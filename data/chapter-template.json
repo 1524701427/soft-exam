@@ -1,0 +1,25 @@
+{
+  "chapterId": 2,
+  "title": "信息技术发展",
+  "sections": [
+    {"id": "2.1", "title": "信息技术及其发展", "children": [
+      {"id": "2.1.1", "title": "计算机软硬件", "page": 1}
+    ]}
+  ],
+  "notes": {
+    "2.1.1": {
+      "lead": "请将本段替换为课程简介",
+      "page": 1,
+      "blocks": [
+        {"type": "concept", "title": "主要概念", "items": [["考点名称", "考点解释"]]},
+        {"type": "chips", "title": "标题类记忆", "items": ["知识点A", "知识点B"]},
+        {"type": "steps", "title": "流程和顺序", "items": [["第一步", "具体动作"]]},
+        {"type": "example", "title": "易混辨析", "text": "例题或场景"}
+      ],
+      "tip": "记忆口诀"
+    }
+  },
+  "questions": [
+    {"id": "q2-001", "number": 1, "chapterId": 2, "sectionId": "2.1.1", "title": "示例题目", "options": ["选项 A", "选项 B", "选项 C", "选项 D"], "answer": "A", "explanation": "此处为示例解析", "sourceLabel": "自编示例", "sourcePage": 1}
+  ]
+}
