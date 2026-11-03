@@ -1,0 +1,40 @@
+name: Deploy static learning site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate site entry
+        shell: bash
+        run: |
+          test -f index.html || { echo "缺少根目录 index.html，请把网站文件放在仓库根目录"; exit 1; }
+          test -f assets/app.js || { echo "缺少 assets/app.js"; exit 1; }
+          test -f assets/vue.global.prod.js || { echo "缺少 Vue runtime"; exit 1; }
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
