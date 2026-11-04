@@ -178,6 +178,7 @@
       lessonVisualIsDirect(){return this.activeLessonVisual?.topicId===this.selectedTopic},
       chapterLearnedCount(){return this.currentChapterTopicList.filter(t=>this.state.mastered.includes(t.id)).length},
       topicPracticeQuestions(){return this.allQuestions.filter(q=>Number(q.chapterId)===this.selectedChapter&&q.sectionId===this.selectedTopic).slice(0,3)},
+      topicPracticeCount(){return this.allQuestions.filter(q=>Number(q.chapterId)===this.selectedChapter&&q.sectionId===this.selectedTopic).length},
 
       sectionVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId?.split('.').slice(0,2).join('.')===this.selectedTopic.split('.').slice(0,2).join('.'))},
       visibleVisualDiagram(){return this.filteredChapterVisuals.find(v=>v.id===this.visualFocusId)||this.filteredChapterVisuals[0]||null},
@@ -300,8 +301,30 @@
           }
         }
       },
+      goToChapterPractice(chapterId=this.selectedChapter){
+        const target=Number(chapterId)||this.selectedChapter;
+        const count=this.allQuestions.filter(q=>Number(q.chapterId)===target).length;
+        this.selectedChapter=target;
+        this.navigate('practice');
+        this.practiceFilter='all';
+        this.practiceSectionFilter='all';
+        this.drillIndex=0;
+        if(!count)this.notify('本章暂无配套题目，可在题库中切换其他章节练习');
+      },
+      goToSectionPractice(topicId=this.selectedTopic){
+        const target=String(topicId||'');
+        const chapterId=Number(target.split('.')[0])||this.selectedChapter;
+        const count=this.allQuestions.filter(q=>Number(q.chapterId)===chapterId&&q.sectionId===target).length;
+        this.goToChapterPractice(chapterId);
+        if(count){
+          this.practiceSectionFilter=target;
+          this.drillIndex=0;
+        }else{
+          this.notify('当前知识小节暂无独立习题，已跳转到第 '+chapterId+' 章全部练习');
+        }
+      },
       navigate(view){if(view==='maps')view='knowledge';if(view==='calculations'||view==='casebook')this.loadedModules[view]=true;this.activeView=view;this.sidebarOpen=false;this.lastExamReport=view==='exam'?this.lastExamReport:null;
-        if(view==='wrong')this.practiceFilter='wrong';else if(view==='favorites')this.practiceFilter='favorite';else if(view==='practice')this.practiceFilter='all';
+        if(view==='wrong')this.practiceFilter='wrong';else if(view==='favorites')this.practiceFilter='favorite';else if(view==='practice'){this.practiceFilter='all';this.practiceSectionFilter='all';}
         if(['wrong','favorites','practice'].includes(view)){this.drillIndex=0;if(view!=='practice')this.practiceSectionFilter='all';}
         window.scrollTo(0,0);if(location.hash!==`#/${view}`)location.hash=`/${view}`},
       openVisualInMaps(id){const v=this.EXAM_VISUALS.find(x=>x.id===id);if(!v)return;
