@@ -6,6 +6,10 @@ const storeKey="gao-xiang-cases-v1";
 let saved={favorites:[],mastered:[],practiceHistory:[]};
 try{saved={...saved,...JSON.parse(localStorage.getItem(storeKey)||"{}")}}catch(_){}
 const state={topic:"all",filter:"all",query:"",caseName:"all",shown:36,view:"library",quizIndex:0,quizReveal:false,quizIds:[],expanded:new Set()};
+function reportEmbeddedNav(){
+ if(document.documentElement.classList.contains('is-embedded')&&window.parent!==window)
+ window.parent.postMessage({type:'gao-xiang-embed-nav-state',target:'casebook',view:state.view,topic:state.topic},location.origin);
+}
 const el=id=>document.getElementById(id);
 const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/江山老师\s*QQ\/VX[^。]+/g,"").replace(/[]/g,"· ").replace(/(?:[\/]V|X:|(?<![A-Za-z])Q)\s*$/g,"").replace(/(?:\b(?:9|16|66|07|91)\b)\s*$/g,"").replace(/(?:序\s*问题(?:要点|描述)?|编\s*问题描述|【问题\s*\d+\s*】|表格\s*序)\s*[\s\S]*$/g,"").replace(/(?:[-–]\s*\d+\s*[-–])\s*$/g,"").trim();
@@ -16,8 +20,8 @@ const isFav=id=>saved.favorites.includes(id);
 const isDone=id=>saved.mastered.includes(id);
 function persist(){localStorage.setItem(storeKey,JSON.stringify(saved))}
 function toggle(key,id){let a=saved[key];saved[key]=a.includes(id)?a.filter(x=>x!==id):[...a,id];persist();renderStats();renderCards();renderTopbar()}
-function setView(view){state.view=view;el("main-library").hidden=view!=="library";el("main-method").hidden=view!=="method";el("main-practice").hidden=view!=="practice";el("main-favorites").hidden=view!=="favorites";document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("selected",b.dataset.view===view));if(view==="favorites")renderFavorites();if(view==="practice")renderQuiz();window.scrollTo({top:0,behavior:"smooth"});if(document.documentElement.classList.contains("is-embedded"))window.parent.postMessage({type:"gao-xiang-embed-top"},location.origin)}
-function setTopic(id){state.topic=id;state.caseName="all";state.shown=36;el("topic-select").value=id;document.querySelectorAll("[data-topic]").forEach(x=>x.classList.toggle("selected",x.dataset.topic===id));if(state.view!=="library")setView("library");renderCases();renderCards();renderTopbar();}
+function setView(view){state.view=view;el("main-library").hidden=view!=="library";el("main-method").hidden=view!=="method";el("main-practice").hidden=view!=="practice";el("main-favorites").hidden=view!=="favorites";document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("selected",b.dataset.view===view));if(view==="favorites")renderFavorites();if(view==="practice")renderQuiz();reportEmbeddedNav();window.scrollTo({top:0,behavior:"smooth"});if(document.documentElement.classList.contains("is-embedded"))window.parent.postMessage({type:"gao-xiang-embed-top"},location.origin)}
+function setTopic(id){state.topic=id;state.caseName="all";state.shown=36;el("topic-select").value=id;document.querySelectorAll("[data-topic]").forEach(x=>x.classList.toggle("selected",x.dataset.topic===id));if(state.view!=="library")setView("library");renderCases();renderCards();renderTopbar();reportEmbeddedNav();}
 function renderGroups(){
 const nav=el("topic-nav");nav.innerHTML='<button type="button" data-topic="all" class="group-button selected"><span class="group-dot">✦</span><span>全部领域</span><b>'+all.length+'</b></button>'+topics.map((t,i)=>'<button type="button" class="group-button" data-topic="'+t.id+'"><span class="group-dot">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(t.name)+'</span><b>'+t.cards.length+'</b></button>').join("");
 nav.querySelectorAll("[data-topic]").forEach(b=>b.addEventListener("click",()=>setTopic(b.dataset.topic)));
@@ -127,4 +131,12 @@ el("hero-start").addEventListener("click",()=>{setView("library");el("search-fie
 el("hero-practice").addEventListener("click",()=>setView("practice"));
 }
 renderGroups();renderStats();renderTopbar();renderCases();renderCards();renderMethod();bind();
+window.addEventListener('message',e=>{
+ if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='gao-xiang-embed-command'||e.data.target!=='casebook')return;
+ if(e.data.action==='topic'&&(e.data.topic==='all'||topics.some(t=>t.id===e.data.topic)))setTopic(e.data.topic);
+ if(e.data.action==='view'&&['library','method','practice','favorites'].includes(e.data.view)){
+   if(e.data.view==='library'&&e.data.topic==='all'&&state.topic!=='all')setTopic('all');
+   setView(e.data.view);
+ }
+});
 })();

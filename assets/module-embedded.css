@@ -36,3 +36,5 @@ html.is-embedded .main .domain-grid{grid-template-columns:repeat(3,minmax(0,1fr)
   html.is-embedded .main .domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:420px){html.is-embedded .main .domain-grid{grid-template-columns:1fr}}
+
+@media(min-width:801px){html.is-embedded .calc-embedded-local-nav,html.is-embedded .case-embedded-local-nav{display:none!important}}

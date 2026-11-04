@@ -28,3 +28,14 @@
 #app.dark-mode .study-six-link:hover{background:#253d46;color:#b4f6e3}
 @media (max-width:1120px){.study-six-nav{gap:5px}.study-six-nav .study-six-link{padding:7px 11px;font-size:12px}}
 @media (max-width:680px){.study-six-nav{padding:8px 12px;min-height:53px;gap:3px}.study-six-nav .study-six-link{padding:7px 11px;font-size:12px;min-height:34px}.study-six-nav .study-six-link .six-nav-symbol{font-size:13px;min-width:14px}}
+
+/* 左侧专题导航：补回计算 11 讲、案例 9 领域的可展开二级目录。 */
+.site-six-sub .six-sub-heading{color:#8298b7;font-size:10px;font-weight:800;letter-spacing:.5px;padding:14px 10px 5px;margin-top:4px;border-top:1px solid #30405c}
+.site-six-sub .six-sub-detail{margin:3px 0 5px}
+.site-six-sub .six-sub-detail>summary{cursor:pointer;color:#a7bdd8;font-size:12px;font-weight:750;padding:7px 9px;list-style-position:inside;border-radius:7px;line-height:1.5}
+.site-six-sub .six-sub-detail>summary:hover{background:#213852;color:white}
+.site-six-sub .six-sub-detail>summary span{float:right;font-size:10px;color:#7f9bb7;font-weight:600}
+.site-six-sub .six-sub-detail button{display:flex;gap:10px;align-items:center;padding:6px 8px 6px 13px;min-height:29px;line-height:1.5;font-size:11.5px;border-radius:7px}
+.site-six-sub .six-sub-detail button small{color:#799bb6;min-width:18px;font-size:10px;font-weight:800}
+.site-six-sub .six-sub-detail button.is-current small{color:#b1e9df}
+.site-six-sub .six-sub-detail button.is-current{color:#a8efdf;background:#234b54}

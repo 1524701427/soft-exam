@@ -57,7 +57,7 @@
   const app=Vue.createApp({
     data(){return {
       EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,essayPrompts:ESSAY_BANK,selectedEssayPromptId:'e13',
-      state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',visualTypeFilter:'all',activeView:'home',sidebarOpen:false,loadedModules:{calculations:false,casebook:false},embeddedHeights:{calculations:1350,casebook:1750},selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
+      state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',visualTypeFilter:'all',activeView:'home',sidebarOpen:false,loadedModules:{calculations:false,casebook:false},embeddedHeights:{calculations:1350,casebook:1750},calcSubTab:'home',calcLesson:'',calcLessonGroup:'schedule',calcLessonGroups:[{"id":"schedule","name":"进度计算","lessons":[{"id":"01","name":"网络图基础"},{"id":"02","name":"三点估算与赶工"},{"id":"03","name":"甘特图与资源平滑"},{"id":"04","name":"巩固习题"}]},{"id":"cost","name":"成本计算","lessons":[{"id":"05","name":"挣值基础"},{"id":"06","name":"挣值巩固"}]},{"id":"combined","name":"进度成本综合","lessons":[{"id":"07","name":"网络图 + EVM"},{"id":"08","name":"多工作包"},{"id":"09","name":"赶工与资源"}]},{"id":"essentials","name":"小计算与速记","lessons":[{"id":"10","name":"十类高频题型"},{"id":"11","name":"考点与公式速查"}]}],caseSubView:'library',caseSubTopic:'all',caseTopics:[{"id":"integration","name":"整合管理"},{"id":"scope","name":"范围管理"},{"id":"quality","name":"质量管理"},{"id":"resources","name":"资源管理"},{"id":"communication","name":"沟通与干系人"},{"id":"risk","name":"风险管理"},{"id":"procurement","name":"采购与合同"},{"id":"initiation","name":"立项与招投标"},{"id":"configuration","name":"配置与变更"}],selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
       evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',stakeholderPower:8,stakeholderInterest:8,domainFocus:0,changeFocus:0,versionStatus:'draft',opmLevel:3,communicationPeople:12,riskCalc:{chance:0.45,gain:80,threatChance:0.25,loss:30,investment:0},procCalc:{targetCost:200,targetFee:20,actualCost:230,sellerShare:30,ceiling:260},networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},
       mathTab:'econ',mathTabs:[{id:'econ',icon:'∑',label:'工程经济'},{id:'lp',icon:'▱',label:'线性规划'},{id:'vogel',icon:'⇄',label:'伏格尔法'},{id:'hungarian',icon:'▦',label:'匈牙利法'},{id:'path',icon:'⌁',label:'最短路径'},{id:'game',icon:'◇',label:'博弈论'},{id:'decision',icon:'≋',label:'决策分析'}],
       mathCapital:100,mathRate:10,mathYears:3,mathCashflows:'40,40,40,40',mathC1:5,mathC2:4,vogelStep:0,hungarianStage:0,
@@ -240,13 +240,65 @@
       openSavedKnowledge(id){if(id.startsWith('topic:'))this.openKnowledge(id.slice(6));else{const p=this.allHighlights.find(x=>x.id===id);if(!p)return;const data=this.state.importedChapters[Number(p.id.split('-')[0].slice(1))]||BUILTINS[Number(p.id.split('-')[0].slice(1))];const sec=data?.sections?.find(x=>x.id===p.sectionId);if(!sec)return;this.openKnowledge(sec.children[0].id);this.readingTab='highlights'}},
       goToQuestion(q){this.selectedChapter=q.chapterId;this.practiceSectionFilter='all';this.navigate('practice');this.drillIndex=Math.max(0,this.filteredQuestions.findIndex(x=>x.id===q.id))},
       topicTitle(id){return this.allTopics.find(x=>x.id===id)?.title||''},
-      onModuleLoad(which){try{const frame=which==='calculations'?this.$refs.calcFrame:this.$refs.caseFrame;const doc=frame?.contentDocument;if(doc){const height=Math.max(doc.documentElement?.scrollHeight||0,doc.body?.scrollHeight||0);if(height>100)this.embeddedHeights[which]=Math.max(400,Math.ceil(height)+10)}}catch(e){}},
+      postEmbeddedNavigation(which){
+        const frame=which==='calculations'?this.$refs.calcFrame:this.$refs.caseFrame;
+        if(!frame?.contentWindow)return;
+        const command=which==='calculations'
+          ?(this.calcSubTab==='lesson'?{action:'lesson',lessonId:this.calcLesson}:{action:'tab',tab:this.calcSubTab})
+          :(this.caseSubView==='library'&&this.caseSubTopic!=='all'?{action:'topic',topic:this.caseSubTopic}:{action:'view',view:this.caseSubView,topic:this.caseSubTopic});
+        frame.contentWindow.postMessage({type:'gao-xiang-embed-command',target:which,...command},location.origin);
+      },
+      openCalcSection(tab){
+        if(!['home','formulas','tools','training'].includes(tab))return;
+        this.calcSubTab=tab;this.calcLesson='';
+        this.navigate('calculations');
+        this.$nextTick(()=>this.postEmbeddedNavigation('calculations'));
+      },
+      openCalcLesson(id,group){
+        this.calcSubTab='lesson';this.calcLesson=id;this.calcLessonGroup=group;
+        this.navigate('calculations');
+        this.$nextTick(()=>this.postEmbeddedNavigation('calculations'));
+      },
+      openCaseSection(view){
+        if(!['library','method','practice','favorites'].includes(view))return;
+        this.caseSubView=view;
+        if(view==='library')this.caseSubTopic='all';
+        this.navigate('casebook');
+        this.$nextTick(()=>this.postEmbeddedNavigation('casebook'));
+      },
+      openCaseTopic(topic){
+        if(topic!=='all'&&!this.caseTopics.some(t=>t.id===topic))return;
+        this.caseSubView='library';this.caseSubTopic=topic;
+        this.navigate('casebook');
+        this.$nextTick(()=>this.postEmbeddedNavigation('casebook'));
+      },
+      onModuleLoad(which){
+        try{
+          const frame=which==='calculations'?this.$refs.calcFrame:this.$refs.caseFrame;
+          const doc=frame?.contentDocument;
+          if(doc){const height=Math.max(doc.documentElement?.scrollHeight||0,doc.body?.scrollHeight||0);if(height>100)this.embeddedHeights[which]=Math.max(400,Math.ceil(height)+10)}
+          this.postEmbeddedNavigation(which);
+        }catch(e){}
+      },
       handleModuleMessage(e){if(e.origin!==location.origin||!e.data||typeof e.data!=='object')return;
         const calc=this.$refs.calcFrame,caseFrame=this.$refs.caseFrame;
         const which=e.source===calc?.contentWindow?'calculations':e.source===caseFrame?.contentWindow?'casebook':null;
         if(!which)return;
         if(e.data.type==='gao-xiang-embed-resize'){const h=Number(e.data.height);if(Number.isFinite(h)&&h>=180&&h<=100000)this.embeddedHeights[which]=Math.ceil(h)+8;}
         if(e.data.type==='gao-xiang-embed-top')window.scrollTo({top:0,behavior:'instant'});
+        if(e.data.type==='gao-xiang-embed-nav-state' && e.data.target===which){
+          if(which==='calculations'){
+            const tab=String(e.data.tab||'home'),lesson=String(e.data.lessonId||'');
+            if(['home','lesson','formulas','tools','training'].includes(tab)){
+              this.calcSubTab=tab;this.calcLesson=tab==='lesson'?lesson:'';
+              if(tab==='lesson'){const group=this.calcLessonGroups.find(g=>g.lessons.some(l=>l.id===lesson));if(group)this.calcLessonGroup=group.id;}
+            }
+          }else{
+            const view=String(e.data.view||'library'),topic=String(e.data.topic||'all');
+            if(['library','method','practice','favorites'].includes(view))this.caseSubView=view;
+            if(topic==='all'||this.caseTopics.some(t=>t.id===topic))this.caseSubTopic=topic;
+          }
+        }
       },
       navigate(view){if(view==='maps')view='knowledge';if(view==='calculations'||view==='casebook')this.loadedModules[view]=true;this.activeView=view;this.sidebarOpen=false;this.lastExamReport=view==='exam'?this.lastExamReport:null;
         if(view==='wrong')this.practiceFilter='wrong';else if(view==='favorites')this.practiceFilter='favorite';else if(view==='practice')this.practiceFilter='all';

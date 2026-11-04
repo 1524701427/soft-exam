@@ -60,7 +60,11 @@ Vue.createApp({
   buyResult(){return C.makeBuy(this.buyFields.qty,this.buyFields.makeFixed,this.buyFields.makeVariable,this.buyFields.buyFixed,this.buyFields.buyVariable)}
  },
  methods:{
-  setTab(key){this.tab=key;if(document.documentElement.classList.contains('is-embedded'))window.parent.postMessage({type:'gao-xiang-embed-top'},location.origin);if(key!=='lesson'&&location.search.includes('lesson='))history.replaceState(null,'',location.pathname+(document.documentElement.classList.contains('is-embedded')?'?embed=1':''));try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}},
+  reportEmbeddedNav(){
+    if(document.documentElement.classList.contains('is-embedded')&&window.parent!==window)
+      window.parent.postMessage({type:'gao-xiang-embed-nav-state',target:'calculations',tab:this.tab,lessonId:this.tab==='lesson'?this.lessonId:''},location.origin);
+  },
+  setTab(key){this.tab=key;this.reportEmbeddedNav();if(document.documentElement.classList.contains('is-embedded'))window.parent.postMessage({type:'gao-xiang-embed-top'},location.origin);if(key!=='lesson'&&location.search.includes('lesson='))history.replaceState(null,'',location.pathname+(document.documentElement.classList.contains('is-embedded')?'?embed=1':''));try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}},
   openLesson(id){if(!this.lessons.some(l=>l.id===id))return;this.lessonId=id;this.setTab('lesson');history.replaceState(null,'',location.pathname+(document.documentElement.classList.contains('is-embedded')?'?embed=1&lesson=':'?lesson=')+id)},
   groupIcon(id){return({schedule:'⌁',cost:'¥',combined:'▥',essentials:'∑'})[id]||'◇'},
   lessonProblemCount(id){return this.problems.filter(q=>q.lesson===id).length},
@@ -72,6 +76,16 @@ Vue.createApp({
   resourceWidth(v){const r=this.networkResult,m=Math.max(1,r.originalPeak,r.adjustedPeak);return 100*Number(v)/m},
   resetTool(){switch(this.tool){case'network':this.networkRows=initialNetwork();break;case'pert':this.pertFields={o:1,m:4,p:7,deadline:5};break;case'evm':this.evmFields={pv:65,ev:53,ac:52,bac:100};this.evmMode='typical';break;case'contract':this.contractFields={target:100,fee:10,actual:90,percent:70};break;case'channel':this.channelPeople=8;break;case'emv':this.emvFields={p:25,gain:-9000,loss:0};break;case'break':this.breakFields={fixed:200,price:25,variable:15};break;case'makebuy':this.buyFields={qty:200,makeFixed:600,makeVariable:12,buyFixed:0,buyVariable:17};break;}}
  },
- mounted(){const u=new URLSearchParams(location.search).get('lesson');if(u&&this.lessons.some(l=>l.id===u)){this.lessonId=u;this.tab='lesson'} }
+ mounted(){
+  const u=new URLSearchParams(location.search).get('lesson');
+  if(u&&this.lessons.some(l=>l.id===u)){this.lessonId=u;this.tab='lesson'}
+  this._sidebarCommand=e=>{
+    if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='gao-xiang-embed-command'||e.data.target!=='calculations')return;
+    if(e.data.action==='lesson'&&this.lessons.some(l=>l.id===e.data.lessonId))this.openLesson(e.data.lessonId);
+    if(e.data.action==='tab'&&['home','formulas','tools','training'].includes(e.data.tab))this.setTab(e.data.tab);
+  };
+  window.addEventListener('message',this._sidebarCommand);
+ },
+ beforeUnmount(){window.removeEventListener('message',this._sidebarCommand)}
 }).mount('#calc-app');
 })();
