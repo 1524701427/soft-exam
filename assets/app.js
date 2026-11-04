@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
   const STORE = 'gao-xiang-study-v1';
-  const BUILTINS = {1:{title:'信息化发展',sections:window.EXAM_SECTIONS,notes:window.EXAM_NOTES,questions:window.EXAM_CH1.questions,highlights:window.EXAM_CH1.highlights},2:window.EXAM_CH2,3:window.EXAM_CH3,4:window.EXAM_CH4,5:window.EXAM_CH5,6:window.EXAM_CH6,7:window.EXAM_CH7,8:window.EXAM_CH8};
+  const BUILTINS = {1:{title:'信息化发展',sections:window.EXAM_SECTIONS,notes:window.EXAM_NOTES,questions:window.EXAM_CH1.questions,highlights:window.EXAM_CH1.highlights},2:window.EXAM_CH2,3:window.EXAM_CH3,4:window.EXAM_CH4,5:window.EXAM_CH5,6:window.EXAM_CH6,7:window.EXAM_CH7,8:window.EXAM_CH8,9:window.EXAM_CH9,10:window.EXAM_CH10,11:window.EXAM_CH11,12:window.EXAM_CH12};
   const EXAM_STORE='gao-xiang-exam-v1';
   const EMPTY = () => ({mastered:[],starred:[],bookmarked:[],wrongIds:[],answers:{},notes:{},exams:[],essayDraft:{title:'',body:''},caseDraft:{title:'',material:'',answer:''},importedChapters:{},dailyActivity:{},settings:{dark:false}});
   function readStore(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');const def=EMPTY();for(const k in def){if(s[k]!==undefined && s[k]!==null && typeof s[k]===typeof def[k]) def[k]=s[k];}def.essayDraft=Object.assign({title:'',body:''},def.essayDraft);def.caseDraft=Object.assign({title:'',material:'',answer:''},def.caseDraft);def.settings=Object.assign({dark:false},def.settings);return def;}catch(e){return EMPTY();}}
@@ -45,18 +45,39 @@
     data(){return {
       EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,
       state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',activeView:'home',sidebarOpen:false,selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
-      practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
+      evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
       pastYear:'全部',examCount:20,examActive:(()=>{try{return JSON.parse(localStorage.getItem(EXAM_STORE)||'null')}catch(e){return null}})(),examIndex:0,remainingSeconds:0,now:Date.now(),lastExamReport:null,
       importMessage:'',importError:false,toast:'',mapNames:['全章思维导图','信息与信息系统','信息化与新基建','工业互联网与车联网','现代化创新发展','数字经济与元宇宙','数字政府与数字生态','数字化转型与智慧转移'],
       navMain:[{id:'home',label:'学习总览',icon:'home'},{id:'chapters',label:'章节管理',icon:'layers'},{id:'knowledge',label:'知识点学习',icon:'book'},{id:'maps',label:'知识图解',icon:'map'},{id:'practice',label:'章节练习',icon:'clipboard'},{id:'exam',label:'模拟考试',icon:'timer'}],
       navResources:[{id:'pastpapers',label:'历年真题',icon:'file'},{id:'wrong',label:'错题本',icon:'alert'},{id:'favorites',label:'我的收藏',icon:'star'},{id:'cases',label:'案例分析',icon:'file'},{id:'essays',label:'论文训练',icon:'pen'},{id:'progress',label:'学习统计',icon:'chart'}],
-      quickActions:[{view:'knowledge',name:'知识点学习',desc:'前八章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'275 道配套题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'99 张可交互图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
+      quickActions:[{view:'knowledge',name:'知识点学习',desc:'前十二章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'413 道配套题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'184 张可交互图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
     }},
     computed:{
       viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
       todayLabel(){return new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'})},
       chapterTitle(){return this.EXAM_CHAPTERS.find(c=>c.id===this.selectedChapter)?.name||'未知章节'},
-      allChapterData(){return Object.keys(BUILTINS).concat(Object.keys(this.state.importedChapters)).map(Number).filter((x,i,a)=>a.indexOf(x)===i).sort((a,b)=>a-b).map(id=>({id,...(this.state.importedChapters[id]||BUILTINS[id])})).filter(x=>x.sections)},
+      evmResult(){
+        const x=this.evmValues, pv=Number(x.pv)||0,ev=Number(x.ev)||0,ac=Number(x.ac)||0,bac=Number(x.bac)||0;
+        const cpi=ac>0?ev/ac:null,spi=pv>0?ev/pv:null;
+        const eac=this.evmForecastMode==='typical'?(cpi&&cpi>0?bac/cpi:null):(ac+bac-ev);
+        const etc=eac===null?null:eac-ac;
+        const tcpi=(bac-ac)>0?(bac-ev)/(bac-ac):null;
+        return {pv,ev,ac,bac,cv:ev-ac,sv:ev-pv,cpi,spi,eac,etc,vac:eac===null?null:bac-eac,tcpi};
+      },
+      networkSchedule(){
+        const defs=[{id:'A',pre:[],x:72,y:75},{id:'B',pre:[],x:72,y:208},{id:'C',pre:['A'],x:345,y:75},{id:'D',pre:['A','B'],x:345,y:208},{id:'E',pre:['C'],x:610,y:75},{id:'F',pre:['D','E'],x:820,y:150}];
+        const byId={};
+        for(const d of defs){let duration=Math.min(99,Math.max(1,Number(this.networkDurations[d.id])||1));let es=Math.max(0,...d.pre.map(p=>byId[p].ef));byId[d.id]={...d,duration,es,ef:es+duration};}
+        const total=Math.max(...Object.values(byId).map(a=>a.ef));
+        for(const d of defs.slice().reverse()){
+          const successors=defs.filter(x=>x.pre.includes(d.id));
+          const lf=successors.length?Math.min(...successors.map(x=>byId[x.id].ls)):total;
+          Object.assign(byId[d.id],{lf,ls:lf-byId[d.id].duration,slack:lf-byId[d.id].ef});
+        }
+        const links=defs.flatMap(d=>d.pre.map(p=>{const a=byId[p],b=byId[d.id];return {id:p+'-'+d.id,d:'M '+(a.x+45)+' '+a.y+' C '+(a.x+120)+' '+a.y+', '+(b.x-110)+' '+b.y+', '+(b.x-45)+' '+b.y,critical:a.slack===0&&b.slack===0&&a.ef===b.es}}));
+        return {nodes:defs.map(d=>byId[d.id]),links,total};
+      },
+      allChapterData(){return Object.keys(BUILTINS).concat(Object.keys(this.state.importedChapters)).map(Number).filter((x,i,a)=>a.indexOf(x)===i).sort((a,b)=>a-b).map(id=>({id,...(BUILTINS[id]||this.state.importedChapters[id])})).filter(x=>x.sections)},
       allQuestions(){return this.allChapterData.flatMap(x=>x.questions||[])},
       currentChapterVisuals(){return this.EXAM_VISUALS.filter(v=>Number(v.chapterId)===this.selectedChapter)},
       topicVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic)},
@@ -65,7 +86,7 @@
       visualChapterStats(){return this.allChapterData.map(d=>{const topics=(d.sections||[]).flatMap(x=>x.children||[]),qs=d.questions||[],answered=qs.filter(q=>this.state.answers[q.id]),mastered=topics.filter(t=>this.state.mastered.includes(t.id)).length,correct=answered.filter(q=>this.state.answers[q.id]?.correct).length;return {id:d.id,name:d.title,topics:topics.length,mastered,mastery:topics.length?Math.round(mastered/topics.length*100):0,answered:answered.length,accuracy:answered.length?Math.round(correct/answered.length*100):0}})},
       allHighlights(){return this.allChapterData.flatMap(x=>x.highlights||[])},
       allTopics(){return this.allChapterData.flatMap(x=>(x.sections||[]).flatMap(s=>s.children||[]))},
-      currentChapterData(){return this.state.importedChapters[this.selectedChapter]||BUILTINS[this.selectedChapter]||null},
+      currentChapterData(){return BUILTINS[this.selectedChapter]||this.state.importedChapters[this.selectedChapter]||null},
       currentChapterSections(){return this.currentChapterData?.sections||[]},
       currentChapterTopicList(){return this.currentChapterSections.flatMap(s=>s.children||[])},
       currentNote(){return this.currentChapterData?.notes?.[this.selectedTopic]},
@@ -109,10 +130,11 @@
       filteredQuestions(){if(this.drillIndex>=this.filteredQuestions.length)this.drillIndex=Math.max(0,this.filteredQuestions.length-1)}
     },
     methods:{
+      displayNum(n){return n===null||!Number.isFinite(n)?'—':Number(n).toFixed(2).replace(/\.00$/,'')},
       icon(name){return `<svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.book}</svg>`},
       notify(message){this.toast=message;clearTimeout(this._toastTimer);this._toastTimer=setTimeout(()=>this.toast='',2700)},
       getChapterId(name){return this.EXAM_CHAPTERS.find(c=>c.name===name)?.id||0},
-      isChapterReady(id){return !!(this.state.importedChapters[id]||BUILTINS[id])},
+      isChapterReady(id){return !!(BUILTINS[id]||this.state.importedChapters[id])},
       getQuestionYear(q){const text=String(q.sourceLabel||'');if(/2025|25年|25上|25下/.test(text))return '2025';if(/2024|24上|24下/.test(text))return '2024';if(/2023|23上|23下/.test(text))return '2023';return ''},
       favoriteTitle(id){if(id.startsWith('topic:'))return this.topicTitle(id.slice(6));const point=this.allHighlights.find(p=>p.id===id);return point?'必背考点 '+point.number+' · '+point.text.slice(0,20):id},
       openSavedKnowledge(id){if(id.startsWith('topic:'))this.openKnowledge(id.slice(6));else{const p=this.allHighlights.find(x=>x.id===id);if(!p)return;const data=this.state.importedChapters[Number(p.id.split('-')[0].slice(1))]||BUILTINS[Number(p.id.split('-')[0].slice(1))];const sec=data?.sections?.find(x=>x.id===p.sectionId);if(!sec)return;this.openKnowledge(sec.children[0].id);this.readingTab='highlights'}},
@@ -145,8 +167,8 @@
       finishExam(){if(!this.examActive)return;const xs=this.examQuestionObjects;if(!xs.length){this.examActive=null;return;}const picks=this.examActive.picks;const correct=xs.filter(q=>picks[q.id]===q.answer).length;const used=Math.min(this.examActive.durationSeconds,Math.round((Date.now()-this.examActive.startedAt)/1000));const record={id:Date.now(),finishedAt:new Date().toISOString(),score:Math.round(correct/xs.length*100),correct,total:xs.length,usedSeconds:used,items:xs.map(q=>({id:q.id,title:q.title,selected:picks[q.id]||'',answer:q.answer,correct:picks[q.id]===q.answer,explanation:q.explanation||''}))};for(const item of record.items){if(!item.correct&&!this.state.wrongIds.includes(item.id))this.state.wrongIds.push(item.id)}this.state.exams.push({id:record.id,finishedAt:record.finishedAt,score:record.score,correct:record.correct,total:record.total});this.recordActivity();this.examActive=null;this.lastExamReport=record;this.notify('交卷完成，成绩已保存')},
       downloadText(name,text){const blob=new Blob([text||''],{type:'text/plain;charset=utf-8'});downloadBlob(name+'-'+new Date().toLocaleDateString('sv-SE')+'.txt',blob)},
       exportProgress(){saveJSON('高项学习记录-'+new Date().toLocaleDateString('sv-SE')+'.json',{app:'soft-exam-study',version:1,exportedAt:new Date().toISOString(),data:this.state})},
-      downloadTemplate(){saveJSON('第09章-导入模板.json',{chapterId:9,title:'项目范围管理',sections:[{id:'9.1',title:'第一节示例',children:[{id:'9.1.1',title:'知识点示例',page:1}]}],notes:{'9.1.1':{lead:'请替换成整理后的讲义内容',page:1,blocks:[{title:'基础概念',type:'concept',items:[['知识点名称','知识点解释']]}],tip:'速记口诀'}} ,questions:[{id:'q9-01',number:1,chapterId:9,sectionId:'9.1.1',title:'示例题目（请选择正确答案）',options:['选项A','选项B','选项C','选项D'],answer:'A',explanation:'示例解析',sourceLabel:'自编示例',sourcePage:1}]})},
-      validateImported(obj){const id=Number(obj?.chapterId);if(!Number.isInteger(id)||id<7||id>24)throw Error('chapterId 必须是 7–24 的整数（第1–6章已内置）');if(!Array.isArray(obj.sections))throw Error('缺少 sections 数组');const expected=this.EXAM_CHAPTERS.find(c=>c.id===id);if(obj.title&&obj.title!==expected.name)throw Error('章节标题和教材目录不一致：应为'+expected.name);let ids=new Set();for(const s of obj.sections){if(!s.id||!Array.isArray(s.children))throw Error('每节必须有 id 和 children 数组');for(const t of s.children){if(!t.id||!t.title||ids.has(t.id))throw Error('知识小节缺少 id/title 或编号重复');ids.add(t.id)}}if(obj.questions&&!Array.isArray(obj.questions))throw Error('questions 必须是数组');const qids=new Set();for(const q of obj.questions||[]){if(!q.id||!q.title||!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer)||qids.has(q.id))throw Error('题目格式无效：需要 id/title/options[4]/answer');if(!ids.has(q.sectionId))throw Error('题目 '+q.id+' 的 sectionId 未出现在章节目录');qids.add(q.id)}return{id,title:expected.name,sections:obj.sections,notes:obj.notes&&typeof obj.notes==='object'?obj.notes:{},questions:(obj.questions||[]).map((q,i)=>({...q,chapterId:id,number:q.number||i+1}))}},
+      downloadTemplate(){saveJSON('第13章-导入模板.json',{chapterId:13,title:'资源管理',sections:[{id:'13.1',title:'第一节示例',children:[{id:'13.1.1',title:'知识点示例',page:1}]}],notes:{'13.1.1':{lead:'请替换成整理后的讲义内容',page:1,blocks:[{title:'基础概念',type:'concept',items:[['知识点名称','知识点解释']]}],tip:'速记口诀'}} ,questions:[{id:'q9-01',number:1,chapterId:9,sectionId:'13.1.1',title:'示例题目（请选择正确答案）',options:['选项A','选项B','选项C','选项D'],answer:'A',explanation:'示例解析',sourceLabel:'自编示例',sourcePage:1}]})},
+      validateImported(obj){const id=Number(obj?.chapterId);if(!Number.isInteger(id)||id<13||id>24)throw Error('chapterId 必须是 13–24 的整数（第1–12章已内置）');if(!Array.isArray(obj.sections))throw Error('缺少 sections 数组');const expected=this.EXAM_CHAPTERS.find(c=>c.id===id);if(obj.title&&obj.title!==expected.name)throw Error('章节标题和教材目录不一致：应为'+expected.name);let ids=new Set();for(const s of obj.sections){if(!s.id||!Array.isArray(s.children))throw Error('每节必须有 id 和 children 数组');for(const t of s.children){if(!t.id||!t.title||ids.has(t.id))throw Error('知识小节缺少 id/title 或编号重复');ids.add(t.id)}}if(obj.questions&&!Array.isArray(obj.questions))throw Error('questions 必须是数组');const qids=new Set();for(const q of obj.questions||[]){if(!q.id||!q.title||!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer)||qids.has(q.id))throw Error('题目格式无效：需要 id/title/options[4]/answer');if(!ids.has(q.sectionId))throw Error('题目 '+q.id+' 的 sectionId 未出现在章节目录');qids.add(q.id)}return{id,title:expected.name,sections:obj.sections,notes:obj.notes&&typeof obj.notes==='object'?obj.notes:{},questions:(obj.questions||[]).map((q,i)=>({...q,chapterId:id,number:q.number||i+1}))}},
       importDataFile(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);const x=this.validateImported(obj);this.state.importedChapters[x.id]={title:x.title,sections:x.sections,notes:x.notes,questions:x.questions};this.importError=false;this.importMessage=`已导入第 ${x.id} 章「${x.title}」：${x.sections.length} 个大节、${x.questions.length} 道练习题。`;this.notify('章节导入成功')}catch(err){this.importError=true;this.importMessage='导入失败：'+err.message}};reader.readAsText(file);e.target.value=''},
       importProgress(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);if(obj.app!=='soft-exam-study'||!obj.data||!Array.isArray(obj.data.mastered))throw Error('不是有效的高项学习记录备份');if(!confirm('导入将替换当前学习记录。是否继续？'))return;this.state=Object.assign(EMPTY(),obj.data);this.state.essayDraft=Object.assign({title:'',body:''},this.state.essayDraft);this.state.caseDraft=Object.assign({title:'',material:'',answer:''},this.state.caseDraft);this.notify('学习记录恢复成功')}catch(err){this.notify('导入失败：'+err.message)}};reader.readAsText(file);e.target.value=''},
       clearProgress(){if(!confirm('确定清空全部答题、错题、笔记及导入章节吗？此操作不可撤销，建议先导出备份。'))return;this.state=EMPTY();this.examActive=null;this.lastExamReport=null;this.notify('已清空学习记录')}
