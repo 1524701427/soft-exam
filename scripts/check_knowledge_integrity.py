@@ -63,7 +63,7 @@ for n, (min_topics, min_questions, min_blocks, min_rows) in BASELINE.items():
     stem = f"chapter{n:02d}"
     document = json.loads((DATA / f"{stem}.json").read_text(encoding="utf-8"))
     browser_text = (DATA / f"{stem}.js").read_text(encoding="utf-8")
-    match = re.fullmatch(r"\s*window\.EXAM_CH\d+\s*=\s*(\{.*\})\s*;?\s*", browser_text, flags=re.S)
+    match = re.search(r"\bwindow\.EXAM_CH\d+\s*=\s*(\{.*\})\s*;?\s*$", browser_text, flags=re.S)
     if not match:
         errors.append(f"Chapter {n}: browser JavaScript data cannot be parsed")
         continue
