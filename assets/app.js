@@ -75,7 +75,6 @@
     computed:{
       viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
       todayLabel(){return new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'})},
-      chapterCardSummary(id){const d=this.state.importedChapters[id]||BUILTINS[id];const topics=(d?.sections||[]).flatMap(s=>s.children||[]).length,qs=(d?.questions||[]).length,vs=this.EXAM_VISUALS.filter(x=>x.chapterId===id).length;return d?topics+' 个知识小节 · '+qs+' 道习题 · '+vs+' 张图解':'目录已建立，待录入';},
       chapterTitle(){return this.EXAM_CHAPTERS.find(c=>c.id===this.selectedChapter)?.name||'未知章节'},
       stakeholderStrategy(){
         const power=Number(this.stakeholderPower)>=6, interest=Number(this.stakeholderInterest)>=6;
@@ -220,6 +219,8 @@
       filteredQuestions(){if(this.drillIndex>=this.filteredQuestions.length)this.drillIndex=Math.max(0,this.filteredQuestions.length-1)}
     },
     methods:{
+      // 章节卡片摘要要接收章节 ID，应放在 methods 中，不能定义为 computed。
+      chapterCardSummary(id){const chapterId=Number(id);const d=this.state.importedChapters?.[chapterId]||BUILTINS[chapterId];if(!d)return '目录已建立，待录入';const topics=(d.sections||[]).flatMap(sec=>sec.children||[]).length;const questions=(d.questions||[]).length;const visuals=this.EXAM_VISUALS.filter(v=>Number(v.chapterId)===chapterId).length;return `${topics} 个知识小节 · ${questions} 道习题 · ${visuals} 张图解`;},
       displayNum(n){return n===null||!Number.isFinite(n)?'—':Number(n).toFixed(2).replace(/\.00$/,'')},
       icon(name){return `<svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.book}</svg>`},
       notify(message){this.toast=message;clearTimeout(this._toastTimer);this._toastTimer=setTimeout(()=>this.toast='',2700)},
