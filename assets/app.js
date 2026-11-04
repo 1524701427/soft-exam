@@ -1,7 +1,15 @@
 (()=>{
   'use strict';
   const STORE = 'gao-xiang-study-v1';
-  const BUILTINS = {1:{title:'信息化发展',sections:window.EXAM_SECTIONS,notes:window.EXAM_NOTES,questions:window.EXAM_CH1.questions,highlights:window.EXAM_CH1.highlights},2:window.EXAM_CH2,3:window.EXAM_CH3,4:window.EXAM_CH4,5:window.EXAM_CH5,6:window.EXAM_CH6,7:window.EXAM_CH7,8:window.EXAM_CH8,9:window.EXAM_CH9,10:window.EXAM_CH10,11:window.EXAM_CH11,12:window.EXAM_CH12};
+  const BUILTINS = {1:{title:'信息化发展',sections:window.EXAM_SECTIONS,notes:window.EXAM_NOTES,questions:window.EXAM_CH1.questions,highlights:window.EXAM_CH1.highlights},2:window.EXAM_CH2,3:window.EXAM_CH3,4:window.EXAM_CH4,5:window.EXAM_CH5,6:window.EXAM_CH6,7:window.EXAM_CH7,8:window.EXAM_CH8,9:window.EXAM_CH9,10:window.EXAM_CH10,11:window.EXAM_CH11,12:window.EXAM_CH12,13:window.EXAM_CH13,14:window.EXAM_CH14,15:window.EXAM_CH15,16:window.EXAM_CH16};
+  const ESSAY_BANK=[
+    {id:'e13',chapter:13,title:'论信息系统项目的资源管理',page:3,source:'讲义标注：2023年下半年第4批',points:['介绍真实项目背景和本人承担的工作','解释资源管理基本过程','比较实物资源和团队资源获取及控制的差异','结合项目说明实际做法与经验']},
+    {id:'e14',chapter:14,title:'论信息系统项目的沟通管理',page:43,source:'讲义提供的论文模拟题',points:['以真实项目及职责为背景','结合三个沟通过程和主要输出说明实际做法','列出干系人并制定有针对性的沟通管理计划','用干系人参与度评估矩阵分析规划与监督沟通']},
+    {id:'e15',chapter:15,title:'论信息系统项目的风险管理',page:3,source:'讲义标注：2023年上半年',points:['介绍真实项目和个人职责','阐述风险识别和风险应对的实际做法','展示风险登记册内容及其逐步完善的过程']},
+    {id:'e16a',chapter:16,title:'论信息系统项目的采购管理',page:3,source:'讲义标注：2020年下半年',points:['描述项目背景与职责','说明采购管理的各过程','如采用招投标，论述招投标流程和管理体会']},
+    {id:'e16b',chapter:16,title:'论信息系统项目的招投标管理',page:4,source:'讲义标注：2021年下半年',points:['介绍项目背景与职责','论述招投标管理过程','编制招标文件评分表','说明投标文件编制和递交的注意事项']},
+    {id:'e16c',chapter:16,title:'论信息系统项目的合同管理',page:5,source:'讲义标注：2023年下半年第3批',points:['描述真实项目背景与职责','论述合同管理过程与主要内容','编制项目合同主要条款','结合项目实际说明合同管理做法与心得']}
+  ];
   const EXAM_STORE='gao-xiang-exam-v1';
   const EMPTY = () => ({mastered:[],starred:[],bookmarked:[],wrongIds:[],answers:{},notes:{},exams:[],essayDraft:{title:'',body:''},caseDraft:{title:'',material:'',answer:''},importedChapters:{},dailyActivity:{},settings:{dark:false}});
   function readStore(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');const def=EMPTY();for(const k in def){if(s[k]!==undefined && s[k]!==null && typeof s[k]===typeof def[k]) def[k]=s[k];}def.essayDraft=Object.assign({title:'',body:''},def.essayDraft);def.caseDraft=Object.assign({title:'',material:'',answer:''},def.caseDraft);def.settings=Object.assign({dark:false},def.settings);return def;}catch(e){return EMPTY();}}
@@ -43,19 +51,39 @@
   function downloadBlob(filename,blob){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   const app=Vue.createApp({
     data(){return {
-      EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,
+      EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,essayPrompts:ESSAY_BANK,selectedEssayPromptId:'e13',
       state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',activeView:'home',sidebarOpen:false,selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
-      evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
+      evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',communicationPeople:12,riskCalc:{chance:0.45,gain:80,threatChance:0.25,loss:30,investment:0},procCalc:{targetCost:200,targetFee:20,actualCost:230,sellerShare:30,ceiling:260},networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
       pastYear:'全部',examCount:20,examActive:(()=>{try{return JSON.parse(localStorage.getItem(EXAM_STORE)||'null')}catch(e){return null}})(),examIndex:0,remainingSeconds:0,now:Date.now(),lastExamReport:null,
       importMessage:'',importError:false,toast:'',mapNames:['全章思维导图','信息与信息系统','信息化与新基建','工业互联网与车联网','现代化创新发展','数字经济与元宇宙','数字政府与数字生态','数字化转型与智慧转移'],
       navMain:[{id:'home',label:'学习总览',icon:'home'},{id:'chapters',label:'章节管理',icon:'layers'},{id:'knowledge',label:'知识点学习',icon:'book'},{id:'maps',label:'知识图解',icon:'map'},{id:'practice',label:'章节练习',icon:'clipboard'},{id:'exam',label:'模拟考试',icon:'timer'}],
       navResources:[{id:'pastpapers',label:'历年真题',icon:'file'},{id:'wrong',label:'错题本',icon:'alert'},{id:'favorites',label:'我的收藏',icon:'star'},{id:'cases',label:'案例分析',icon:'file'},{id:'essays',label:'论文训练',icon:'pen'},{id:'progress',label:'学习统计',icon:'chart'}],
-      quickActions:[{view:'knowledge',name:'知识点学习',desc:'前十二章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'413 道配套题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'184 张可交互图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
+      quickActions:[{view:'knowledge',name:'知识点学习',desc:'前十六章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'576 道配套题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'254 张可交互图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
     }},
     computed:{
       viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
       todayLabel(){return new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'})},
       chapterTitle(){return this.EXAM_CHAPTERS.find(c=>c.id===this.selectedChapter)?.name||'未知章节'},
+      communicationChannels(){
+        const n=Math.max(2,Math.min(500,Math.floor(Number(this.communicationPeople)||2)));
+        return {people:n,channels:n*(n-1)/2,additional:n};
+      },
+      riskCalcResult(){
+        const x=this.riskCalc, clamp=v=>Math.max(0,Math.min(1,Number(v)||0));
+        const positive=clamp(x.chance)*Math.max(0,Number(x.gain)||0);
+        const negative=clamp(x.threatChance)*Math.max(0,Number(x.loss)||0);
+        const investment=Math.max(0,Number(x.investment)||0);
+        return {positive,negative,investment,net:positive-negative-investment};
+      },
+      procurementCalcResult(){
+        const x=this.procCalc;
+        const target=Math.max(0,Number(x.targetCost)||0),fee=Math.max(0,Number(x.targetFee)||0),actual=Math.max(0,Number(x.actualCost)||0);
+        const sellerShare=Math.min(100,Math.max(0,Number(x.sellerShare)||0))/100,ceiling=Math.max(0,Number(x.ceiling)||0);
+        const incentiveFee=fee+(target-actual)*sellerShare;
+        const cpif=actual+incentiveFee;
+        const fpif=Math.min(cpif,ceiling);
+        return {cpif,fpif,fee:incentiveFee,sellerProfitCpif:cpif-actual,sellerProfitFpif:fpif-actual,buyerShare:1-sellerShare};
+      },
       evmResult(){
         const x=this.evmValues, pv=Number(x.pv)||0,ev=Number(x.ev)||0,ac=Number(x.ac)||0,bac=Number(x.bac)||0;
         const cpi=ac>0?ev/ac:null,spi=pv>0?ev/pv:null;
@@ -165,10 +193,15 @@
       tickExam(){this.now=Date.now();if(this.examActive){this.remainingSeconds=Math.max(0,Math.ceil((this.examActive.startedAt+this.examActive.durationSeconds*1000-this.now)/1000));if(this.remainingSeconds===0)this.finishExam()}},
       formatTime(n){n=Math.max(0,Math.floor(n||0));return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`},
       finishExam(){if(!this.examActive)return;const xs=this.examQuestionObjects;if(!xs.length){this.examActive=null;return;}const picks=this.examActive.picks;const correct=xs.filter(q=>picks[q.id]===q.answer).length;const used=Math.min(this.examActive.durationSeconds,Math.round((Date.now()-this.examActive.startedAt)/1000));const record={id:Date.now(),finishedAt:new Date().toISOString(),score:Math.round(correct/xs.length*100),correct,total:xs.length,usedSeconds:used,items:xs.map(q=>({id:q.id,title:q.title,selected:picks[q.id]||'',answer:q.answer,correct:picks[q.id]===q.answer,explanation:q.explanation||''}))};for(const item of record.items){if(!item.correct&&!this.state.wrongIds.includes(item.id))this.state.wrongIds.push(item.id)}this.state.exams.push({id:record.id,finishedAt:record.finishedAt,score:record.score,correct:record.correct,total:record.total});this.recordActivity();this.examActive=null;this.lastExamReport=record;this.notify('交卷完成，成绩已保存')},
+      selectEssayPrompt(prompt){
+        if(this.state.essayDraft.title && this.state.essayDraft.title!==prompt.title && this.state.essayDraft.body && !confirm('更换论文题目不会清空正文，但会修改草稿标题。是否继续？'))return;
+        this.selectedEssayPromptId=prompt.id;this.state.essayDraft.title=prompt.title;
+        this.notify('已选择论文训练题目：第'+prompt.chapter+'章');
+      },
       downloadText(name,text){const blob=new Blob([text||''],{type:'text/plain;charset=utf-8'});downloadBlob(name+'-'+new Date().toLocaleDateString('sv-SE')+'.txt',blob)},
       exportProgress(){saveJSON('高项学习记录-'+new Date().toLocaleDateString('sv-SE')+'.json',{app:'soft-exam-study',version:1,exportedAt:new Date().toISOString(),data:this.state})},
-      downloadTemplate(){saveJSON('第13章-导入模板.json',{chapterId:13,title:'资源管理',sections:[{id:'13.1',title:'第一节示例',children:[{id:'13.1.1',title:'知识点示例',page:1}]}],notes:{'13.1.1':{lead:'请替换成整理后的讲义内容',page:1,blocks:[{title:'基础概念',type:'concept',items:[['知识点名称','知识点解释']]}],tip:'速记口诀'}} ,questions:[{id:'q9-01',number:1,chapterId:9,sectionId:'13.1.1',title:'示例题目（请选择正确答案）',options:['选项A','选项B','选项C','选项D'],answer:'A',explanation:'示例解析',sourceLabel:'自编示例',sourcePage:1}]})},
-      validateImported(obj){const id=Number(obj?.chapterId);if(!Number.isInteger(id)||id<13||id>24)throw Error('chapterId 必须是 13–24 的整数（第1–12章已内置）');if(!Array.isArray(obj.sections))throw Error('缺少 sections 数组');const expected=this.EXAM_CHAPTERS.find(c=>c.id===id);if(obj.title&&obj.title!==expected.name)throw Error('章节标题和教材目录不一致：应为'+expected.name);let ids=new Set();for(const s of obj.sections){if(!s.id||!Array.isArray(s.children))throw Error('每节必须有 id 和 children 数组');for(const t of s.children){if(!t.id||!t.title||ids.has(t.id))throw Error('知识小节缺少 id/title 或编号重复');ids.add(t.id)}}if(obj.questions&&!Array.isArray(obj.questions))throw Error('questions 必须是数组');const qids=new Set();for(const q of obj.questions||[]){if(!q.id||!q.title||!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer)||qids.has(q.id))throw Error('题目格式无效：需要 id/title/options[4]/answer');if(!ids.has(q.sectionId))throw Error('题目 '+q.id+' 的 sectionId 未出现在章节目录');qids.add(q.id)}return{id,title:expected.name,sections:obj.sections,notes:obj.notes&&typeof obj.notes==='object'?obj.notes:{},questions:(obj.questions||[]).map((q,i)=>({...q,chapterId:id,number:q.number||i+1}))}},
+      downloadTemplate(){saveJSON('第17章-导入模板.json',{chapterId:17,title:'项目干系人管理',sections:[{id:'17.1',title:'第一节示例',children:[{id:'17.1.1',title:'知识点示例',page:1}]}],notes:{'17.1.1':{lead:'请替换成整理后的讲义内容',page:1,blocks:[{title:'基础概念',type:'concept',items:[['知识点名称','知识点解释']]}],tip:'速记口诀'}} ,questions:[{id:'q9-01',number:1,chapterId:9,sectionId:'17.1.1',title:'示例题目（请选择正确答案）',options:['选项A','选项B','选项C','选项D'],answer:'A',explanation:'示例解析',sourceLabel:'自编示例',sourcePage:1}]})},
+      validateImported(obj){const id=Number(obj?.chapterId);if(!Number.isInteger(id)||id<17||id>24)throw Error('chapterId 必须是 17–24 的整数（第1–16章已内置）');if(!Array.isArray(obj.sections))throw Error('缺少 sections 数组');const expected=this.EXAM_CHAPTERS.find(c=>c.id===id);if(obj.title&&obj.title!==expected.name)throw Error('章节标题和教材目录不一致：应为'+expected.name);let ids=new Set();for(const s of obj.sections){if(!s.id||!Array.isArray(s.children))throw Error('每节必须有 id 和 children 数组');for(const t of s.children){if(!t.id||!t.title||ids.has(t.id))throw Error('知识小节缺少 id/title 或编号重复');ids.add(t.id)}}if(obj.questions&&!Array.isArray(obj.questions))throw Error('questions 必须是数组');const qids=new Set();for(const q of obj.questions||[]){if(!q.id||!q.title||!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer)||qids.has(q.id))throw Error('题目格式无效：需要 id/title/options[4]/answer');if(!ids.has(q.sectionId))throw Error('题目 '+q.id+' 的 sectionId 未出现在章节目录');qids.add(q.id)}return{id,title:expected.name,sections:obj.sections,notes:obj.notes&&typeof obj.notes==='object'?obj.notes:{},questions:(obj.questions||[]).map((q,i)=>({...q,chapterId:id,number:q.number||i+1}))}},
       importDataFile(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);const x=this.validateImported(obj);this.state.importedChapters[x.id]={title:x.title,sections:x.sections,notes:x.notes,questions:x.questions};this.importError=false;this.importMessage=`已导入第 ${x.id} 章「${x.title}」：${x.sections.length} 个大节、${x.questions.length} 道练习题。`;this.notify('章节导入成功')}catch(err){this.importError=true;this.importMessage='导入失败：'+err.message}};reader.readAsText(file);e.target.value=''},
       importProgress(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);if(obj.app!=='soft-exam-study'||!obj.data||!Array.isArray(obj.data.mastered))throw Error('不是有效的高项学习记录备份');if(!confirm('导入将替换当前学习记录。是否继续？'))return;this.state=Object.assign(EMPTY(),obj.data);this.state.essayDraft=Object.assign({title:'',body:''},this.state.essayDraft);this.state.caseDraft=Object.assign({title:'',material:'',answer:''},this.state.caseDraft);this.notify('学习记录恢复成功')}catch(err){this.notify('导入失败：'+err.message)}};reader.readAsText(file);e.target.value=''},
       clearProgress(){if(!confirm('确定清空全部答题、错题、笔记及导入章节吗？此操作不可撤销，建议先导出备份。'))return;this.state=EMPTY();this.examActive=null;this.lastExamReport=null;this.notify('已清空学习记录')}

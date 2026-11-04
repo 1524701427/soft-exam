@@ -76,3 +76,16 @@
 .dark-mode .calc-lab .calc-result,.dark-mode .evm-input-grid label,.dark-mode .calc-tiles>div,.dark-mode .network-diagram-scroll,.dark-mode .calc-table th{background:#203250;border-color:#3a4d6a}.dark-mode .network-inputs label{background:#1b2b45;border-color:#354765}.dark-mode .evm-bar-row>div{background:#354765}.dark-mode .calc-heading p{color:#a7b5ce}.dark-mode .calc-tiles small,.dark-mode .calc-tiles span,.dark-mode .calc-hint{color:#a9b8d0}.dark-mode .calc-result strong{color:#e0eaff}.dark-mode .calc-table .critical-row{background:#493828}.dark-mode .calc-table td{border-color:#354765}.dark-mode .forecast-control select{background:#1e304a;color:#e1eafa;border-color:#425672}
 @media(max-width:800px){.calc-lab{padding:18px 16px}.calc-heading{flex-direction:column;gap:15px}.calc-result{width:100%}.evm-input-grid,.calc-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.network-chart{min-width:710px}}
 @media(max-width:420px){.evm-input-grid,.calc-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.evm-bar-row{grid-template-columns:64px minmax(0,1fr) 58px;gap:7px}.calc-tiles strong{font-size:18px}.network-inputs label{min-width:110px}}
+
+/* v1.8 论文题目导航 */
+.essay-source-panel{margin:0 0 22px;padding:23px;}
+.essay-prompt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:17px 0;}
+.essay-prompt-card{display:flex;flex-direction:column;gap:7px;min-height:110px;text-align:left;border:1px solid var(--line,#dbe3ec);background:var(--surface,#fff);border-radius:15px;padding:14px 16px;color:var(--text,#23334e);cursor:pointer;}
+.essay-prompt-card:hover,.essay-prompt-card.active{border-color:#6698cf;background:var(--surface-subtle,#f5f9ff);}
+.essay-prompt-card span{font-size:12px;color:#667f99;font-weight:700;}
+.essay-prompt-card strong{font-size:15px;line-height:1.5;}
+.essay-prompt-card small{font-size:12px;color:var(--muted,#7b879b);}
+.essay-prompt-points{font-size:14px;color:var(--text,#2a3b52);line-height:1.8;}
+.essay-prompt-points ul{margin:6px 0 0 20px;padding:0;}
+.dark-mode .essay-prompt-card{background:#202940;color:#e9edfc;border-color:#425273;}
+.dark-mode .essay-prompt-card.active{background:#2e405b;border-color:#8fb9ff;}
