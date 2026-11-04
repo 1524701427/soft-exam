@@ -8,7 +8,7 @@
 <title>高项研习社 · 信息系统项目管理师学习平台</title>
 <link rel="stylesheet" href="./assets/style.css?v=1.9" />
 <link rel="stylesheet" href="./assets/visuals.css?v=2.2" />
-<link rel="stylesheet" href="./assets/visual-modes.css?v=2.2" /><link rel="stylesheet" href="./assets/reading-v22.css?v=2.2" /><link rel="stylesheet" href="./assets/nav-six.css?v=1.0" />
+<link rel="stylesheet" href="./assets/visual-modes.css?v=2.2" /><link rel="stylesheet" href="./assets/reading-v22.css?v=2.2" /><link rel="stylesheet" href="./assets/nav-six.css?v=1.1" /><link rel="stylesheet" href="./assets/module-embedded.css?v=1.0" />
 </head>
 <body>
 <div id="app" v-cloak :class="{'dark-mode':state.settings.dark}">
@@ -28,11 +28,11 @@
           </div>
         </details>
       </div>
-      <a class="site-six-primary" href="./calculations/"><span class="six-side-symbol">∑</span><span>计算专题</span><span class="six-side-arrow">›</span></a>
-      <a class="site-six-primary" href="./cases/" :class="{'is-current':activeView==='cases'}"><span class="six-side-symbol">✓</span><span>案例分析</span><span class="six-side-arrow">›</span></a>
-      <div class="site-six-sub" v-if="activeView==='cases'">
-        <a href="./cases/">找错改错专题</a>
-        <button class="is-current" @click="navigate('cases')">案例作答训练</button>
+      <button class="site-six-primary" :class="{'is-current':activeView==='calculations'}" @click="navigate('calculations')"><span class="six-side-symbol">∑</span><span>计算专题</span><span class="six-side-arrow">›</span></button>
+      <button class="site-six-primary" :class="{'is-current':['casebook','cases'].includes(activeView)}" @click="navigate('casebook')"><span class="six-side-symbol">✓</span><span>案例分析</span><span class="six-side-arrow">›</span></button>
+      <div class="site-six-sub" v-if="['casebook','cases'].includes(activeView)">
+        <button :class="{'is-current':activeView==='casebook'}" @click="navigate('casebook')">找错改错专题</button>
+        <button :class="{'is-current':activeView==='cases'}" @click="navigate('cases')">案例作答训练</button>
       </div>
       <button class="site-six-primary" :class="{'is-current':activeView==='essays'}" @click="navigate('essays')"><span class="six-side-symbol">✎</span><span>论文</span><span class="six-side-arrow">›</span></button>
       <div class="site-six-sub" v-if="activeView==='essays'">
@@ -54,14 +54,20 @@
   <div class="app-shell">
     <header class="topbar"><button class="mobile-toggle" @click="sidebarOpen=true" v-html="icon('menu')"></button><div class="breadcrumbs"><span>备考中心</span><span class="bread-sep">/</span><strong>{{viewTitle}}</strong></div><div class="top-right"><div class="global-search"><span v-html="icon('search')"></span><input v-model="searchQuery" @keydown.enter="performSearch" placeholder="搜索章节、知识点、题目..." /><kbd @click="performSearch">↵</kbd></div><button class="top-icon-btn" title="切换深色模式" @click="state.settings.dark=!state.settings.dark" v-html="icon(state.settings.dark?'sun':'moon')"></button><span class="top-avatar">学</span></div></header>
     <nav class="study-six-nav" aria-label="六大备考模块">
- <a class="study-six-link" href="./index.html#/home" :class="{'is-current':['home','chapters','knowledge','maps','search','settings'].includes(activeView)}"><span class="six-nav-symbol">▤</span>综合知识</a>
- <a class="study-six-link" href="./calculations/" ><span class="six-nav-symbol">∑</span>计算专题</a>
- <a class="study-six-link" href="./cases/" :class="{'is-current':activeView==='cases'}"><span class="six-nav-symbol">✓</span>案例分析</a>
- <a class="study-six-link" href="./index.html#/essays" :class="{'is-current':activeView==='essays'}"><span class="six-nav-symbol">✎</span>论文</a>
- <a class="study-six-link" href="./index.html#/practice" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam'].includes(activeView)}"><span class="six-nav-symbol">▦</span>题库</a>
- <a class="study-six-link" href="./index.html#/progress" :class="{'is-current':activeView==='progress'}"><span class="six-nav-symbol">◴</span>学习统计</a>
+ <a class="study-six-link" href="#/home" @click.prevent="navigate('home')" :class="{'is-current':['home','chapters','knowledge','maps','search','settings'].includes(activeView)}"><span class="six-nav-symbol">▤</span>综合知识</a>
+ <a class="study-six-link" href="#/calculations" :class="{'is-current':activeView==='calculations'}" @click.prevent="navigate('calculations')"><span class="six-nav-symbol">∑</span>计算专题</a>
+ <a class="study-six-link" href="#/casebook" :class="{'is-current':['casebook','cases'].includes(activeView)}" @click.prevent="navigate('casebook')"><span class="six-nav-symbol">✓</span>案例分析</a>
+ <a class="study-six-link" href="#/essays" @click.prevent="navigate('essays')" :class="{'is-current':activeView==='essays'}"><span class="six-nav-symbol">✎</span>论文</a>
+ <a class="study-six-link" href="#/practice" @click.prevent="navigate('practice')" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam'].includes(activeView)}"><span class="six-nav-symbol">▦</span>题库</a>
+ <a class="study-six-link" href="#/progress" @click.prevent="navigate('progress')" :class="{'is-current':activeView==='progress'}"><span class="six-nav-symbol">◴</span>学习统计</a>
 </nav>
-    <main class="main-content">
+    <main class="main-content" :class="{'has-embedded-module':['calculations','casebook'].includes(activeView)}">
+      <section v-if="loadedModules.calculations" v-show="activeView==='calculations'" class="embedded-module" aria-label="计算专题">
+        <iframe ref="calcFrame" title="计算专题交互课程" src="./calculations/index.html?embed=1" :style="{height:embeddedHeights.calculations+'px'}" class="module-frame" @load="onModuleLoad('calculations')" loading="eager"></iframe>
+      </section>
+      <section v-if="loadedModules.casebook" v-show="activeView==='casebook'" class="embedded-module" aria-label="案例分析找错专题">
+        <iframe ref="caseFrame" title="案例分析找错改错专题" src="./cases/index.html?embed=1" :style="{height:embeddedHeights.casebook+'px'}" class="module-frame" @load="onModuleLoad('casebook')" loading="eager"></iframe>
+      </section>
       <!-- 首页 -->
       <template v-if="activeView==='home'">
         <div class="page-heading"><div><div class="eyebrow"><span class="tiny-dot"></span> 2026 软考高级 · 备考空间</div><h1>每一个知识点，都算数。<span class="wave">✦</span></h1><p>把繁杂的教材变成清晰的学习路径，从理解考点到熟练答题。</p></div><div class="date-pill"><span v-html="icon('calendar')"></span>{{todayLabel}}</div></div>
@@ -179,5 +185,5 @@
   <div v-if="toast" class="toast" role="status">{{toast}}</div>
 </div>
 <script src="./assets/vue.global.prod.js"></script><script src="./data/catalog.js"></script><script src="./data/content.js"></script><script src="./data/chapter01.js"></script><script src="./data/chapter02.js"></script><script src="./data/chapter03.js"></script><script src="./data/chapter04.js"></script><script src="./data/chapter05.js"></script><script src="./data/chapter06.js"></script><script src="./data/chapter07.js"></script><script src="./data/chapter08.js"></script><script src="./data/chapter09.js"></script><script src="./data/chapter10.js"></script><script src="./data/chapter11.js"></script><script src="./data/chapter12.js"></script><script src="./data/chapter13.js"></script><script src="./data/chapter14.js"></script><script src="./data/chapter15.js"></script><script src="./data/chapter16.js"></script><script src="./data/chapter17.js"></script><script src="./data/chapter18.js"></script><script src="./data/chapter19.js"></script><script src="./data/chapter20.js"></script><script src="./data/chapter21.js?v=2.0"></script><script src="./data/chapter22.js?v=2.0"></script><script src="./data/chapter23.js?v=2.0"></script><script src="./data/chapter24.js?v=2.0"></script><script src="./assets/ch21-math.js?v=2.0"></script><script src="./data/visuals.js?v=2.0"></script><script src="./data/visual-modes.js?v=2.2"></script>
-<script src="./assets/visuals-ui.js?v=2.2"></script><script src="./assets/app.js?v=2.2"></script>
+<script src="./assets/visuals-ui.js?v=2.2"></script><script src="./assets/app.js?v=2.3"></script>
 </body></html>

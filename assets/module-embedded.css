@@ -1,0 +1,38 @@
+/* 无刷新六模块工作台；独立专题在同一主站内显示，避免重复导航。 */
+#app .main-content.has-embedded-module{width:100%;max-width:1510px;padding:17px clamp(10px,2.3vw,34px) 35px}
+#app .embedded-module{background:transparent;width:100%;min-width:0}
+#app .module-frame{display:block;width:100%;border:0;background:transparent;min-height:600px;overflow:hidden;max-width:100%;scrollbar-width:none}
+#app .module-frame:focus-visible{outline:2px solid #49b79e}
+html.is-embedded .study-six-nav{display:none!important}
+html.is-embedded .site-header,html.is-embedded .footer{display:none!important}
+html.is-embedded .container{max-width:none!important;width:100%;padding:4px 3px 24px!important;margin:0 auto!important}
+html.is-embedded body{background:transparent!important}
+html.is-embedded .hero{margin-top:9px}
+html.is-embedded .calc-embedded-local-nav{display:flex}
+html:not(.is-embedded) .calc-embedded-local-nav{display:none!important}
+.calc-embedded-local-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 18px;padding:10px 12px;border:1px solid #e2eaf0;border-radius:12px;background:#fff}
+.calc-embedded-local-nav button{background:#f3f7fa;color:#61758b;border:1px solid transparent;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:760}
+.calc-embedded-local-nav button.selected{background:#e7f4ef;color:#117d6a;border-color:#b3e0d0}
+.calc-embedded-local-nav button:hover{background:#d9eee7;color:#0f735f}
+html.is-embedded .layout{display:block!important;min-height:0!important}
+html.is-embedded .side{display:none!important}
+html.is-embedded .topbar{display:none!important}
+html.is-embedded .workspace{width:100%;min-width:0}
+html.is-embedded .main{width:100%;max-width:none!important;padding:4px 3px 35px!important;margin:0!important}
+html.is-embedded .mobile-topic{display:block!important;width:min(100%,340px);margin-bottom:15px}
+html.is-embedded .mobile-topic select{min-width:0;width:100%;background:#fff}
+html:not(.is-embedded) .case-embedded-local-nav{display:none!important}
+.case-embedded-local-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid #e2eaf0;background:#fff;margin:0 0 15px}
+.case-embedded-local-nav button{border:1px solid transparent;border-radius:8px;padding:8px 15px;background:#f4f7f9;color:#687c92;font-size:12px;font-weight:760}
+.case-embedded-local-nav button.selected{background:#e8f5f0;color:#117b68;border-color:#bde3d3}
+.case-embedded-local-nav button:hover{background:#e0f2e9;color:#187a65}
+html.is-embedded .hero{border-radius:16px}
+html.is-embedded .main .domain-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:960px){html.is-embedded .main .domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){
+  #app .main-content.has-embedded-module{padding:11px 10px 25px}
+  .calc-embedded-local-nav,.case-embedded-local-nav{gap:5px;padding:8px}
+  .calc-embedded-local-nav button,.case-embedded-local-nav button{padding:8px 10px}
+  html.is-embedded .main .domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:420px){html.is-embedded .main .domain-grid{grid-template-columns:1fr}}
