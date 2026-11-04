@@ -48,3 +48,34 @@
 - SDN 的 NBI、SBI、A-CPI、D-CPI、CPI 是否存在。
 
 这一程序能阻止常见的数据条目误删，**不能替代人工核对概念准确性和教材覆盖度**。
+
+
+## 第二轮：从已有题库反查英文缩写（2026-11-04）
+
+把 24 章配套题目的题干/答案解析中的英文缩写与对应小节的笔记逐项比对。对有依据的遗漏采用**追加知识块**的方式处理；不根据错误选项或未经验证的猜测补写。连同最初补充的 SDN A-CPI / D-CPI，累计在九章的 12 个不同知识小节新增 13 个知识块，已有知识内容保持原样。
+
+| 章节 | 反查发现的遗漏 | 追加位置 |
+|---|---|---|
+| 2 信息技术发展 | NBI/SBI/A-CPI/D-CPI/CPI，以及 5G 的 OFDMA、MIMO | 2.1.2 |
+| 12 质量管理 | COQ（质量成本）、PDCA（持续改进） | 12.3.2、12.4.1 |
+| 13 资源管理 | RAM、RACI、OBS 等责任矩阵与组织分解术语 | 13.3.1 |
+| 15 风险管理 | SWOT 的优势、劣势、机会、威胁四象限 | 15.4.1 |
+| 16 采购管理 | TOR 工作大纲、ADR 替代争议解决 | 16.3.2、16.5.1 |
+| 18 项目绩效域 | SMART、ROI、NPV、WIP 的作用与区别 | 18.7.1 |
+| 19 配置与变更管理 | CCB 与配置管理员的职责区别 | 19.1.1 |
+| 22 组织通用治理 | SWOT 战略环境分析、KPI 转型指标 | 22.1.1、22.3.1 |
+| 24 法律法规与标准 | GB/T 44109-2024、GB/T 22239-2019 | 24.2.1 |
+
+此次追加只针对有题库依据的具体术语，标注“由配套题库反查”；ONF、PMI、ASQ 和中国国家标准平台查证的内容，另给出可点开的来源链接。
+
+参考资料：
+- ONF TR-521 SDN Architecture Issue 1.1：https://opennetworking.org/wp-content/uploads/2014/10/TR-521_SDN_Architecture_issue_1.1.pdf
+- PMI 术语词典：https://www.pmi.org/standards/lexicon
+- PMI 风险识别：https://www.pmi.org/learning/library/risk-identification-life-cycle-tools-7784
+- ASQ PDCA：https://asq.org/quality-resources/pdca-cycle
+- 国家标准 GB/T 44109-2024：https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=D3B354CD2E0ECF1821C1D8B4204BEE7C
+- 国家标准 GB/T 22239-2019：https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=BAFB47E8874764186BDB7865E8344DAF
+
+### 核对限制
+
+444 个知识小节都具备笔记条目，且 800 道题保留，**不意味着每个知识小节已经覆盖教材的全部内容**。第 9—24 章中许多小节仍是摘要型笔记。本次没有可逐页对照的 24 章完整原版教材和课件，因此不宣称已经完成全文逐条核对；后续获得原始资料时，须按“原文—网页笔记—差异—来源页码”继续补全。

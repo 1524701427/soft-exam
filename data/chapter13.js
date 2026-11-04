@@ -495,6 +495,46 @@ window.EXAM_CH13 = {
               "角色职责、资源识别与获取、认可计划、培训、团队建设及资源控制。"
             ]
           ]
+        },
+        {
+          "title": "资源角色与责任矩阵缩写（由配套题库反查）",
+          "type": "concept",
+          "items": [
+            [
+              "RAM — Responsibility Assignment Matrix",
+              "责任分配矩阵：展示工作包/活动与团队成员之间的责任关系；RACI 是 RAM 的一种具体形式。"
+            ],
+            [
+              "R — Responsible",
+              "执行者：负责开展并完成具体工作，可以由多人分担执行。"
+            ],
+            [
+              "A — Accountable",
+              "最终责任人：对结果负责并最终确认；通常每项工作指定一个最终负责者。"
+            ],
+            [
+              "C — Consulted",
+              "被咨询者：工作实施/决策前提供专业意见，侧重双向沟通。"
+            ],
+            [
+              "I — Informed",
+              "被告知者：获悉进度或结果，主要是单向信息同步。"
+            ],
+            [
+              "OBS — Organizational Breakdown Structure",
+              "组织分解结构：按组织/部门划分层级，便于识别各组织单元的责任；与按资源类别的 RBS 和按工作分解的 WBS 不同。"
+            ]
+          ],
+          "sources": [
+            {
+              "label": "PMI RACI 术语词典",
+              "url": "https://www.pmi.org/standards/lexicon"
+            },
+            {
+              "label": "PMI RAM/RACI 责任管理",
+              "url": "https://www.pmi.org/learning/library/project-success-core-values-key-accountabilities-6262"
+            }
+          ]
         }
       ],
       "tip": "先记概念，再辨析适用条件与输出。"

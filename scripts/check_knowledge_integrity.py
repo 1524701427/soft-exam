@@ -43,7 +43,21 @@ BASELINE = {
     23: (22, 20, 22, 78),
     24: (21, 18, 21, 68),
 }
-REQUIRED_SDN_ACRONYMS = ("NBI", "SBI", "A-CPI", "D-CPI", "CPI")
+
+
+# Spot-check critical textbook and question-bank terms by topic. This makes
+# glossary supplements harder to accidentally erase when editing layouts.
+REQUIRED_BY_TOPIC = {
+    2: {"2.1.2": ("NBI", "A-CPI", "SBI", "D-CPI", "CPI", "OFDMA", "MIMO")},
+    12: {"12.3.2": ("COQ",), "12.4.1": ("PDCA",)},
+    13: {"13.3.1": ("RAM", "RACI", "OBS")},
+    15: {"15.4.1": ("SWOT",)},
+    16: {"16.3.2": ("TOR",), "16.5.1": ("ADR",)},
+    18: {"18.7.1": ("SMART", "ROI", "NPV", "WIP")},
+    19: {"19.1.1": ("CCB",)},
+    22: {"22.1.1": ("SWOT",), "22.3.1": ("KPI",)},
+    24: {"24.2.1": ("GB/T 44109-2024", "GB/T 22239-2019")},
+}
 
 errors = []
 print("Knowledge integrity check: 24 chapters, page content and question bank")
@@ -87,11 +101,11 @@ for n, (min_topics, min_questions, min_blocks, min_rows) in BASELINE.items():
         errors.append(f"Chapter {n}: note detail count decreased: blocks={len(blocks)}, rows={rows}")
     if any(not note.get("blocks") for note in notes.values()):
         errors.append(f"Chapter {n}: empty knowledge block(s)")
-    if n == 2:
-        sdn_text = json.dumps(notes.get("2.1.2", {}), ensure_ascii=False)
-        for keyword in REQUIRED_SDN_ACRONYMS:
-            if keyword not in sdn_text:
-                errors.append(f"Chapter 2 SDN: acronym {keyword} was removed")
+    for topic_id, terms in REQUIRED_BY_TOPIC.get(n, {}).items():
+        content = json.dumps(notes.get(topic_id, {}), ensure_ascii=False)
+        for term in terms:
+            if term not in content:
+                errors.append(f"Chapter {n}, topic {topic_id}: essential term {term} was removed")
     total_topics += len(topics)
     total_questions += len(questions)
     print(f"{n:02d}  topics={len(topics):>2} notes={len(notes):>2} questions={len(questions):>2} blocks={len(blocks):>2} rows={rows:>3}")

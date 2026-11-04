@@ -235,6 +235,28 @@ window.EXAM_CH2 = {
           "title": "答题区分",
           "type": "example",
           "text": "网络协议题先判断层次；SDN 记“数据转发、控制决策、应用提出需求”；5G 记“宽带、低时延、海量连接”。"
+        },
+        {
+          "title": "5G 技术缩写与判断题补充（由配套题库反查）",
+          "type": "concept",
+          "items": [
+            [
+              "OFDMA",
+              "Orthogonal Frequency Division Multiple Access，正交频分多址：用正交子载波组织多用户的无线资源；5G 技术基础之一。"
+            ],
+            [
+              "MIMO",
+              "Multiple-Input Multiple-Output，多输入多输出：利用多天线提升容量、可靠性或频谱效率；5G 常结合大规模 MIMO。"
+            ],
+            [
+              "低时延与可靠性",
+              "5G 可采用短时隙/短帧结构、快速反馈与重传等机制；不可误记为“5G 仅使用高频段”。"
+            ],
+            [
+              "题库对应考点",
+              "eMBB 强调大带宽；uRLLC 强调低时延高可靠；mMTC 强调海量连接；OFDMA 与 MIMO 是相关支撑技术而不是三种场景本身。"
+            ]
+          ]
         }
       ],
       "tip": "七层物-链-网-传-会-表-应；SDN：南数北应东西控。"

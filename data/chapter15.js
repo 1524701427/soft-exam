@@ -432,6 +432,38 @@ window.EXAM_CH15 = {
               "概述整体项目风险和关键单个风险。"
             ]
           ]
+        },
+        {
+          "title": "SWOT 风险识别（由配套题库反查）",
+          "type": "concept",
+          "items": [
+            [
+              "S — Strengths",
+              "优势：项目或组织内部有利条件，例如技术能力、成熟经验和可用资源。"
+            ],
+            [
+              "W — Weaknesses",
+              "劣势：内部限制或不足，例如关键岗位能力短板、流程缺陷。"
+            ],
+            [
+              "O — Opportunities",
+              "机会：外部环境可能带来的有利影响，例如市场需求增长、政策支持。"
+            ],
+            [
+              "T — Threats",
+              "威胁：外部环境中的不利因素，例如竞争变化、供应中断。"
+            ],
+            [
+              "风险识别应用",
+              "将内部优劣势与外部机会/威胁结合，分析可能的风险来源；SWOT 不等于风险概率—影响矩阵。"
+            ]
+          ],
+          "sources": [
+            {
+              "label": "PMI 风险识别与 SWOT",
+              "url": "https://www.pmi.org/learning/library/risk-identification-life-cycle-tools-7784"
+            }
+          ]
         }
       ],
       "tip": "先记概念，再辨析适用条件与输出。"
