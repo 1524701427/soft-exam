@@ -68,9 +68,9 @@
       practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
       pastYear:'全部',examCount:20,examActive:(()=>{try{return JSON.parse(localStorage.getItem(EXAM_STORE)||'null')}catch(e){return null}})(),examIndex:0,remainingSeconds:0,now:Date.now(),lastExamReport:null,
       importMessage:'',importError:false,toast:'',mapNames:['全章思维导图','信息与信息系统','信息化与新基建','工业互联网与车联网','现代化创新发展','数字经济与元宇宙','数字政府与数字生态','数字化转型与智慧转移'],
-      navMain:[{id:'home',label:'学习总览',icon:'home'},{id:'chapters',label:'章节管理',icon:'layers'},{id:'knowledge',label:'知识点学习',icon:'book'},{id:'maps',label:'知识图解',icon:'map'},{id:'practice',label:'章节练习',icon:'clipboard'},{id:'exam',label:'模拟考试',icon:'timer'}],
+      navMain:[{id:'home',label:'学习总览',icon:'home'},{id:'chapters',label:'章节管理',icon:'layers'},{id:'knowledge',label:'知识点学习',icon:'book'},{id:'practice',label:'章节练习',icon:'clipboard'},{id:'exam',label:'模拟考试',icon:'timer'}],
       navResources:[{id:'pastpapers',label:'历年真题',icon:'file'},{id:'wrong',label:'错题本',icon:'alert'},{id:'favorites',label:'我的收藏',icon:'star'},{id:'cases',label:'案例分析',icon:'file'},{id:'essays',label:'论文训练',icon:'pen'},{id:'progress',label:'学习统计',icon:'chart'}],
-      quickActions:[{view:'knowledge',name:'知识点学习',desc:'全24章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'800 道配套与自测题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'426 张原创图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
+      quickActions:[{view:'knowledge',name:'知识点学习',desc:'全24章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'800 道配套与自测题',icon:'clipboard',tone:'peach'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
     }},
     computed:{
       viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
@@ -170,6 +170,15 @@
       visualTypeOptions(){const vs=this.currentChapterVisuals;const counts=new Map();vs.forEach(v=>{const key=v.kind;counts.set(key,(counts.get(key)||0)+1)});return [{key:'all',label:'全部图解',count:vs.length},...Array.from(counts,([key,count])=>({key,label:window.EXAM_VISUAL_TYPE_LABELS?.[key]||key,count}))]},
       filteredChapterVisuals(){return this.currentChapterVisuals.filter(v=>this.visualTypeFilter==='all'||v.kind===this.visualTypeFilter)},
       topicVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic)},
+      lessonVisuals(){
+        // 严格按知识点 ID 归属图解；不再用邻近小节的无关图填充。
+        return this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic);
+      },
+      activeLessonVisual(){return this.lessonVisuals.find(v=>v.id===this.visualFocusId)||this.lessonVisuals[0]||null},
+      lessonVisualIsDirect(){return this.activeLessonVisual?.topicId===this.selectedTopic},
+      chapterLearnedCount(){return this.currentChapterTopicList.filter(t=>this.state.mastered.includes(t.id)).length},
+      topicPracticeQuestions(){return this.allQuestions.filter(q=>Number(q.chapterId)===this.selectedChapter&&q.sectionId===this.selectedTopic).slice(0,3)},
+
       sectionVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId?.split('.').slice(0,2).join('.')===this.selectedTopic.split('.').slice(0,2).join('.'))},
       visibleVisualDiagram(){return this.filteredChapterVisuals.find(v=>v.id===this.visualFocusId)||this.filteredChapterVisuals[0]||null},
       visualChapterStats(){return this.allChapterData.map(d=>{const topics=(d.sections||[]).flatMap(x=>x.children||[]),qs=d.questions||[],answered=qs.filter(q=>this.state.answers[q.id]),mastered=topics.filter(t=>this.state.mastered.includes(t.id)).length,correct=answered.filter(q=>this.state.answers[q.id]?.correct).length;return {id:d.id,name:d.title,topics:topics.length,mastered,mastery:topics.length?Math.round(mastered/topics.length*100):0,answered:answered.length,accuracy:answered.length?Math.round(correct/answered.length*100):0}})},
@@ -231,15 +240,21 @@
       openSavedKnowledge(id){if(id.startsWith('topic:'))this.openKnowledge(id.slice(6));else{const p=this.allHighlights.find(x=>x.id===id);if(!p)return;const data=this.state.importedChapters[Number(p.id.split('-')[0].slice(1))]||BUILTINS[Number(p.id.split('-')[0].slice(1))];const sec=data?.sections?.find(x=>x.id===p.sectionId);if(!sec)return;this.openKnowledge(sec.children[0].id);this.readingTab='highlights'}},
       goToQuestion(q){this.selectedChapter=q.chapterId;this.practiceSectionFilter='all';this.navigate('practice');this.drillIndex=Math.max(0,this.filteredQuestions.findIndex(x=>x.id===q.id))},
       topicTitle(id){return this.allTopics.find(x=>x.id===id)?.title||''},
-      navigate(view){this.activeView=view;this.sidebarOpen=false;this.lastExamReport=view==='exam'?this.lastExamReport:null;
+      navigate(view){if(view==='maps')view='knowledge';this.activeView=view;this.sidebarOpen=false;this.lastExamReport=view==='exam'?this.lastExamReport:null;
         if(view==='wrong')this.practiceFilter='wrong';else if(view==='favorites')this.practiceFilter='favorite';else if(view==='practice')this.practiceFilter='all';
         if(['wrong','favorites','practice'].includes(view)){this.drillIndex=0;if(view!=='practice')this.practiceSectionFilter='all';}
         window.scrollTo(0,0);if(location.hash!==`#/${view}`)location.hash=`/${view}`},
-      openVisualInMaps(id){const v=this.EXAM_VISUALS.find(x=>x.id===id);if(!v)return;this.selectedChapter=v.chapterId;this.visualTypeFilter='all';this.visualFocusId=v.id;this.navigate('maps')},
+      openVisualInMaps(id){const v=this.EXAM_VISUALS.find(x=>x.id===id);if(!v)return;
+        const n=Number(v.chapterId), data=this.state.importedChapters[n]||BUILTINS[n], topics=(data?.sections||[]).flatMap(s=>s.children||[]);
+        const dest=topics.find(t=>t.id===v.topicId)?.id||topics.find(t=>t.id.startsWith(String(v.topicId||'').split('.').slice(0,2).join('.')+'.'))?.id||topics[0]?.id;
+        if(!dest)return;this.openKnowledge(dest);this.visualFocusId=v.id;
+        this.$nextTick(()=>{const el=document.getElementById('lesson-figure');if(el)el.scrollIntoView({block:'start',behavior:'smooth'})});
+      },
       groupMasteryPercent(group){const chapterNames=new Set(group.chapters||[]);const items=this.allChapterData.filter(d=>chapterNames.has(d.title)).flatMap(d=>d.sections||[]).flatMap(sec=>sec.children||[]);return items.length?Math.round(items.filter(t=>this.state.mastered.includes(t.id)).length/items.length*100):0},
       mathNode(id){return window.ExamMathLab.routeNodes.find(n=>n.id===id);},
       openChapter(id){this.selectedChapter=id;this.practiceSectionFilter='all';this.selectedTopic=this.currentChapterTopicList[0]?.id||'';this.openSectionGroups=this.currentChapterSections.map(s=>s.id);this.readingTab='course';this.navigate('knowledge')},
       openKnowledge(id){this.selectedChapter=Number(id?.split('.')[0])||1;this.selectedTopic=id||'1.1.1';this.openSectionGroups=this.currentChapterSections.map(s=>s.id);this.readingTab='course';this.navigate('knowledge')},
+      selectTopic(id){if(!id)return;this.selectedTopic=id;this.visualFocusId='';this.readingTab='course';this.$nextTick(()=>{const el=document.querySelector('.lesson-area');if(el)window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-94),behavior:'smooth'})})},
       toggleSectionCollapse(id){if(this.openSectionGroups.includes(id))this.openSectionGroups=this.openSectionGroups.filter(x=>x!==id);else this.openSectionGroups.push(id)},
       recordActivity(){const d=new Date().toLocaleDateString('sv-SE');this.state.dailyActivity[d]=(this.state.dailyActivity[d]||0)+1},
       toggleMastery(id){if(this.state.mastered.includes(id)){this.state.mastered=this.state.mastered.filter(x=>x!==id);this.notify('已取消掌握标记')}else{this.state.mastered.push(id);this.recordActivity();this.notify('已标记掌握，继续保持！')}},
@@ -270,7 +285,7 @@
       importProgress(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);if(obj.app!=='soft-exam-study'||!obj.data||!Array.isArray(obj.data.mastered))throw Error('不是有效的高项学习记录备份');if(!confirm('导入将替换当前学习记录。是否继续？'))return;this.state=Object.assign(EMPTY(),obj.data);this.state.essayDraft=Object.assign({title:'',body:''},this.state.essayDraft);this.state.caseDraft=Object.assign({title:'',material:'',answer:''},this.state.caseDraft);this.notify('学习记录恢复成功')}catch(err){this.notify('导入失败：'+err.message)}};reader.readAsText(file);e.target.value=''},
       clearProgress(){if(!confirm('确定清空全部答题、错题、笔记及导入章节吗？此操作不可撤销，建议先导出备份。'))return;this.state=EMPTY();this.examActive=null;this.lastExamReport=null;this.notify('已清空学习记录')}
     },
-    mounted(){const view=(location.hash||'').replace(/^#\//,'');const valid=['home','chapters','knowledge','maps','practice','pastpapers','wrong','favorites','exam','cases','essays','progress','settings','search'];if(valid.includes(view)){this.activeView=view;if(view==='wrong')this.practiceFilter='wrong';if(view==='favorites')this.practiceFilter='favorite'}this._ticker=setInterval(()=>{if(this.examActive)this.tickExam()},1000);if(this.examActive)this.tickExam();window.addEventListener('hashchange',this._hashHandler=()=>{const v=(location.hash||'').replace(/^#\//,'');if(valid.includes(v)&&v!==this.activeView)this.navigate(v)})},
+    mounted(){const view=(location.hash||'').replace(/^#\//,'');const valid=['home','chapters','knowledge','practice','pastpapers','wrong','favorites','exam','cases','essays','progress','settings','search'];if(view==='maps')view='knowledge';if(valid.includes(view)){this.activeView=view;if(view==='wrong')this.practiceFilter='wrong';if(view==='favorites')this.practiceFilter='favorite'}this._ticker=setInterval(()=>{if(this.examActive)this.tickExam()},1000);if(this.examActive)this.tickExam();window.addEventListener('hashchange',this._hashHandler=()=>{const v=(location.hash||'').replace(/^#\//,'');if(v==='maps'){this.navigate('knowledge');return}if(valid.includes(v)&&v!==this.activeView)this.navigate(v)})},
     beforeUnmount(){clearInterval(this._ticker);clearTimeout(this._toastTimer);window.removeEventListener('hashchange',this._hashHandler)}
   });
   app.component('exam-visual',window.ExamVisualComponent);
