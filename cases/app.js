@@ -5,7 +5,7 @@ const all=topics.flatMap(t=>t.cards.map(c=>({...c,groupId:t.id,groupName:t.name,
 const storeKey="gao-xiang-cases-v1";
 let saved={favorites:[],mastered:[],practiceHistory:[]};
 try{saved={...saved,...JSON.parse(localStorage.getItem(storeKey)||"{}")}}catch(_){}
-const state={topic:"all",filter:"all",query:"",caseName:"all",shown:36,view:"library",quizIndex:0,quizReveal:false,quizIds:[],expanded:new Set()};
+const state={topic:"all",filter:"all",query:"",caseName:"all",shown:80,view:"library",quizIndex:0,quizReveal:false,quizIds:[],expanded:new Set()};
 function reportEmbeddedNav(){
  if(document.documentElement.classList.contains('is-embedded')&&window.parent!==window)
  window.parent.postMessage({type:'gao-xiang-embed-nav-state',target:'casebook',view:state.view,topic:state.topic},location.origin);
@@ -21,7 +21,7 @@ const isDone=id=>saved.mastered.includes(id);
 function persist(){localStorage.setItem(storeKey,JSON.stringify(saved))}
 function toggle(key,id){let a=saved[key];saved[key]=a.includes(id)?a.filter(x=>x!==id):[...a,id];persist();renderStats();renderCards();renderTopbar()}
 function setView(view){state.view=view;el("main-library").hidden=view!=="library";el("main-method").hidden=view!=="method";el("main-practice").hidden=view!=="practice";el("main-favorites").hidden=view!=="favorites";document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("selected",b.dataset.view===view));if(view==="favorites")renderFavorites();if(view==="practice")renderQuiz();reportEmbeddedNav();window.scrollTo({top:0,behavior:"smooth"});if(document.documentElement.classList.contains("is-embedded"))window.parent.postMessage({type:"gao-xiang-embed-top"},location.origin)}
-function setTopic(id){state.topic=id;state.caseName="all";state.shown=36;el("topic-select").value=id;document.querySelectorAll("[data-topic]").forEach(x=>x.classList.toggle("selected",x.dataset.topic===id));if(state.view!=="library")setView("library");renderCases();renderCards();renderTopbar();reportEmbeddedNav();}
+function setTopic(id){state.topic=id;state.caseName="all";state.shown=80;el("topic-select").value=id;document.querySelectorAll("[data-topic]").forEach(x=>x.classList.toggle("selected",x.dataset.topic===id));if(state.view!=="library")setView("library");renderCases();renderCards();renderTopbar();reportEmbeddedNav();}
 function renderGroups(){
 const nav=el("topic-nav");nav.innerHTML='<button type="button" data-topic="all" class="group-button selected"><span class="group-dot">✦</span><span>全部领域</span><b>'+all.length+'</b></button>'+topics.map((t,i)=>'<button type="button" class="group-button" data-topic="'+t.id+'"><span class="group-dot">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(t.name)+'</span><b>'+t.cards.length+'</b></button>').join("");
 nav.querySelectorAll("[data-topic]").forEach(b=>b.addEventListener("click",()=>setTopic(b.dataset.topic)));
@@ -47,24 +47,32 @@ const cases=unique(group.map(c=>c.caseName)).filter(x=>x&&x!=="综合案例").so
 select.innerHTML='<option value="all">全部案例编号</option>'+cases.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join(""); select.value=state.caseName;
 }
 function cardHtml(c,i){
-const favorite=isFav(c.id),mastered=isDone(c.id),opened=state.expanded.has(c.id);
-const clue=short(c.clue,180),fix=short(c.fix,310);
-return '<article class="mistake-card '+(opened?"expanded":"")+'" id="card-'+esc(c.id)+'">'+
-'<div class="mistake-card-top"><span class="meta-tag">'+esc(c.groupName)+'</span><span class="meta-text">'+esc(c.caseName)+' · 讲义 PDF 第 '+Number(c.page)+' 页</span><span class="meta-counter">#'+String(i+1).padStart(3,"0")+'</span></div>'+
-'<button type="button" class="card-heading" data-open="'+esc(c.id)+'" aria-expanded="'+opened+'"><span class="card-bullet">✕</span><strong>'+esc(c.title)+'</strong><span class="card-chevron">'+(opened?"−":"＋")+'</span></button>'+
-'<div class="card-body" '+(opened?"":"hidden")+'><div class="evidence"><span class="detail-eyebrow">01 / 题干定位线索</span><p>'+esc(clue||"原讲义未提供独立背景摘录；请结合案例题干核对。")+'</p></div><div class="solution"><span class="detail-eyebrow">02 / 改错方向</span><p>'+esc(fix||"按相应过程规范补齐计划、评估、审批、执行和监督闭环。")+'</p></div><p class="source-foot">来源：'+esc(c.source)+' · PDF第 '+c.page+' 页。这里是讲义要点提取，具体答案应以题干为准。</p></div>'+
-'<div class="card-footer"><button type="button" data-fav="'+esc(c.id)+'" class="'+(favorite?"marked":"")+'">'+(favorite?"★ 已收藏":"☆ 收藏")+'</button><button type="button" data-done="'+esc(c.id)+'" class="'+(mastered?"complete":"")+'">'+(mastered?"✓ 已掌握":"○ 标记掌握")+'</button><button type="button" data-open="'+esc(c.id)+'">'+(opened?"收起解析 ↑":"查看依据与改错 ↓")+'</button></div></article>';
+ const favorite=isFav(c.id),mastered=isDone(c.id);
+ const clue=clean(c.clue)||"讲义未单独提取题干依据，请对照对应案例核查。";
+ const fix=clean(c.fix)||"请结合对应知识领域的计划、执行、检查及变更控制要求完善。";
+ const ref=esc(c.caseName)+" · PDF 第 "+Number(c.page)+" 页";
+ return '<article class="mistake-list-row'+(mastered?' is-mastered':'')+'" role="row" id="card-'+esc(c.id)+'">'+
+   '<div class="mistake-list-problem" role="cell">'+
+     '<div class="mistake-item-title"><span class="mistake-no">'+String(i+1).padStart(2,"0")+'</span><strong>'+esc(clean(c.title))+'</strong></div>'+
+     '<div class="mistake-list-meta"><span class="meta-tag">'+esc(c.groupName)+'</span><span>'+ref+'</span></div>'+
+     '<div class="mistake-list-actions">'+
+       '<button type="button" data-fav="'+esc(c.id)+'" aria-label="'+(favorite?'取消收藏：':'收藏：')+esc(c.title)+'" class="'+(favorite?'marked':'')+'">'+(favorite?'★ 已收藏':'☆ 收藏')+'</button>'+
+       '<button type="button" data-done="'+esc(c.id)+'" aria-label="'+(mastered?'取消已掌握：':'标记掌握：')+esc(c.title)+'" class="'+(mastered?'complete':'')+'">'+(mastered?'✓ 已掌握':'○ 标记掌握')+'</button>'+
+     '</div>'+
+   '</div>'+
+   '<div class="mistake-list-evidence" role="cell"><span class="mistake-mobile-label">题干依据</span><p>'+esc(clue)+'</p></div>'+
+   '<div class="mistake-list-solution" role="cell"><span class="mistake-mobile-label">正确做法</span><p>'+esc(fix)+'</p></div>'+
+ '</article>';
 }
 function registerCardEvents(root){
-root.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.open;state.expanded.has(id)?state.expanded.delete(id):state.expanded.add(id);renderCards();const card=el("card-"+id);if(card)card.scrollIntoView({block:"nearest"});}));
-root.querySelectorAll("[data-fav]").forEach(b=>b.addEventListener("click",()=>toggle("favorites",b.dataset.fav)));
-root.querySelectorAll("[data-done]").forEach(b=>b.addEventListener("click",()=>toggle("mastered",b.dataset.done)));
+ root.querySelectorAll("[data-fav]").forEach(b=>b.addEventListener("click",()=>toggle("favorites",b.dataset.fav)));
+ root.querySelectorAll("[data-done]").forEach(b=>b.addEventListener("click",()=>toggle("mastered",b.dataset.done)));
 }
 function renderCards(){
-const cards=activeCards(),root=el("cards-list");root.innerHTML=cards.slice(0,state.shown).map(cardHtml).join("");
+const cards=activeCards(),root=el("cards-list");root.innerHTML='<div class="mistake-list-head" role="row"><span role="columnheader">错误点 / 资料定位</span><span role="columnheader">题干依据</span><span role="columnheader">正确做法</span></div>'+cards.slice(0,state.shown).map(cardHtml).join("");
 registerCardEvents(root);
-el("result-count").textContent="筛选结果 "+cards.length+" 条";
-el("load-more").hidden=cards.length<=state.shown;
+el("result-count").textContent="筛选结果 "+cards.length+" 条 · 已展示 "+Math.min(cards.length,state.shown)+" 条";
+el("load-more").hidden=cards.length<=state.shown;el("load-more").textContent="继续加载剩余 "+Math.max(0,cards.length-state.shown)+" 条 ↓";
 el("empty-result").hidden=cards.length!==0;
 }
 function renderStats(){
@@ -117,11 +125,11 @@ el("quiz-prev").disabled=state.quizIndex<=0;
 }
 function bind(){
 document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.view)));
-el("search-field").addEventListener("input",e=>{state.query=e.target.value;state.shown=36;renderCards()});
-el("filter-select").addEventListener("change",e=>{state.filter=e.target.value;state.shown=36;renderCards()});
-el("case-filter").addEventListener("change",e=>{state.caseName=e.target.value;state.shown=36;renderCards()});
-el("load-more").addEventListener("click",()=>{state.shown+=36;renderCards()});
-el("clear-filters").addEventListener("click",()=>{state.query="";state.filter="all";state.caseName="all";state.shown=36;el("search-field").value="";el("filter-select").value="all";renderCases();renderCards()});
+el("search-field").addEventListener("input",e=>{state.query=e.target.value;state.shown=80;renderCards()});
+el("filter-select").addEventListener("change",e=>{state.filter=e.target.value;state.shown=80;renderCards()});
+el("case-filter").addEventListener("change",e=>{state.caseName=e.target.value;state.shown=80;renderCards()});
+el("load-more").addEventListener("click",()=>{state.shown+=80;renderCards()});
+el("clear-filters").addEventListener("click",()=>{state.query="";state.filter="all";state.caseName="all";state.shown=80;el("search-field").value="";el("filter-select").value="all";renderCases();renderCards()});
 el("quiz-new").addEventListener("click",chooseQuiz);
 el("quiz-reveal").addEventListener("click",()=>{state.quizReveal=!state.quizReveal;renderQuiz()});
 el("quiz-next").addEventListener("click",()=>{state.quizIndex=Math.min(state.quizIds.length-1,state.quizIndex+1);state.quizReveal=false;renderQuiz()});
