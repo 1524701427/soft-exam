@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
   const STORE = 'gao-xiang-study-v1';
-  const BUILTINS = {1:{title:'信息化发展',sections:window.EXAM_SECTIONS,notes:window.EXAM_NOTES,questions:window.EXAM_CH1.questions,highlights:window.EXAM_CH1.highlights},2:window.EXAM_CH2,3:window.EXAM_CH3,4:window.EXAM_CH4,5:window.EXAM_CH5,6:window.EXAM_CH6,7:window.EXAM_CH7,8:window.EXAM_CH8,9:window.EXAM_CH9,10:window.EXAM_CH10,11:window.EXAM_CH11,12:window.EXAM_CH12,13:window.EXAM_CH13,14:window.EXAM_CH14,15:window.EXAM_CH15,16:window.EXAM_CH16};
+  const BUILTINS = {1:{title:'信息化发展',sections:window.EXAM_SECTIONS,notes:window.EXAM_NOTES,questions:window.EXAM_CH1.questions,highlights:window.EXAM_CH1.highlights},2:window.EXAM_CH2,3:window.EXAM_CH3,4:window.EXAM_CH4,5:window.EXAM_CH5,6:window.EXAM_CH6,7:window.EXAM_CH7,8:window.EXAM_CH8,9:window.EXAM_CH9,10:window.EXAM_CH10,11:window.EXAM_CH11,12:window.EXAM_CH12,13:window.EXAM_CH13,14:window.EXAM_CH14,15:window.EXAM_CH15,16:window.EXAM_CH16,17:window.EXAM_CH17,18:window.EXAM_CH18,19:window.EXAM_CH19,20:window.EXAM_CH20};
   const ESSAY_BANK=[
     {id:'e13',chapter:13,title:'论信息系统项目的资源管理',page:3,source:'讲义标注：2023年下半年第4批',points:['介绍真实项目背景和本人承担的工作','解释资源管理基本过程','比较实物资源和团队资源获取及控制的差异','结合项目说明实际做法与经验']},
     {id:'e14',chapter:14,title:'论信息系统项目的沟通管理',page:43,source:'讲义提供的论文模拟题',points:['以真实项目及职责为背景','结合三个沟通过程和主要输出说明实际做法','列出干系人并制定有针对性的沟通管理计划','用干系人参与度评估矩阵分析规划与监督沟通']},
@@ -9,6 +9,11 @@
     {id:'e16a',chapter:16,title:'论信息系统项目的采购管理',page:3,source:'讲义标注：2020年下半年',points:['描述项目背景与职责','说明采购管理的各过程','如采用招投标，论述招投标流程和管理体会']},
     {id:'e16b',chapter:16,title:'论信息系统项目的招投标管理',page:4,source:'讲义标注：2021年下半年',points:['介绍项目背景与职责','论述招投标管理过程','编制招标文件评分表','说明投标文件编制和递交的注意事项']},
     {id:'e16c',chapter:16,title:'论信息系统项目的合同管理',page:5,source:'讲义标注：2023年下半年第3批',points:['描述真实项目背景与职责','论述合同管理过程与主要内容','编制项目合同主要条款','结合项目实际说明合同管理做法与心得']}
+    ,{id:'e17a',chapter:17,title:'论信息系统项目的干系人管理（权力/利益）',page:3,source:'讲义标注：2022年上半年',points:['简述真实项目背景及自身职责','阐述干系人管理四个过程','比较干系人、沟通和需求管理','列举干系人并分析权力/利益方格及管理策略','总结干系人参与的实际做法']}
+    ,{id:'e17b',chapter:17,title:'论信息系统项目的干系人管理（参与度矩阵）',page:4,source:'讲义标注：2023年下半年第1批',points:['介绍真实项目经历','说明干系人管理四个过程','依据参与度评估矩阵分析并分类管理项目干系人','结合案例说明管理措施与心得']}
+    ,{id:'e18a',chapter:18,title:'论信息系统项目的工作绩效域',page:3,source:'讲义标注：2023年下半年第2批',points:['介绍真实项目背景和本人工作','论述项目工作绩效域的绩效要点','说明哪些项目工作绩效活动应重点管理']}
+    ,{id:'e18b',chapter:18,title:'论信息系统项目的交付绩效域',page:4,source:'讲义标注：2025年上半年第1批',points:['结合真实项目说明交付绩效域重点','按五大过程组说明与其他绩效域的协同','提出各过程组可用于检查交付的度量指标']}
+    ,{id:'e18c',chapter:18,title:'论信息系统项目的不确定性绩效域',page:5,source:'讲义标注：2025年上半年第2批',points:['列出该绩效域预期目标','说明其与其他七大绩效域的关系','用真实项目列出不确定性及应对方式']}
   ];
   const EXAM_STORE='gao-xiang-exam-v1';
   const EMPTY = () => ({mastered:[],starred:[],bookmarked:[],wrongIds:[],answers:{},notes:{},exams:[],essayDraft:{title:'',body:''},caseDraft:{title:'',material:'',answer:''},importedChapters:{},dailyActivity:{},settings:{dark:false}});
@@ -53,17 +58,54 @@
     data(){return {
       EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,essayPrompts:ESSAY_BANK,selectedEssayPromptId:'e13',
       state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',activeView:'home',sidebarOpen:false,selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
-      evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',communicationPeople:12,riskCalc:{chance:0.45,gain:80,threatChance:0.25,loss:30,investment:0},procCalc:{targetCost:200,targetFee:20,actualCost:230,sellerShare:30,ceiling:260},networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
+      evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',stakeholderPower:8,stakeholderInterest:8,domainFocus:0,changeFocus:0,versionStatus:'draft',opmLevel:3,communicationPeople:12,riskCalc:{chance:0.45,gain:80,threatChance:0.25,loss:30,investment:0},procCalc:{targetCost:200,targetFee:20,actualCost:230,sellerShare:30,ceiling:260},networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},practiceFilter:'all',practiceSectionFilter:'all',drillIndex:0,mapIndex:0,zoomMap:false, searchQuery:'',
       pastYear:'全部',examCount:20,examActive:(()=>{try{return JSON.parse(localStorage.getItem(EXAM_STORE)||'null')}catch(e){return null}})(),examIndex:0,remainingSeconds:0,now:Date.now(),lastExamReport:null,
       importMessage:'',importError:false,toast:'',mapNames:['全章思维导图','信息与信息系统','信息化与新基建','工业互联网与车联网','现代化创新发展','数字经济与元宇宙','数字政府与数字生态','数字化转型与智慧转移'],
       navMain:[{id:'home',label:'学习总览',icon:'home'},{id:'chapters',label:'章节管理',icon:'layers'},{id:'knowledge',label:'知识点学习',icon:'book'},{id:'maps',label:'知识图解',icon:'map'},{id:'practice',label:'章节练习',icon:'clipboard'},{id:'exam',label:'模拟考试',icon:'timer'}],
       navResources:[{id:'pastpapers',label:'历年真题',icon:'file'},{id:'wrong',label:'错题本',icon:'alert'},{id:'favorites',label:'我的收藏',icon:'star'},{id:'cases',label:'案例分析',icon:'file'},{id:'essays',label:'论文训练',icon:'pen'},{id:'progress',label:'学习统计',icon:'chart'}],
-      quickActions:[{view:'knowledge',name:'知识点学习',desc:'前十六章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'576 道配套题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'254 张可交互图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
+      quickActions:[{view:'knowledge',name:'知识点学习',desc:'前二十章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'715 道配套题',icon:'clipboard',tone:'peach'},{view:'maps',name:'图解实验室',desc:'343 张可交互图解',icon:'map',tone:'mint'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
     }},
     computed:{
       viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
       todayLabel(){return new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'})},
       chapterTitle(){return this.EXAM_CHAPTERS.find(c=>c.id===this.selectedChapter)?.name||'未知章节'},
+      stakeholderStrategy(){
+        const power=Number(this.stakeholderPower)>=6, interest=Number(this.stakeholderInterest)>=6;
+        return power?(interest?{name:'重点管理',detail:'高权力、高利益：密切协作、优先处理诉求'}:{name:'令其满意',detail:'高权力、低利益：保持满意，不必过度打扰'}):(interest?{name:'随时告知',detail:'低权力、高利益：定期同步进展、收集反馈'}:{name:'适度监督',detail:'低权力、低利益：监测变化并按需沟通'});
+      },
+      domainCards(){return [
+        {name:'干系人',goal:'建立高效关系、目标认同、干系人满意',check:'参与连续性、满意度、行为和相关风险',link:'规划、交付、度量'},
+        {name:'团队',goal:'共享责任、建立高绩效团队、提升领导力',check:'信任协作、适应性与领导风格',link:'干系人、项目工作、开发方法'},
+        {name:'开发方法与生命周期',goal:'方法符合产品、价值紧密关联、交付节奏适宜',check:'产品质量、变更成本、交付节奏',link:'规划、交付、不确定性'},
+        {name:'规划',goal:'有条理推进、系统交付、适度详尽、可调整',check:'绩效偏差、计划整体性与适宜性',link:'开发方法、项目工作、度量'},
+        {name:'项目工作',goal:'高效执行、沟通、资源、采购、变更与学习',check:'状态报告、利用率、采购和变更效果',link:'规划、干系人、团队、交付'},
+        {name:'交付',goal:'战略一致、实现预期成果与价值、需求清楚',check:'项目完成度、收益、满意度与质量',link:'规划、项目工作、度量'},
+        {name:'度量',goal:'了解项目状况、支持决策、及时纠偏',check:'有效指标、趋势、度量结果和报告',link:'规划、项目工作、交付'},
+        {name:'不确定性',goal:'理解环境，管理风险、模糊与复杂，利用储备',check:'风险应对、机会利用、储备使用',link:'开发方法、规划、交付'}
+      ];},
+      changeSteps(){return [
+        {name:'提出申请',detail:'提出书面申请并登记，说明背景、理由和预期效果'},
+        {name:'初步审查',detail:'检查完整性、必要性和申请是否合理'},
+        {name:'方案论证',detail:'分析技术、进度、成本、范围、质量和风险影响'},
+        {name:'变更审查',detail:'交由授权评审机构或CCB决定批准、否决或延期'},
+        {name:'通知并实施',detail:'通知相关方，配置资源并按批准方案实施'},
+        {name:'实施监控',detail:'跟踪实施状态和偏差，保留必要记录'},
+        {name:'效果评估',detail:'验证是否达到变更目标和验收标准'},
+        {name:'变更收尾',detail:'更新基准、文档和配置项，完成记录归档'}
+      ];},
+      versionExamples(){return [
+        {id:'draft',name:'草稿',format:'0.YZ',example:'0.01 → 0.02',hint:'未经评审，草稿数字按修改增加'},
+        {id:'formal',name:'正式',format:'X.Y',example:'1.0 → 1.1',hint:'通过评审后才可标为正式'},
+        {id:'changing',name:'修改',format:'X.YZ',example:'1.11 → 1.12',hint:'修改中临时版本，复审通过回到正式'}
+      ];},
+      selectedVersion(){return this.versionExamples.find(x=>x.id===this.versionStatus)||this.versionExamples[0];},
+      opmLevels(){return [
+        {name:'初始或临时',detail:'初步活动，实践不统一，靠个人经验完成'},
+        {name:'项目层级采用',detail:'各项目有自己的方法和计划，可重复程度提升'},
+        {name:'组织定义',detail:'组织统一标准方法和裁剪规则'},
+        {name:'量化管理',detail:'通过度量和性能预测驱动过程管理'},
+        {name:'持续优化',detail:'根据数据和创新不断优化组织能力'}
+      ];},
       communicationChannels(){
         const n=Math.max(2,Math.min(500,Math.floor(Number(this.communicationPeople)||2)));
         return {people:n,channels:n*(n-1)/2,additional:n};
@@ -200,8 +242,8 @@
       },
       downloadText(name,text){const blob=new Blob([text||''],{type:'text/plain;charset=utf-8'});downloadBlob(name+'-'+new Date().toLocaleDateString('sv-SE')+'.txt',blob)},
       exportProgress(){saveJSON('高项学习记录-'+new Date().toLocaleDateString('sv-SE')+'.json',{app:'soft-exam-study',version:1,exportedAt:new Date().toISOString(),data:this.state})},
-      downloadTemplate(){saveJSON('第17章-导入模板.json',{chapterId:17,title:'项目干系人管理',sections:[{id:'17.1',title:'第一节示例',children:[{id:'17.1.1',title:'知识点示例',page:1}]}],notes:{'17.1.1':{lead:'请替换成整理后的讲义内容',page:1,blocks:[{title:'基础概念',type:'concept',items:[['知识点名称','知识点解释']]}],tip:'速记口诀'}} ,questions:[{id:'q9-01',number:1,chapterId:9,sectionId:'17.1.1',title:'示例题目（请选择正确答案）',options:['选项A','选项B','选项C','选项D'],answer:'A',explanation:'示例解析',sourceLabel:'自编示例',sourcePage:1}]})},
-      validateImported(obj){const id=Number(obj?.chapterId);if(!Number.isInteger(id)||id<17||id>24)throw Error('chapterId 必须是 17–24 的整数（第1–16章已内置）');if(!Array.isArray(obj.sections))throw Error('缺少 sections 数组');const expected=this.EXAM_CHAPTERS.find(c=>c.id===id);if(obj.title&&obj.title!==expected.name)throw Error('章节标题和教材目录不一致：应为'+expected.name);let ids=new Set();for(const s of obj.sections){if(!s.id||!Array.isArray(s.children))throw Error('每节必须有 id 和 children 数组');for(const t of s.children){if(!t.id||!t.title||ids.has(t.id))throw Error('知识小节缺少 id/title 或编号重复');ids.add(t.id)}}if(obj.questions&&!Array.isArray(obj.questions))throw Error('questions 必须是数组');const qids=new Set();for(const q of obj.questions||[]){if(!q.id||!q.title||!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer)||qids.has(q.id))throw Error('题目格式无效：需要 id/title/options[4]/answer');if(!ids.has(q.sectionId))throw Error('题目 '+q.id+' 的 sectionId 未出现在章节目录');qids.add(q.id)}return{id,title:expected.name,sections:obj.sections,notes:obj.notes&&typeof obj.notes==='object'?obj.notes:{},questions:(obj.questions||[]).map((q,i)=>({...q,chapterId:id,number:q.number||i+1}))}},
+      downloadTemplate(){saveJSON('第21章-导入模板.json',{chapterId:21,title:'项目管理科学基础',sections:[{id:'21.1',title:'第一节示例',children:[{id:'21.1.1',title:'知识点示例',page:1}]}],notes:{'21.1.1':{lead:'请替换成整理后的讲义内容',page:1,blocks:[{title:'基础概念',type:'concept',items:[['知识点名称','知识点解释']]}],tip:'速记口诀'}} ,questions:[{id:'q21-01',number:1,chapterId:21,sectionId:'21.1.1',title:'示例题目（请选择正确答案）',options:['选项A','选项B','选项C','选项D'],answer:'A',explanation:'示例解析',sourceLabel:'自编示例',sourcePage:1}]})},
+      validateImported(obj){const id=Number(obj?.chapterId);if(!Number.isInteger(id)||id<21||id>24)throw Error('chapterId 必须是 21–24 的整数（第1–20章已内置）');if(!Array.isArray(obj.sections))throw Error('缺少 sections 数组');const expected=this.EXAM_CHAPTERS.find(c=>c.id===id);if(obj.title&&obj.title!==expected.name)throw Error('章节标题和教材目录不一致：应为'+expected.name);let ids=new Set();for(const s of obj.sections){if(!s.id||!Array.isArray(s.children))throw Error('每节必须有 id 和 children 数组');for(const t of s.children){if(!t.id||!t.title||ids.has(t.id))throw Error('知识小节缺少 id/title 或编号重复');ids.add(t.id)}}if(obj.questions&&!Array.isArray(obj.questions))throw Error('questions 必须是数组');const qids=new Set();for(const q of obj.questions||[]){if(!q.id||!q.title||!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer)||qids.has(q.id))throw Error('题目格式无效：需要 id/title/options[4]/answer');if(!ids.has(q.sectionId))throw Error('题目 '+q.id+' 的 sectionId 未出现在章节目录');qids.add(q.id)}return{id,title:expected.name,sections:obj.sections,notes:obj.notes&&typeof obj.notes==='object'?obj.notes:{},questions:(obj.questions||[]).map((q,i)=>({...q,chapterId:id,number:q.number||i+1}))}},
       importDataFile(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);const x=this.validateImported(obj);this.state.importedChapters[x.id]={title:x.title,sections:x.sections,notes:x.notes,questions:x.questions};this.importError=false;this.importMessage=`已导入第 ${x.id} 章「${x.title}」：${x.sections.length} 个大节、${x.questions.length} 道练习题。`;this.notify('章节导入成功')}catch(err){this.importError=true;this.importMessage='导入失败：'+err.message}};reader.readAsText(file);e.target.value=''},
       importProgress(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);if(obj.app!=='soft-exam-study'||!obj.data||!Array.isArray(obj.data.mastered))throw Error('不是有效的高项学习记录备份');if(!confirm('导入将替换当前学习记录。是否继续？'))return;this.state=Object.assign(EMPTY(),obj.data);this.state.essayDraft=Object.assign({title:'',body:''},this.state.essayDraft);this.state.caseDraft=Object.assign({title:'',material:'',answer:''},this.state.caseDraft);this.notify('学习记录恢复成功')}catch(err){this.notify('导入失败：'+err.message)}};reader.readAsText(file);e.target.value=''},
       clearProgress(){if(!confirm('确定清空全部答题、错题、笔记及导入章节吗？此操作不可撤销，建议先导出备份。'))return;this.state=EMPTY();this.examActive=null;this.lastExamReport=null;this.notify('已清空学习记录')}
