@@ -1,4 +1,4 @@
-/* 62 张原创交互式图解，基于学习知识点独立整理，不包含课程原始图像 */
+/* 99 张基于讲义要点整理的原创交互式知识图解，不含原课程图像 */
 window.EXAM_VISUALS = [
   {
     "id": "c1-lifecycle",
@@ -1853,5 +1853,1134 @@ window.EXAM_VISUALS = [
     "center": "",
     "insight": "10 大领域横向组织知识；5 大过程组纵向组织管理过程。",
     "sourcePage": 59
+  },
+  {
+    "id": "c7-project-init",
+    "chapterId": 7,
+    "topicId": "7.0",
+    "kind": "path",
+    "title": "从项目构想到投资决策",
+    "subtitle": "立项管理前期阶段的完整主线",
+    "items": [
+      {
+        "label": "项目建议",
+        "detail": "提出建设目标与必要性"
+      },
+      {
+        "label": "立项申请",
+        "detail": "提交初始申请文件"
+      },
+      {
+        "label": "可行性研究",
+        "detail": "充分分析技术、经济与运行约束"
+      },
+      {
+        "label": "项目评估",
+        "detail": "独立检查可靠性和价值"
+      },
+      {
+        "label": "审批决策",
+        "detail": "决定是否进入实施准备"
+      }
+    ],
+    "center": "",
+    "insight": "先证明值得建，再研究能否建。",
+    "sourcePage": 3
+  },
+  {
+    "id": "c7-party",
+    "chapterId": 7,
+    "topicId": "7.0",
+    "kind": "compare",
+    "title": "甲方与乙方的立项路线",
+    "subtitle": "同一个项目的两种管理视角",
+    "items": [
+      {
+        "label": "甲方：发起建设",
+        "detail": "需求调研→项目建议书→可研→评估→批准→招标"
+      },
+      {
+        "label": "乙方：争取承建",
+        "detail": "获取招标信息→识别机会→可研→论证评估→投标→签约"
+      }
+    ],
+    "center": "",
+    "insight": "甲方做投资决策；乙方做投标与履约能力决策。",
+    "sourcePage": 3
+  },
+  {
+    "id": "c7-proposal",
+    "chapterId": 7,
+    "topicId": "7.1",
+    "kind": "wheel",
+    "title": "项目建议书四项核心",
+    "subtitle": "一必要、两预测、一条件",
+    "items": [
+      {
+        "label": "建设必要性",
+        "detail": "为什么需要建这个项目"
+      },
+      {
+        "label": "项目市场预测",
+        "detail": "项目所处行业和市场形势"
+      },
+      {
+        "label": "成果市场预测",
+        "detail": "未来产品或服务需求"
+      },
+      {
+        "label": "建设必需条件",
+        "detail": "资源、政策、能力等基础前提"
+      }
+    ],
+    "center": "项目建议书",
+    "insight": "四个要点与详细可研内容不要混淆。",
+    "sourcePage": 5
+  },
+  {
+    "id": "c7-five-feasibility",
+    "chapterId": 7,
+    "topicId": "7.2.1",
+    "kind": "wheel",
+    "title": "项目可行性五个维度",
+    "subtitle": "一张图快速分清技术、经济、社会、运行和其他",
+    "items": [
+      {
+        "label": "技术",
+        "detail": "风险、人力、技术能力、物资可用"
+      },
+      {
+        "label": "经济",
+        "detail": "支出、收益、投资回报、敏感性"
+      },
+      {
+        "label": "社会",
+        "detail": "组织内部与社会外部效益"
+      },
+      {
+        "label": "运行环境",
+        "detail": "管理机制、人员、数据与软硬件环境"
+      },
+      {
+        "label": "其他",
+        "detail": "法律、政策、合同、知识产权"
+      }
+    ],
+    "center": "项目可行性",
+    "insight": "场景题先识别约束属于哪个维度。",
+    "sourcePage": 7
+  },
+  {
+    "id": "c7-technical",
+    "chapterId": 7,
+    "topicId": "7.2.1",
+    "kind": "compare",
+    "title": "技术可行性四因素",
+    "subtitle": "判断“技术上做不做得到”",
+    "items": [
+      {
+        "label": "开发风险",
+        "detail": "能否实现预定目标及功能"
+      },
+      {
+        "label": "人力资源",
+        "detail": "有没有合适人员、能否补充"
+      },
+      {
+        "label": "技术能力",
+        "detail": "掌握的技术是否满足项目需要"
+      },
+      {
+        "label": "物资可用",
+        "detail": "设备、产品、工具是否能获取"
+      }
+    ],
+    "center": "",
+    "insight": "风险、人力、技术、物资。",
+    "sourcePage": 8
+  },
+  {
+    "id": "c7-social",
+    "chapterId": 7,
+    "topicId": "7.2.1",
+    "kind": "compare",
+    "title": "社会效益的内外两面",
+    "subtitle": "收益不止于现金流",
+    "items": [
+      {
+        "label": "组织内部",
+        "detail": "品牌、创新、竞争力、管理提升、员工发展"
+      },
+      {
+        "label": "社会外部",
+        "detail": "公共、文化、环境、社会责任等效益"
+      }
+    ],
+    "center": "",
+    "insight": "组织内部“品技竞管人”；外部“公文环责”。",
+    "sourcePage": 10
+  },
+  {
+    "id": "c7-economic",
+    "chapterId": 7,
+    "topicId": "7.2.1",
+    "kind": "cycle",
+    "title": "经济可行性四类分析",
+    "subtitle": "财务合理性和关键假设检验",
+    "items": [
+      {
+        "label": "支出分析",
+        "detail": "测算一次性与非一次性成本"
+      },
+      {
+        "label": "收益分析",
+        "detail": "估计直接和间接收益"
+      },
+      {
+        "label": "投资回报",
+        "detail": "投入产出比与回收期"
+      },
+      {
+        "label": "敏感性分析",
+        "detail": "关键参数变化对收益的影响"
+      }
+    ],
+    "center": "经济评价",
+    "insight": "题干出现“收益率、回收期、负载变化”先找经济可行性。",
+    "sourcePage": 9
+  },
+  {
+    "id": "c7-feasibility-depth",
+    "chapterId": 7,
+    "topicId": "7.2.2",
+    "kind": "layers",
+    "title": "机会 → 初步 → 详细可研",
+    "subtitle": "研究深度逐级加深",
+    "items": [
+      {
+        "label": "详细可研",
+        "detail": "系统全面论证技术、经济、运营等，作为决策依据"
+      },
+      {
+        "label": "初步可研",
+        "detail": "客户/市场摸底，形成初步估计和判断"
+      },
+      {
+        "label": "机会研究",
+        "detail": "投资设想及机会识别，判断是否继续研究"
+      }
+    ],
+    "center": "研究深度",
+    "insight": "初步可研可按规模合并；详细可研不能省略。",
+    "sourcePage": 11
+  },
+  {
+    "id": "c7-prelim",
+    "chapterId": 7,
+    "topicId": "7.2.2",
+    "kind": "path",
+    "title": "初步可行性研究内容",
+    "subtitle": "形成对规模、资源、进度、投资的整体判断",
+    "items": [
+      {
+        "label": "需求与市场",
+        "detail": "检验需求是否存在"
+      },
+      {
+        "label": "设备与资源",
+        "detail": "估计人员及设施投入"
+      },
+      {
+        "label": "空间与项目设计",
+        "detail": "初拟总体方案和布局"
+      },
+      {
+        "label": "进度安排",
+        "detail": "初排主要时间安排"
+      },
+      {
+        "label": "投资成本",
+        "detail": "估计项目投入"
+      }
+    ],
+    "center": "",
+    "insight": "初步可研是概要研判，不等于正式详细设计。",
+    "sourcePage": 12
+  },
+  {
+    "id": "c7-detail",
+    "chapterId": 7,
+    "topicId": "7.2.3",
+    "kind": "compare",
+    "title": "三类研究横向对照",
+    "subtitle": "初步研究、详细研究与辅助功能研究",
+    "items": [
+      {
+        "label": "初步研究",
+        "detail": "需求市场、投入资源、空间布局、项目设计、进度、成本"
+      },
+      {
+        "label": "详细研究",
+        "detail": "市场预测、技术设备、布局、资金筹措、经济分析"
+      },
+      {
+        "label": "辅助研究",
+        "detail": "在部分关键领域深入实验和论证，不代替全部可研"
+      }
+    ],
+    "center": "",
+    "insight": "详细调查最系统；辅助研究只处理局部关键条件。",
+    "sourcePage": 13
+  },
+  {
+    "id": "c7-costs",
+    "chapterId": 7,
+    "topicId": "7.2.3",
+    "kind": "layers",
+    "title": "项目总成本与经营成本",
+    "subtitle": "成本范围中的“包含/不包含”陷阱",
+    "items": [
+      {
+        "label": "总成本",
+        "detail": "研发 + 行政管理 + 销售与分销 + 财务费用和折旧"
+      },
+      {
+        "label": "经营成本",
+        "detail": "研发 + 行政管理 + 销售与分销"
+      },
+      {
+        "label": "经常性支出",
+        "detail": "人员薪酬、租金、水电等持续发生费用"
+      }
+    ],
+    "center": "",
+    "insight": "经营成本不含财务费用和折旧（按讲义口径）。",
+    "sourcePage": 26
+  },
+  {
+    "id": "c7-assessment",
+    "chapterId": 7,
+    "topicId": "7.3",
+    "kind": "path",
+    "title": "项目评估工作六步",
+    "subtitle": "从独立评估到形成报告",
+    "items": [
+      {
+        "label": "成立评估小组",
+        "detail": "指定角色和分工"
+      },
+      {
+        "label": "调查研究",
+        "detail": "收集与核实证据"
+      },
+      {
+        "label": "分析评估",
+        "detail": "审查项目价值和条件"
+      },
+      {
+        "label": "修订报告",
+        "detail": "形成讨论稿并完善"
+      },
+      {
+        "label": "专家论证",
+        "detail": "引入独立意见"
+      },
+      {
+        "label": "发布评估报告",
+        "detail": "支持决策与审批"
+      }
+    ],
+    "center": "",
+    "insight": "评估不是项目经理自行“拍板”，要有独立论证。",
+    "sourcePage": 23
+  },
+  {
+    "id": "c7-assessment-inputs",
+    "chapterId": 7,
+    "topicId": "7.3",
+    "kind": "compare",
+    "title": "项目评估五项依据",
+    "subtitle": "不包含后续生成的项目章程",
+    "items": [
+      {
+        "label": "建议书与批复",
+        "detail": "已提出并批准的项目建设构想"
+      },
+      {
+        "label": "可研报告",
+        "detail": "技术、经济及运营分析证据"
+      },
+      {
+        "label": "申请与初审",
+        "detail": "报送组织申请及主管部门意见"
+      },
+      {
+        "label": "关键协议文件",
+        "detail": "建设条件、工程相关协议"
+      },
+      {
+        "label": "其他必要资料",
+        "detail": "法规要求的辅助文件与证据"
+      }
+    ],
+    "center": "",
+    "insight": "题目若问评估依据，项目章程往往是干扰项。",
+    "sourcePage": 23
+  },
+  {
+    "id": "c8-purpose",
+    "chapterId": 8,
+    "topicId": "8.0",
+    "kind": "wheel",
+    "title": "整合管理五项目标",
+    "subtitle": "项目经理跨知识领域的“总协调”",
+    "items": [
+      {
+        "label": "协调资源",
+        "detail": "统筹有限资源分配"
+      },
+      {
+        "label": "平衡需求",
+        "detail": "处理冲突的干系人和项目约束"
+      },
+      {
+        "label": "备选方法",
+        "detail": "分析和选择管理行动"
+      },
+      {
+        "label": "裁剪过程",
+        "detail": "选取符合情境的过程"
+      },
+      {
+        "label": "管理依赖",
+        "detail": "把各知识领域联系起来"
+      }
+    ],
+    "center": "整合管理",
+    "insight": "识别、定义、组合、统一、协调贯穿项目始终。",
+    "sourcePage": 3
+  },
+  {
+    "id": "c8-dimensions",
+    "chapterId": 8,
+    "topicId": "8.1.1",
+    "kind": "triangle",
+    "title": "三个层面的整合",
+    "subtitle": "执行整合不仅是处理工作流程",
+    "items": [
+      {
+        "label": "过程层面",
+        "detail": "协调重叠与重复过程"
+      },
+      {
+        "label": "认知层面",
+        "detail": "运用经验、领导力、技术与商务能力"
+      },
+      {
+        "label": "背景层面",
+        "detail": "适应新技术、多文化和虚拟团队"
+      }
+    ],
+    "center": "项目整合",
+    "insight": "过程/认知/背景是第八章常考概念。",
+    "sourcePage": 5
+  },
+  {
+    "id": "c8-complexity",
+    "chapterId": 8,
+    "topicId": "8.1.2",
+    "kind": "wheel",
+    "title": "复杂性的四个条件",
+    "subtitle": "整体不等于各部分简单相加",
+    "items": [
+      {
+        "label": "多个部分",
+        "detail": "包含多个子系统/工作单元"
+      },
+      {
+        "label": "相互关联",
+        "detail": "多个部分之间互相影响"
+      },
+      {
+        "label": "动态交互",
+        "detail": "作用关系随时间变化"
+      },
+      {
+        "label": "涌现行为",
+        "detail": "结果可能出现不可预期的新性质"
+      }
+    ],
+    "center": "复杂性",
+    "insight": "复杂性不仅是数量多，更是关联和交互。",
+    "sourcePage": 4
+  },
+  {
+    "id": "c8-new-practices",
+    "chapterId": 8,
+    "topicId": "8.1.3",
+    "kind": "compare",
+    "title": "整合管理五项新实践",
+    "subtitle": "技术与人的管理并重",
+    "items": [
+      {
+        "label": "信息化",
+        "detail": "收集、分析和利用数据"
+      },
+      {
+        "label": "可视化",
+        "detail": "透明地呈现实时状态"
+      },
+      {
+        "label": "知识管理",
+        "detail": "减少人员流动造成的知识损失"
+      },
+      {
+        "label": "经理职责扩展",
+        "detail": "更早介入商业论证和效益"
+      },
+      {
+        "label": "混合方法",
+        "detail": "融合预测、迭代与敏捷"
+      }
+    ],
+    "center": "",
+    "insight": "新工具服务于项目管理，不代替经理整合责任。",
+    "sourcePage": 4
+  },
+  {
+    "id": "c8-plan-vs-docs",
+    "chapterId": 8,
+    "topicId": "8.1.4",
+    "kind": "compare",
+    "title": "项目管理计划 VS 项目文件",
+    "subtitle": "别把计划当成所有项目文件的集合",
+    "items": [
+      {
+        "label": "项目管理计划",
+        "detail": "子计划、基准、生命周期及管理审查等综合指导性内容"
+      },
+      {
+        "label": "项目文件",
+        "detail": "假设日志、问题日志、风险登记册、需求文件、经验教训等工作记录"
+      }
+    ],
+    "center": "",
+    "insight": "计划指导怎么管理；文件记录具体工作与状态。",
+    "sourcePage": 6
+  },
+  {
+    "id": "c8-seven-processes",
+    "chapterId": 8,
+    "topicId": "8.2.1",
+    "kind": "path",
+    "title": "整合管理七大过程",
+    "subtitle": "按启动→规划→执行→监控→收尾梳理",
+    "items": [
+      {
+        "label": "制定章程",
+        "detail": "正式授权，输出章程"
+      },
+      {
+        "label": "制订计划",
+        "detail": "整合计划与基准"
+      },
+      {
+        "label": "指导工作",
+        "detail": "执行计划与批准的变更"
+      },
+      {
+        "label": "管理知识",
+        "detail": "记录经验与知识"
+      },
+      {
+        "label": "监控工作",
+        "detail": "分析绩效并建议改进"
+      },
+      {
+        "label": "变更控制",
+        "detail": "审批变更并保护基准"
+      },
+      {
+        "label": "结束项目",
+        "detail": "正式收尾与移交"
+      }
+    ],
+    "center": "",
+    "insight": "七过程对应五大过程组，并非七个独立项目阶段。",
+    "sourcePage": 9
+  },
+  {
+    "id": "c8-process-outputs",
+    "chapterId": 8,
+    "topicId": "8.2.1",
+    "kind": "compare",
+    "title": "七个过程的高频输出",
+    "subtitle": "选择题考“某输出来自哪个过程”",
+    "items": [
+      {
+        "label": "章程",
+        "detail": "项目章程、假设日志"
+      },
+      {
+        "label": "项目计划",
+        "detail": "综合项目管理计划"
+      },
+      {
+        "label": "指导工作",
+        "detail": "可交付成果、原始绩效数据、问题日志"
+      },
+      {
+        "label": "管理知识",
+        "detail": "经验教训登记册"
+      },
+      {
+        "label": "监控工作",
+        "detail": "工作绩效报告、变更请求"
+      },
+      {
+        "label": "整体变更",
+        "detail": "批准的变更请求、变更日志"
+      },
+      {
+        "label": "收尾",
+        "detail": "最终产品、最终报告"
+      }
+    ],
+    "center": "",
+    "insight": "先记“独特输出”，再拓展 ITTO。",
+    "sourcePage": 16
+  },
+  {
+    "id": "c8-tailor",
+    "chapterId": 8,
+    "topicId": "8.2.2",
+    "kind": "wheel",
+    "title": "整合管理八项裁剪因素",
+    "subtitle": "记忆口诀：两周期、两管理、变治教效",
+    "items": [
+      {
+        "label": "项目生命周期",
+        "detail": "规划阶段和管理节奏"
+      },
+      {
+        "label": "开发生命周期",
+        "detail": "预测/迭代/适应方式"
+      },
+      {
+        "label": "管理方法",
+        "detail": "根据情景选方法"
+      },
+      {
+        "label": "知识管理",
+        "detail": "知识获取与传承"
+      },
+      {
+        "label": "变更",
+        "detail": "调整变更处理方式"
+      },
+      {
+        "label": "治理",
+        "detail": "组织管理和审批要求"
+      },
+      {
+        "label": "经验教训",
+        "detail": "既有知识和反馈"
+      },
+      {
+        "label": "效益",
+        "detail": "业务价值兑现"
+      }
+    ],
+    "center": "量体裁衣",
+    "insight": "裁剪意味着恰当选择，不是删除所有控制。",
+    "sourcePage": 11
+  },
+  {
+    "id": "c8-agile",
+    "chapterId": 8,
+    "topicId": "8.2.3",
+    "kind": "cycle",
+    "title": "适应型团队的快速反馈",
+    "subtitle": "自组织交付，经理仍对整合负责",
+    "items": [
+      {
+        "label": "确定价值",
+        "detail": "从核心需求出发"
+      },
+      {
+        "label": "迭代交付",
+        "detail": "交付最小可用成果"
+      },
+      {
+        "label": "收集反馈",
+        "detail": "用户及时验证"
+      },
+      {
+        "label": "协同改进",
+        "detail": "团队再规划并优化"
+      }
+    ],
+    "center": "反馈循环",
+    "insight": "敏捷把更多产品决策权授予团队，但不移走整合责任。",
+    "sourcePage": 12
+  },
+  {
+    "id": "c8-charter-itto",
+    "chapterId": 8,
+    "topicId": "8.3",
+    "kind": "path",
+    "title": "制定项目章程 ITTO",
+    "subtitle": "输入 → 工具与技术 → 输出",
+    "items": [
+      {
+        "label": "立项/协议",
+        "detail": "立项管理文件、协议、环境与过程资产"
+      },
+      {
+        "label": "专家与数据收集",
+        "detail": "专家判断、头脑风暴、焦点小组和访谈"
+      },
+      {
+        "label": "协商与会议",
+        "detail": "冲突管理、引导、会议管理"
+      },
+      {
+        "label": "项目章程",
+        "detail": "正式批准并授权项目经理"
+      },
+      {
+        "label": "假设日志",
+        "detail": "记录假设条件和制约因素"
+      }
+    ],
+    "center": "",
+    "insight": "章程是授权文件，不能替代对外合同。",
+    "sourcePage": 20
+  },
+  {
+    "id": "c8-charter-contents",
+    "chapterId": 8,
+    "topicId": "8.3",
+    "kind": "wheel",
+    "title": "项目章程主要内容",
+    "subtitle": "高层级信息，用于正式授权项目",
+    "items": [
+      {
+        "label": "目的与目标",
+        "detail": "项目目的、可测量目标及成功标准"
+      },
+      {
+        "label": "需求与范围",
+        "detail": "高层级需求、边界、可交付成果"
+      },
+      {
+        "label": "风险与里程碑",
+        "detail": "整体项目风险、总体进度里程碑"
+      },
+      {
+        "label": "财务与干系人",
+        "detail": "已批资金、关键干系人"
+      },
+      {
+        "label": "审批与退出",
+        "detail": "审批要求和项目退出标准"
+      },
+      {
+        "label": "授权与职权",
+        "detail": "项目经理和发起人姓名及权责"
+      }
+    ],
+    "center": "项目章程",
+    "insight": "批准章程标志项目正式启动。",
+    "sourcePage": 24
+  },
+  {
+    "id": "c8-plan-components",
+    "chapterId": 8,
+    "topicId": "8.4",
+    "kind": "layers",
+    "title": "项目管理计划三个组成部分",
+    "subtitle": "12个子管理计划 + 4个基准 + 其他组件",
+    "items": [
+      {
+        "label": "其他组件",
+        "detail": "生命周期、开发方法、管理审查"
+      },
+      {
+        "label": "四项基准",
+        "detail": "范围、进度、成本与绩效测量基准"
+      },
+      {
+        "label": "十二个计划",
+        "detail": "各知识领域子计划及需求、变更、配置计划"
+      }
+    ],
+    "center": "计划综合体",
+    "insight": "受控基准确立以后修改需要履行正式变更控制。",
+    "sourcePage": 32
+  },
+  {
+    "id": "c8-baseline",
+    "chapterId": 8,
+    "topicId": "8.4",
+    "kind": "compare",
+    "title": "基准前后修改规则",
+    "subtitle": "同样是修改计划，授权和流程不同",
+    "items": [
+      {
+        "label": "基准确立前",
+        "detail": "计划可多次更新，通常无须正式审批流程"
+      },
+      {
+        "label": "基准确立后",
+        "detail": "需提出变更请求，获得授权批准后调整基准"
+      }
+    ],
+    "center": "",
+    "insight": "基准只能对未来调整，不能改写已经发生的绩效。",
+    "sourcePage": 28
+  },
+  {
+    "id": "c8-work-output",
+    "chapterId": 8,
+    "topicId": "8.5",
+    "kind": "compare",
+    "title": "指导与管理项目工作的关键产出",
+    "subtitle": "执行过程的四类高频输出",
+    "items": [
+      {
+        "label": "可交付成果",
+        "detail": "可核实的产品、成果或服务能力"
+      },
+      {
+        "label": "绩效数据",
+        "detail": "工作中的原始观察、测量值和KPI"
+      },
+      {
+        "label": "问题日志",
+        "detail": "问题分类、责任人、优先级、期限、状态"
+      },
+      {
+        "label": "变更请求",
+        "detail": "纠正、预防、缺陷补救、更新"
+      }
+    ],
+    "center": "",
+    "insight": "已批准的变更在“指导与管理工作”中实施。",
+    "sourcePage": 36
+  },
+  {
+    "id": "c8-change-types",
+    "chapterId": 8,
+    "topicId": "8.5",
+    "kind": "compare",
+    "title": "四种变更请求分类",
+    "subtitle": "考题常根据情境判断措施类型",
+    "items": [
+      {
+        "label": "纠正措施",
+        "detail": "现在已出现偏差 → 拉回计划"
+      },
+      {
+        "label": "预防措施",
+        "detail": "未来可能出现偏差 → 先预防"
+      },
+      {
+        "label": "缺陷补救",
+        "detail": "交付物有缺陷 → 修正产品"
+      },
+      {
+        "label": "更新",
+        "detail": "正式受控的计划或文件变更"
+      }
+    ],
+    "center": "",
+    "insight": "纠正针对当下偏差；预防针对未来风险。",
+    "sourcePage": 43
+  },
+  {
+    "id": "c8-knowledge",
+    "chapterId": 8,
+    "topicId": "8.6",
+    "kind": "compare",
+    "title": "显性知识与隐性知识",
+    "subtitle": "用文档和互动的不同方式共享",
+    "items": [
+      {
+        "label": "显性知识",
+        "detail": "知识库、登记册、模板、图文资料可直接整理的知识"
+      },
+      {
+        "label": "隐性知识",
+        "detail": "经验诀窍、判断力；人际互动和指导更有效"
+      }
+    ],
+    "center": "",
+    "insight": "知识管理首先营造信任；经验教训从项目早期开始记。",
+    "sourcePage": 47
+  },
+  {
+    "id": "c8-lessons",
+    "chapterId": 8,
+    "topicId": "8.6",
+    "kind": "cycle",
+    "title": "经验教训的持续闭环",
+    "subtitle": "不要到项目结束才想起复盘",
+    "items": [
+      {
+        "label": "尽早创建",
+        "detail": "项目早期建立登记册"
+      },
+      {
+        "label": "日常记录",
+        "detail": "记录问题、挑战、影响、行动"
+      },
+      {
+        "label": "团队分享",
+        "detail": "交流并验证可复用的经验"
+      },
+      {
+        "label": "归档复用",
+        "detail": "收尾进入组织经验教训知识库"
+      }
+    ],
+    "center": "持续积累",
+    "insight": "持续记录、共享、更新，比一次性收尾总结更有效。",
+    "sourcePage": 49
+  },
+  {
+    "id": "c8-performance-chain",
+    "chapterId": 8,
+    "topicId": "8.7",
+    "kind": "path",
+    "title": "绩效数据→信息→报告",
+    "subtitle": "原始事实变成管理决策",
+    "items": [
+      {
+        "label": "原始数据",
+        "detail": "实际成本、进度日期、缺陷数量"
+      },
+      {
+        "label": "分析信息",
+        "detail": "与基准对比、识别偏差及原因"
+      },
+      {
+        "label": "形成报告",
+        "detail": "状态、趋势、预测和建议"
+      },
+      {
+        "label": "决策沟通",
+        "detail": "向干系人报告并实施必要行动"
+      }
+    ],
+    "center": "",
+    "insight": "数据是什么；信息为什么；报告怎么办。",
+    "sourcePage": 41
+  },
+  {
+    "id": "c8-analysis-tools",
+    "chapterId": 8,
+    "topicId": "8.7",
+    "kind": "compare",
+    "title": "监控项目工作的六种分析工具",
+    "subtitle": "根据题目关键词判断工具",
+    "items": [
+      {
+        "label": "备选方案",
+        "detail": "比较多种纠正方案"
+      },
+      {
+        "label": "成本效益",
+        "detail": "找出最节约成本的措施"
+      },
+      {
+        "label": "挣值分析",
+        "detail": "综合范围、进度与成本"
+      },
+      {
+        "label": "根本原因",
+        "detail": "查找偏差的根因"
+      },
+      {
+        "label": "趋势分析",
+        "detail": "从历史规律预测未来"
+      },
+      {
+        "label": "偏差分析",
+        "detail": "比较计划目标与实际差异"
+      }
+    ],
+    "center": "",
+    "insight": "备选选方案，成本效益看值不值，挣值看综合绩效。",
+    "sourcePage": 56
+  },
+  {
+    "id": "c8-change-flow",
+    "chapterId": 8,
+    "topicId": "8.8",
+    "kind": "path",
+    "title": "整体变更控制八步流程",
+    "subtitle": "变更从提出到正式关闭",
+    "items": [
+      {
+        "label": "变更申请",
+        "detail": "正式提出请求"
+      },
+      {
+        "label": "初步审查",
+        "detail": "核对变更合法性、完整性"
+      },
+      {
+        "label": "方案论证",
+        "detail": "分析对范围进度成本风险的影响"
+      },
+      {
+        "label": "正式审查",
+        "detail": "PM/CCB等授权人批准或否决"
+      },
+      {
+        "label": "通知实施",
+        "detail": "通知有关干系人并执行"
+      },
+      {
+        "label": "实施监控",
+        "detail": "跟踪是否按批准方案完成"
+      },
+      {
+        "label": "效果评估",
+        "detail": "检查改动达成效果"
+      },
+      {
+        "label": "变更收尾",
+        "detail": "更新日志、关闭请求"
+      }
+    ],
+    "center": "",
+    "insight": "控制过程审批后，执行团队才实施变更。",
+    "sourcePage": 65
+  },
+  {
+    "id": "c8-change-authorities",
+    "chapterId": 8,
+    "topicId": "8.8",
+    "kind": "compare",
+    "title": "变更审批角色分工",
+    "subtitle": "识别谁有权决定",
+    "items": [
+      {
+        "label": "项目经理",
+        "detail": "一般批准权限范围内的不影响基准的变更"
+      },
+      {
+        "label": "发起人",
+        "detail": "通常审批项目章程的修改"
+      },
+      {
+        "label": "CCB",
+        "detail": "对影响基准和流程指定事项作出决策"
+      },
+      {
+        "label": "客户",
+        "detail": "按合同约定批准需要客户确认的变更"
+      }
+    ],
+    "center": "",
+    "insight": "CCB只做决策不执行；所有变更必须记录并追踪。",
+    "sourcePage": 65
+  },
+  {
+    "id": "c8-configuration",
+    "chapterId": 8,
+    "topicId": "8.8",
+    "kind": "compare",
+    "title": "配置控制 VS 变更控制",
+    "subtitle": "关注的对象不同但互相配合",
+    "items": [
+      {
+        "label": "配置控制",
+        "detail": "识别配置项、记录状态、核实与审计技术规范"
+      },
+      {
+        "label": "变更控制",
+        "detail": "识别变更、记录、作出批准/否决决定、跟踪变更"
+      }
+    ],
+    "center": "",
+    "insight": "配置管理重技术状态；变更管理重审批决策。",
+    "sourcePage": 64
+  },
+  {
+    "id": "c8-closure",
+    "chapterId": 8,
+    "topicId": "8.9",
+    "kind": "path",
+    "title": "项目收尾六项必要活动",
+    "subtitle": "完成 ≠ 正式收尾",
+    "items": [
+      {
+        "label": "检查退出标准",
+        "detail": "核实全部必要条件"
+      },
+      {
+        "label": "关闭合同",
+        "detail": "清理与供应商的承诺"
+      },
+      {
+        "label": "归档总结",
+        "detail": "记录与总结经验教训"
+      },
+      {
+        "label": "成果移交",
+        "detail": "客户/运营接收成果"
+      },
+      {
+        "label": "提出改进",
+        "detail": "改进组织政策与流程"
+      },
+      {
+        "label": "满意度评估",
+        "detail": "调查干系人评价"
+      }
+    ],
+    "center": "",
+    "insight": "即便提前终止，也需要记录原因并完成收尾。",
+    "sourcePage": 71
+  },
+  {
+    "id": "c8-closing-report",
+    "chapterId": 8,
+    "topicId": "8.9",
+    "kind": "compare",
+    "title": "项目最终报告八类内容",
+    "subtitle": "核心四约束与业务价值一起回顾",
+    "items": [
+      {
+        "label": "项目和范围",
+        "detail": "项目概述、范围达成证据"
+      },
+      {
+        "label": "质量",
+        "detail": "质量标准、核实和里程碑偏差"
+      },
+      {
+        "label": "成本与进度",
+        "detail": "实际与计划差异及原因"
+      },
+      {
+        "label": "成果",
+        "detail": "最终产品、服务和移交确认"
+      },
+      {
+        "label": "业务需求",
+        "detail": "是否满足需求和预期效益"
+      },
+      {
+        "label": "风险问题",
+        "detail": "实施中主要问题及处理情况"
+      }
+    ],
+    "center": "",
+    "insight": "最终报告是综合绩效复盘，不只是“项目完成”一句话。",
+    "sourcePage": 73
   }
 ];
