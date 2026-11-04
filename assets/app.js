@@ -57,7 +57,7 @@
   const app=Vue.createApp({
     data(){return {
       EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,essayPrompts:ESSAY_BANK,selectedEssayPromptId:'e13',
-      state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',activeView:'home',sidebarOpen:false,selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
+      state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',visualTypeFilter:'all',activeView:'home',sidebarOpen:false,selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
       evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',stakeholderPower:8,stakeholderInterest:8,domainFocus:0,changeFocus:0,versionStatus:'draft',opmLevel:3,communicationPeople:12,riskCalc:{chance:0.45,gain:80,threatChance:0.25,loss:30,investment:0},procCalc:{targetCost:200,targetFee:20,actualCost:230,sellerShare:30,ceiling:260},networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},
       mathTab:'econ',mathTabs:[{id:'econ',icon:'∑',label:'工程经济'},{id:'lp',icon:'▱',label:'线性规划'},{id:'vogel',icon:'⇄',label:'伏格尔法'},{id:'hungarian',icon:'▦',label:'匈牙利法'},{id:'path',icon:'⌁',label:'最短路径'},{id:'game',icon:'◇',label:'博弈论'},{id:'decision',icon:'≋',label:'决策分析'}],
       mathCapital:100,mathRate:10,mathYears:3,mathCashflows:'40,40,40,40',mathC1:5,mathC2:4,vogelStep:0,hungarianStage:0,
@@ -167,9 +167,12 @@
       allChapterData(){return Object.keys(BUILTINS).concat(Object.keys(this.state.importedChapters)).map(Number).filter((x,i,a)=>a.indexOf(x)===i).sort((a,b)=>a-b).map(id=>({id,...(this.state.importedChapters[id]||BUILTINS[id])})).filter(x=>x.sections)},
       allQuestions(){return this.allChapterData.flatMap(x=>x.questions||[])},
       currentChapterVisuals(){return this.EXAM_VISUALS.filter(v=>Number(v.chapterId)===this.selectedChapter)},
+      featuredChapterVisuals(){return Array.from({length:24},(_,i)=>this.EXAM_VISUALS.find(v=>v.chapterId===i+1&&v.featured)).filter(Boolean)},
+      visualTypeOptions(){const vs=this.currentChapterVisuals;const counts=new Map();vs.forEach(v=>{const key=v.kind;counts.set(key,(counts.get(key)||0)+1)});return [{key:'all',label:'全部图解',count:vs.length},...Array.from(counts,([key,count])=>({key,label:window.EXAM_VISUAL_TYPE_LABELS?.[key]||key,count}))]},
+      filteredChapterVisuals(){return this.currentChapterVisuals.filter(v=>this.visualTypeFilter==='all'||v.kind===this.visualTypeFilter)},
       topicVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic)},
       sectionVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId?.split('.').slice(0,2).join('.')===this.selectedTopic.split('.').slice(0,2).join('.'))},
-      visibleVisualDiagram(){return this.currentChapterVisuals.find(v=>v.id===this.visualFocusId)||this.currentChapterVisuals[0]||null},
+      visibleVisualDiagram(){return this.filteredChapterVisuals.find(v=>v.id===this.visualFocusId)||this.filteredChapterVisuals[0]||null},
       visualChapterStats(){return this.allChapterData.map(d=>{const topics=(d.sections||[]).flatMap(x=>x.children||[]),qs=d.questions||[],answered=qs.filter(q=>this.state.answers[q.id]),mastered=topics.filter(t=>this.state.mastered.includes(t.id)).length,correct=answered.filter(q=>this.state.answers[q.id]?.correct).length;return {id:d.id,name:d.title,topics:topics.length,mastered,mastery:topics.length?Math.round(mastered/topics.length*100):0,answered:answered.length,accuracy:answered.length?Math.round(correct/answered.length*100):0}})},
       allHighlights(){return this.allChapterData.flatMap(x=>x.highlights||[])},
       allTopics(){return this.allChapterData.flatMap(x=>(x.sections||[]).flatMap(s=>s.children||[]))},
@@ -231,7 +234,7 @@
         if(view==='wrong')this.practiceFilter='wrong';else if(view==='favorites')this.practiceFilter='favorite';else if(view==='practice')this.practiceFilter='all';
         if(['wrong','favorites','practice'].includes(view)){this.drillIndex=0;if(view!=='practice')this.practiceSectionFilter='all';}
         window.scrollTo(0,0);if(location.hash!==`#/${view}`)location.hash=`/${view}`},
-      openVisualInMaps(id){const v=this.EXAM_VISUALS.find(x=>x.id===id);if(!v)return;this.selectedChapter=v.chapterId;this.visualFocusId=v.id;this.navigate('maps')},
+      openVisualInMaps(id){const v=this.EXAM_VISUALS.find(x=>x.id===id);if(!v)return;this.selectedChapter=v.chapterId;this.visualTypeFilter='all';this.visualFocusId=v.id;this.navigate('maps')},
       groupMasteryPercent(group){const chapterNames=new Set(group.chapters||[]);const items=this.allChapterData.filter(d=>chapterNames.has(d.title)).flatMap(d=>d.sections||[]).flatMap(sec=>sec.children||[]);return items.length?Math.round(items.filter(t=>this.state.mastered.includes(t.id)).length/items.length*100):0},
       mathNode(id){return window.ExamMathLab.routeNodes.find(n=>n.id===id);},
       openChapter(id){this.selectedChapter=id;this.practiceSectionFilter='all';this.selectedTopic=this.currentChapterTopicList[0]?.id||'';this.openSectionGroups=this.currentChapterSections.map(s=>s.id);this.readingTab='course';this.navigate('knowledge')},
