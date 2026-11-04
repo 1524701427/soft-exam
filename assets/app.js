@@ -70,7 +70,7 @@
       importMessage:'',importError:false,toast:'',mapNames:['全章思维导图','信息与信息系统','信息化与新基建','工业互联网与车联网','现代化创新发展','数字经济与元宇宙','数字政府与数字生态','数字化转型与智慧转移'],
       navMain:[{id:'home',label:'学习总览',icon:'home'},{id:'chapters',label:'章节管理',icon:'layers'},{id:'knowledge',label:'知识点学习',icon:'book'},{id:'practice',label:'章节练习',icon:'clipboard'},{id:'exam',label:'模拟考试',icon:'timer'}],
       navResources:[{id:'pastpapers',label:'历年真题',icon:'file'},{id:'wrong',label:'错题本',icon:'alert'},{id:'favorites',label:'我的收藏',icon:'star'},{id:'cases',label:'案例分析',icon:'file'},{id:'essays',label:'论文训练',icon:'pen'},{id:'progress',label:'学习统计',icon:'chart'}],
-      quickActions:[{view:'knowledge',name:'知识点学习',desc:'全24章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'800 道配套与自测题',icon:'clipboard',tone:'peach'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
+      quickActions:[{view:'knowledge',name:'知识点学习',desc:'全24章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'讲义配套、案例改编与知识自测',icon:'clipboard',tone:'peach'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
     }},
     computed:{
       viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',calculations:'计算专题',casebook:'案例分析',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
@@ -208,7 +208,7 @@
         {label:'已练习题目',caption:'题库共 '+this.allQuestions.length+' 题',value:this.answeredCount,unit:' 题',tone:'blue',icon:'clipboard'},
         {label:'练习正确率',caption:'最近一次作答',value:this.answerAccuracy,unit:'%',tone:'mint',icon:'chart'},
         {label:'待复习错题',caption:'有错题就有进步',value:this.state.wrongIds.length,unit:' 题',tone:'peach',icon:'alert'}]},
-      filteredQuestions(){let qs=this.allQuestions.filter(q=>Number(q.chapterId)===this.selectedChapter);if(this.practiceFilter==='wrong')qs=qs.filter(q=>this.state.wrongIds.includes(q.id));if(this.practiceFilter==='favorite')qs=qs.filter(q=>this.state.bookmarked.includes(q.id));if(this.practiceFilter==='unanswered')qs=qs.filter(q=>!this.state.answers[q.id]);if(this.practiceFilter==='marked')qs=qs.filter(q=>q.kind==='资料标记真题'||/\d{2}/.test(String(q.sourceLabel||'')));if(this.practiceSectionFilter!=='all')qs=qs.filter(q=>q.sectionId===this.practiceSectionFilter);return qs},
+      filteredQuestions(){let qs=this.allQuestions.filter(q=>Number(q.chapterId)===this.selectedChapter);if(this.practiceFilter==='wrong')qs=qs.filter(q=>this.state.wrongIds.includes(q.id));if(this.practiceFilter==='favorite')qs=qs.filter(q=>this.state.bookmarked.includes(q.id));if(this.practiceFilter==='unanswered')qs=qs.filter(q=>!this.state.answers[q.id]);if(this.practiceFilter==='marked')qs=qs.filter(q=>!String(q.id||'').startsWith('gold26-')&&(q.kind==='资料标记真题'||/\d{2}/.test(String(q.sourceLabel||''))));if(this.practiceFilter==='gold')qs=qs.filter(q=>String(q.id||'').startsWith('gold26-'));if(this.practiceSectionFilter!=='all')qs=qs.filter(q=>q.sectionId===this.practiceSectionFilter);return qs},
       currentDrillQ(){return this.filteredQuestions[Math.min(this.drillIndex,this.filteredQuestions.length-1)]},
       examCountOptions(){const len=this.allQuestions.length;return [10,20,40].filter(n=>n<=len).concat(len<10&&len>0?[len]:[])},
       examQuestionObjects(){return (this.examActive?.questions||[]).map(id=>this.allQuestions.find(q=>q.id===id)).filter(Boolean)},

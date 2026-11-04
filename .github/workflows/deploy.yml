@@ -31,6 +31,8 @@ jobs:
           test -f assets/vue.global.prod.js || { echo "缺少 Vue runtime"; exit 1; }
       - name: Check 24-chapter knowledge integrity
         run: python3 scripts/check_knowledge_integrity.py
+      - name: Verify 2026 case material supplements and original content
+        run: node scripts/check_case_gold_import.js
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
