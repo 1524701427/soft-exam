@@ -1,0 +1,17 @@
+<svg font-family="Noto Sans CJK SC, Microsoft YaHei, sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" role="img" aria-labelledby="p_title p_desc"><title id="p_title">第05章 信息系统工程 原创学习结构图</title><desc id="p_desc">4 条主线 · 概念—方法—实现—安全</desc><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1f6ff"/><stop offset="1" stop-color="#f2fafb"/></linearGradient></defs><rect width="1120" height="420" fill="url(#bg)" rx="30"/><circle cx="1030" cy="55" r="118" fill="#476be8" opacity=".055"/><circle cx="1010" cy="10" r="58" fill="#476be8" opacity=".065"/><text x="40" y="52" font-size="16" fill="#476be8" letter-spacing="3" font-weight="700">SOFT EXAM • CHAPTER 05</text><text x="40" y="106" font-size="38" font-weight="800" fill="#13244c">信息系统工程</text><text x="40" y="151" font-size="19" fill="#637396">4 条主线 · 概念—方法—实现—安全</text><rect x="40" y="190" width="230" height="185" rx="24" fill="#ffffff" stroke="#dce4f5" stroke-width="2"/>
+  <rect x="58" y="210" width="48" height="48" rx="15" fill="#476be8" opacity=".15"/>
+  <text x="82" y="244" font-size="19" font-weight="800" text-anchor="middle" fill="#476be8">01</text>
+  <text x="58" y="298" font-size="25" font-weight="800" fill="#172653">软件工程</text>
+  <text x="58" y="342" font-size="17" fill="#56678e">开发与过程能力</text><path d="M 279 281 H 297 m -9 -7 9 7 -9 7" stroke="#476be8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" /><rect x="310" y="190" width="230" height="185" rx="24" fill="#ffffff" stroke="#dce4f5" stroke-width="2"/>
+  <rect x="328" y="210" width="48" height="48" rx="15" fill="#476be8" opacity=".15"/>
+  <text x="352" y="244" font-size="19" font-weight="800" text-anchor="middle" fill="#476be8">02</text>
+  <text x="328" y="298" font-size="25" font-weight="800" fill="#172653">数据工程</text>
+  <text x="328" y="342" font-size="17" fill="#56678e">模型、标准与容灾</text><path d="M 549 281 H 567 m -9 -7 9 7 -9 7" stroke="#476be8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" /><rect x="580" y="190" width="230" height="185" rx="24" fill="#ffffff" stroke="#dce4f5" stroke-width="2"/>
+  <rect x="598" y="210" width="48" height="48" rx="15" fill="#476be8" opacity=".15"/>
+  <text x="622" y="244" font-size="19" font-weight="800" text-anchor="middle" fill="#476be8">03</text>
+  <text x="598" y="298" font-size="25" font-weight="800" fill="#172653">系统集成</text>
+  <text x="598" y="342" font-size="17" fill="#56678e">网络数据与应用</text><path d="M 819 281 H 837 m -9 -7 9 7 -9 7" stroke="#476be8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" /><rect x="850" y="190" width="230" height="185" rx="24" fill="#ffffff" stroke="#dce4f5" stroke-width="2"/>
+  <rect x="868" y="210" width="48" height="48" rx="15" fill="#476be8" opacity=".15"/>
+  <text x="892" y="244" font-size="19" font-weight="800" text-anchor="middle" fill="#476be8">04</text>
+  <text x="868" y="298" font-size="25" font-weight="800" fill="#172653">安全工程</text>
+  <text x="868" y="342" font-size="17" fill="#56678e">三维空间与成熟度</text><text x="40" y="405" font-size="14" fill="#8190ad">原创图解 · 根据已上传第 5 章讲义知识结构整理</text></svg>

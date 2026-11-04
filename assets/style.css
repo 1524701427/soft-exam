@@ -13,3 +13,16 @@
 
 /* Chapter 3 learning experience */
 .secondary-chapter-banner{background:linear-gradient(110deg,#f1f5fa,#edf3ff);color:#51607c}.secondary-chapter-banner button{background:#52679f}.mindmap-topic{border:1px solid #e5e9ed;border-radius:11px;padding:1px 8px 9px;margin:8px 0}.mindmap-level-one .mindmap-topic button{border:0;margin-top:2px}.mindmap-tags{display:flex;flex-wrap:wrap;gap:5px;padding:0 5px}.mindmap-tags span{padding:4px 7px;border-radius:6px;background:#f1f8f6;color:#46816c;font-size:11px;line-height:1.35}@media(max-width:650px){.mindmap-tags span{font-size:10px}}
+
+/* Chapter 05-06 original overview illustration cards */
+.chapter-art-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0}
+.chapter-art-card{border:1px solid #e1e8f6;background:#fff;text-align:left;overflow:hidden;border-radius:21px;padding:0;cursor:pointer;box-shadow:0 10px 30px rgba(35,54,98,.055);transition:transform .2s,box-shadow .2s}
+.chapter-art-card:hover{transform:translateY(-3px);box-shadow:0 15px 36px rgba(35,54,98,.11)}
+.chapter-art-card img{display:block;width:100%;aspect-ratio:1120 / 420;object-fit:cover}
+.chapter-art-card > span{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:15px 20px 18px;flex-wrap:wrap}
+.chapter-art-card strong{font-size:15px;color:#223357;font-weight:750}
+.chapter-art-card small{font-size:12px;color:#6b7c9c}
+.dark-mode .chapter-art-card{background:#192744;border-color:#304566}
+.dark-mode .chapter-art-card strong{color:#e9effe}
+.dark-mode .chapter-art-card small{color:#adbad7}
+@media(max-width:1000px){.chapter-art-rail{grid-template-columns:1fr}}
