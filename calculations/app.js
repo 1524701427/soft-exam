@@ -60,8 +60,8 @@ Vue.createApp({
   buyResult(){return C.makeBuy(this.buyFields.qty,this.buyFields.makeFixed,this.buyFields.makeVariable,this.buyFields.buyFixed,this.buyFields.buyVariable)}
  },
  methods:{
-  setTab(key){this.tab=key;if(document.documentElement.classList.contains('is-embedded'))window.parent.postMessage({type:'gao-xiang-embed-top'},location.origin);if(key!=='lesson'&&location.search.includes('lesson='))history.replaceState(null,'',location.pathname);try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}},
-  openLesson(id){if(!this.lessons.some(l=>l.id===id))return;this.lessonId=id;this.setTab('lesson');history.replaceState(null,'',location.pathname+'?lesson='+id)},
+  setTab(key){this.tab=key;if(document.documentElement.classList.contains('is-embedded'))window.parent.postMessage({type:'gao-xiang-embed-top'},location.origin);if(key!=='lesson'&&location.search.includes('lesson='))history.replaceState(null,'',location.pathname+(document.documentElement.classList.contains('is-embedded')?'?embed=1':''));try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}},
+  openLesson(id){if(!this.lessons.some(l=>l.id===id))return;this.lessonId=id;this.setTab('lesson');history.replaceState(null,'',location.pathname+(document.documentElement.classList.contains('is-embedded')?'?embed=1&lesson=':'?lesson=')+id)},
   groupIcon(id){return({schedule:'⌁',cost:'¥',combined:'▥',essentials:'∑'})[id]||'◇'},
   lessonProblemCount(id){return this.problems.filter(q=>q.lesson===id).length},
   isLessonPracticed(id){return this.problems.some(q=>q.lesson===id&&this.attempts[q.id])},
