@@ -17,6 +17,7 @@
     <div class="sidebar-scroll">
       <div class="nav-label">学习工作台</div>
       <button v-for="item in navMain" :key="item.id" class="nav-item" :class="{'active':activeView===item.id}" @click="navigate(item.id)"><span class="nav-icon" v-html="icon(item.icon)"></span><span>{{item.label}}</span><span v-if="item.id==='wrong' && state.wrongIds.length" class="nav-pill">{{state.wrongIds.length}}</span></button>
+      <a class="nav-item" href="./calculations/" aria-label="打开计算专题独立课程" style="text-decoration:none;color:inherit"><span class="nav-icon" style="font-weight:900;font-size:18px;display:inline-grid;place-items:center">∑</span><span>计算专题</span><span style="margin-left:auto;font-size:9px;letter-spacing:.4px;border-radius:5px;padding:2px 5px;background:#e8f4ed;color:#26765e;font-weight:850">NEW</span></a>
       <div class="nav-label nav-gap">学习资源</div>
       <button v-for="item in navResources" :key="item.id" class="nav-item" :class="{'active':activeView===item.id}" @click="navigate(item.id)"><span class="nav-icon" v-html="icon(item.icon)"></span><span>{{item.label}}</span></button>
       <div class="sidebar-divider"></div>
