@@ -8,28 +8,59 @@
 <title>高项研习社 · 信息系统项目管理师学习平台</title>
 <link rel="stylesheet" href="./assets/style.css?v=1.9" />
 <link rel="stylesheet" href="./assets/visuals.css?v=2.2" />
-<link rel="stylesheet" href="./assets/visual-modes.css?v=2.2" /><link rel="stylesheet" href="./assets/reading-v22.css?v=2.2" />
+<link rel="stylesheet" href="./assets/visual-modes.css?v=2.2" /><link rel="stylesheet" href="./assets/reading-v22.css?v=2.2" /><link rel="stylesheet" href="./assets/nav-six.css?v=1.0" />
 </head>
 <body>
 <div id="app" v-cloak :class="{'dark-mode':state.settings.dark}">
   <aside class="sidebar" :class="{'mobile-open':sidebarOpen}">
     <div class="brand"><div class="brand-mark">研<span>·</span></div><div><strong>高项研习社</strong><small>信息系统项目管理师</small></div><button class="mobile-close" @click="sidebarOpen=false">✕</button></div>
     <div class="sidebar-scroll">
-      <div class="nav-label">学习工作台</div>
-      <button v-for="item in navMain" :key="item.id" class="nav-item" :class="{'active':activeView===item.id}" @click="navigate(item.id)"><span class="nav-icon" v-html="icon(item.icon)"></span><span>{{item.label}}</span><span v-if="item.id==='wrong' && state.wrongIds.length" class="nav-pill">{{state.wrongIds.length}}</span></button>
-      <a class="nav-item" href="./calculations/" aria-label="打开计算专题独立课程" style="text-decoration:none;color:inherit"><span class="nav-icon" style="font-weight:900;font-size:18px;display:inline-grid;place-items:center">∑</span><span>计算专题</span><span style="margin-left:auto;font-size:9px;letter-spacing:.4px;border-radius:5px;padding:2px 5px;background:#e8f4ed;color:#26765e;font-weight:850">NEW</span></a>
-      <a class="nav-item" href="./cases/" aria-label="打开案例分析找错改错专题" style="text-decoration:none;color:inherit"><span class="nav-icon" style="font-weight:900;font-size:18px;display:inline-grid;place-items:center">✓</span><span>案例分析·找错改错</span><span style="margin-left:auto;font-size:9px;letter-spacing:.4px;border-radius:5px;padding:2px 5px;background:#e8f4ed;color:#26765e;font-weight:850">NEW</span></a>
-      <div class="nav-label nav-gap">学习资源</div>
-      <button v-for="item in navResources" :key="item.id" class="nav-item" :class="{'active':activeView===item.id}" @click="navigate(item.id)"><span class="nav-icon" v-html="icon(item.icon)"></span><span>{{item.label}}</span></button>
-      <div class="sidebar-divider"></div>
-      <div class="side-section-title"><span>教材章节</span><button @click="navigate('chapters')" title="查看24章">全部 <span class="arrow-small">›</span></button></div>
-      <div v-for="g in EXAM_CATALOG" :key="g.group" class="chapter-side-group"><div class="chapter-group-label">{{g.group}}</div><button v-for="n in g.chapters" :key="n" class="chapter-mini" :class="{'selected':selectedChapter===getChapterId(n)}" @click="openChapter(getChapterId(n))"><span class="chapter-mini-no">{{String(getChapterId(n)).padStart(2,'0')}}</span><span class="ellipsis">{{n}}</span><span v-if="isChapterReady(getChapterId(n))" class="side-dot"></span></button></div>
+      <div class="nav-label">备考导航 · 六大模块</div>
+      <button class="site-six-primary" :class="{'is-current':['home','chapters','knowledge','maps','search','settings'].includes(activeView)}" @click="navigate('home')"><span class="six-side-symbol">▤</span><span>综合知识</span><span class="six-side-arrow">›</span></button>
+      <div class="site-six-sub" v-if="['home','chapters','knowledge','maps','search','settings'].includes(activeView)">
+        <button :class="{'is-current':activeView==='home'}" @click="navigate('home')">学习总览</button>
+        <button :class="{'is-current':activeView==='chapters'}" @click="navigate('chapters')">24 章教材目录</button>
+        <button :class="{'is-current':activeView==='knowledge'}" @click="navigate('knowledge')">知识点学习与图解</button>
+        <details class="site-six-chapters"><summary>展开 24 章快捷目录</summary>
+          <div v-for="g in EXAM_CATALOG" :key="g.group" class="chapter-side-group">
+            <div class="chapter-group-label">{{g.group}}</div>
+            <button v-for="n in g.chapters" :key="n" class="chapter-mini" :class="{'selected':selectedChapter===getChapterId(n)}" @click="openChapter(getChapterId(n))"><span class="chapter-mini-no">{{String(getChapterId(n)).padStart(2,'0')}}</span><span class="ellipsis">{{n}}</span><span v-if="isChapterReady(getChapterId(n))" class="side-dot"></span></button>
+          </div>
+        </details>
+      </div>
+      <a class="site-six-primary" href="./calculations/"><span class="six-side-symbol">∑</span><span>计算专题</span><span class="six-side-arrow">›</span></a>
+      <a class="site-six-primary" href="./cases/" :class="{'is-current':activeView==='cases'}"><span class="six-side-symbol">✓</span><span>案例分析</span><span class="six-side-arrow">›</span></a>
+      <div class="site-six-sub" v-if="activeView==='cases'">
+        <a href="./cases/">找错改错专题</a>
+        <button class="is-current" @click="navigate('cases')">案例作答训练</button>
+      </div>
+      <button class="site-six-primary" :class="{'is-current':activeView==='essays'}" @click="navigate('essays')"><span class="six-side-symbol">✎</span><span>论文</span><span class="six-side-arrow">›</span></button>
+      <div class="site-six-sub" v-if="activeView==='essays'">
+        <button class="is-current" @click="navigate('essays')">论文选题与写作练习</button>
+      </div>
+      <button class="site-six-primary" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam'].includes(activeView)}" @click="navigate('practice')"><span class="six-side-symbol">▦</span><span>题库</span><span class="six-side-arrow">›</span></button>
+      <div class="site-six-sub" v-if="['practice','pastpapers','wrong','favorites','exam'].includes(activeView)">
+        <button :class="{'is-current':activeView==='practice'}" @click="navigate('practice')">章节练习</button>
+        <button :class="{'is-current':activeView==='pastpapers'}" @click="navigate('pastpapers')">历年真题</button>
+        <button :class="{'is-current':activeView==='exam'}" @click="navigate('exam')">模拟考试</button>
+        <button :class="{'is-current':activeView==='wrong'}" @click="navigate('wrong')">错题本 <span class="six-sub-count" v-if="state.wrongIds.length">{{state.wrongIds.length}}</span></button>
+        <button :class="{'is-current':activeView==='favorites'}" @click="navigate('favorites')">我的收藏</button>
+      </div>
+      <button class="site-six-primary" :class="{'is-current':activeView==='progress'}" @click="navigate('progress')"><span class="six-side-symbol">◴</span><span>学习统计</span><span class="six-side-arrow">›</span></button>
     </div>
     <div class="sidebar-bottom"><div class="user-avatar">学</div><div class="user-info"><strong>我的学习空间</strong><small>仅保存在当前浏览器</small></div><button class="side-gear" title="设置和数据管理" @click="navigate('settings')" v-html="icon('settings')"></button></div>
   </aside>
   <div v-if="sidebarOpen" class="mobile-scrim" @click="sidebarOpen=false"></div>
   <div class="app-shell">
     <header class="topbar"><button class="mobile-toggle" @click="sidebarOpen=true" v-html="icon('menu')"></button><div class="breadcrumbs"><span>备考中心</span><span class="bread-sep">/</span><strong>{{viewTitle}}</strong></div><div class="top-right"><div class="global-search"><span v-html="icon('search')"></span><input v-model="searchQuery" @keydown.enter="performSearch" placeholder="搜索章节、知识点、题目..." /><kbd @click="performSearch">↵</kbd></div><button class="top-icon-btn" title="切换深色模式" @click="state.settings.dark=!state.settings.dark" v-html="icon(state.settings.dark?'sun':'moon')"></button><span class="top-avatar">学</span></div></header>
+    <nav class="study-six-nav" aria-label="六大备考模块">
+ <a class="study-six-link" href="./index.html#/home" :class="{'is-current':['home','chapters','knowledge','maps','search','settings'].includes(activeView)}"><span class="six-nav-symbol">▤</span>综合知识</a>
+ <a class="study-six-link" href="./calculations/" ><span class="six-nav-symbol">∑</span>计算专题</a>
+ <a class="study-six-link" href="./cases/" :class="{'is-current':activeView==='cases'}"><span class="six-nav-symbol">✓</span>案例分析</a>
+ <a class="study-six-link" href="./index.html#/essays" :class="{'is-current':activeView==='essays'}"><span class="six-nav-symbol">✎</span>论文</a>
+ <a class="study-six-link" href="./index.html#/practice" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam'].includes(activeView)}"><span class="six-nav-symbol">▦</span>题库</a>
+ <a class="study-six-link" href="./index.html#/progress" :class="{'is-current':activeView==='progress'}"><span class="six-nav-symbol">◴</span>学习统计</a>
+</nav>
     <main class="main-content">
       <!-- 首页 -->
       <template v-if="activeView==='home'">

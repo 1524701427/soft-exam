@@ -1,0 +1,30 @@
+/* 高项研习社｜跨页面六大备考模块导航。独立样式，不覆盖原有课程、题库和练习逻辑。 */
+.study-six-nav{display:flex;align-items:center;gap:9px;padding:10px clamp(17px,3vw,43px);background:#fff;border-bottom:1px solid #e7ecf3;min-height:61px;overflow-x:auto;white-space:nowrap;scrollbar-width:thin;scrollbar-color:#d5dfe8 transparent;flex-shrink:0}
+.study-six-nav .study-six-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:37px;padding:7px 16px;border:1px solid transparent;border-radius:10px;font-size:13px;font-weight:750;color:#617187;text-decoration:none;background:transparent;transition:background .16s,border-color .16s,color .16s}
+.study-six-nav .study-six-link:hover{background:#f1f7f6;color:#176e60;border-color:#e0eeea}
+.study-six-nav .study-six-link.is-current,.study-six-nav .study-six-link[aria-current="page"]{background:#e8f5f0;border-color:#bce1d3;color:#147966}
+.study-six-nav .study-six-link .six-nav-symbol{font-size:15px;font-weight:850;min-width:17px;text-align:center}
+.site-six-primary{appearance:none;display:flex;align-items:center;gap:12px;padding:10px 12px;width:100%;min-height:45px;border:0;background:transparent;color:#b6c4d9;border-radius:10px;text-decoration:none;text-align:left;font-size:13px;font-weight:750;margin:4px 0}
+.site-six-primary:hover{background:#1f304d;color:#fff}
+.site-six-primary.is-current{background:#2a405f;color:#fff;box-shadow:inset 3px 0 #7dd8c2}
+.site-six-primary .six-side-symbol{width:25px;height:25px;background:#253752;border-radius:8px;display:grid;place-items:center;font-size:14px;font-weight:850;color:#c7d6eb;flex-shrink:0}
+.site-six-primary.is-current .six-side-symbol{background:#217c70;color:#f4fffd}
+.site-six-primary .six-side-arrow{margin-left:auto;font-size:16px;font-weight:500;color:#829bb9}
+.site-six-sub{margin:2px 0 9px 17px;padding:3px 0 4px 12px;border-left:1px solid #394660}
+.site-six-sub a,.site-six-sub button{appearance:none;border:0;display:flex;align-items:center;gap:9px;min-height:33px;padding:7px 10px;width:100%;background:transparent;color:#99aecb;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;text-align:left}
+.site-six-sub a:hover,.site-six-sub button:hover{background:#213552;color:#fff}
+.site-six-sub a.is-current,.site-six-sub button.is-current{background:#234b54;color:#a8efdf;font-weight:800}
+.site-six-sub .six-sub-number{font-size:10px;color:#789ab6;min-width:16px}
+.site-six-sub .six-sub-count{margin-left:auto;font-size:10px;color:#b5c4d6;background:#30425d;border-radius:12px;padding:1px 6px}
+.site-six-chapters{margin:8px 0 4px}
+.site-six-chapters summary{cursor:pointer;padding:8px 10px;color:#aabdd3;font-size:11px;border-radius:8px;list-style-position:inside}
+.site-six-chapters summary:hover{background:#203552;color:#eaf4ff}
+.site-six-chapters .chapter-group-label{padding:11px 8px 4px}
+.site-six-chapters .chapter-mini{padding-left:9px}
+.site-six-chapters .chapter-mini-no{font-size:10px}
+#app.dark-mode .study-six-nav{background:var(--panel);border-color:var(--border)}
+#app.dark-mode .study-six-link{color:#9aaac0}
+#app.dark-mode .study-six-link.is-current{background:#214e49;border-color:#356d61;color:#b0f6e2}
+#app.dark-mode .study-six-link:hover{background:#253d46;color:#b4f6e3}
+@media (max-width:1120px){.study-six-nav{gap:5px}.study-six-nav .study-six-link{padding:7px 11px;font-size:12px}}
+@media (max-width:680px){.study-six-nav{padding:8px 12px;min-height:53px;gap:3px}.study-six-nav .study-six-link{padding:7px 11px;font-size:12px;min-height:34px}.study-six-nav .study-six-link .six-nav-symbol{font-size:13px;min-width:14px}}

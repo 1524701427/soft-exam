@@ -1,6 +1,14 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#172b4d"/><title>计算专题 · 高项研习社</title><meta name="description" content="高项研习社计算专题：11讲系统学习进度网络图、三点估算、挣值分析、进度成本综合与小计算，附交互计算器和分专题练习。"/><link rel="stylesheet" href="./style.css?v=2.3.0"/></head>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#172b4d"/><title>计算专题 · 高项研习社</title><meta name="description" content="高项研习社计算专题：11讲系统学习进度网络图、三点估算、挣值分析、进度成本综合与小计算，附交互计算器和分专题练习。"/><link rel="stylesheet" href="./style.css?v=2.3.0"/><link rel="stylesheet" href="../assets/nav-six.css?v=1.0"/></head>
 <body><div id="calc-app" v-cloak>
+<nav class="study-six-nav" aria-label="六大备考模块">
+ <a class="study-six-link" href="../index.html#/home" ><span class="six-nav-symbol">▤</span>综合知识</a>
+ <a class="study-six-link" href="../calculations/" aria-current="page"><span class="six-nav-symbol">∑</span>计算专题</a>
+ <a class="study-six-link" href="../cases/" ><span class="six-nav-symbol">✓</span>案例分析</a>
+ <a class="study-six-link" href="../index.html#/essays" ><span class="six-nav-symbol">✎</span>论文</a>
+ <a class="study-six-link" href="../index.html#/practice" ><span class="six-nav-symbol">▦</span>题库</a>
+ <a class="study-six-link" href="../index.html#/progress" ><span class="six-nav-symbol">◴</span>学习统计</a>
+</nav>
 <header class="site-header"><div class="header-inner"><a href="../index.html#/home" class="header-brand"><span class="brand-symbol">研</span><span>高项研习社 <small>／ 计算专题</small></span></a><nav class="global-nav" aria-label="主要导航"><button v-for="t in tabs" :key="t.key" :class="{'active':tab===t.key}" @click="setTab(t.key)">{{t.label}}</button></nav><a class="header-back" href="../index.html#/chapters"><span>↖</span> 返回 24 章</a></div></header>
 <main class="container">
 <section v-if="tab==='home'" class="home-view"><div class="hero"><div class="hero-left"><div class="eyebrow light">SPECIAL TOPIC · CALCULATION</div><h1>把计算题，<br><span>一道一道算明白。</span></h1><p>按课件的 11 讲重新组织：先理解公式，再动手代入，最后用案例思路训练。进度、成本、综合类与小计算，都放在这里。</p><div class="hero-cta"><button class="btn white" @click="openLesson('01')">从第 01 讲开始 <span>→</span></button><button class="btn ghost-white" @click="setTab('tools')">打开计算工具 <span>↗</span></button></div></div><div class="hero-decor" aria-hidden="true"><div class="hero-plot"><div class="plot-grid"></div><svg viewBox="0 0 340 220" role="img"><path d="M23 178 L85 148 L137 165 L194 101 L245 117 L316 37" fill="none" stroke="#86c8ef" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 178 L85 148 L137 165 L194 101 L245 117 L316 37 L316 204 L23 204Z" fill="url(#grad)" opacity=".18"/><defs><linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8ee0d3"/><stop offset="1" stop-color="#8ee0d3" stop-opacity="0"/></linearGradient></defs><g fill="#ffffff"><circle cx="85" cy="148" r="7"/><circle cx="194" cy="101" r="7"/><circle cx="316" cy="37" r="7"/></g></svg><span class="plot-label">PV · EV · AC</span></div></div></div>
