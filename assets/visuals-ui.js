@@ -18,7 +18,7 @@ window.ExamVisualComponent = {
       }
       return `conic-gradient(${seg.join(',')})`;
     },
-    sourceLabel(){return this.diagram.sourcePage?'整理自讲义 P'+this.diagram.sourcePage:'章节知识结构整理'}
+    sourceLabel(){return this.diagram.sourcePage?'资料：'+(this.diagram.sourceDocument||'章节讲义')+' · P'+this.diagram.sourcePage:'章节知识结构整理'}
   },
   watch:{'diagram.id'(){this.selectedIndex=0}},
   methods:{
