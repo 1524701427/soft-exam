@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#142744" />
+<meta name="description" content="高项研习社案例分析找错改错专题：整合、范围、质量、资源、沟通干系人、风险、采购合同、立项招投标、配置变更，按题干线索梳理错误点与改正措施。" />
+<title>案例分析 · 找错改错专题 | 高项研习社</title>
+<link rel="stylesheet" href="./style.css?v=2.4.0" />
+</head>
+<body>
+<div class="layout">
+<aside class="side" aria-label="案例分析目录">
+ <div class="side-head">
+  <a class="logo" href="../index.html#/home"><span class="logo-symbol">研</span><span><strong>高项研习社</strong><small>SOFT EXAM · STUDY CENTER</small></span></a>
+  <p class="side-description">案例分析 · 找错改错专题</p>
+ </div>
+ <div class="side-menu">
+  <div class="side-label">学习方式</div>
+  <button class="side-link selected" type="button" data-view="library"><span class="link-icon">▦</span>找错要点库</button>
+  <button class="side-link" type="button" data-view="method"><span class="link-icon">✦</span>通用找错方法</button>
+  <button class="side-link" type="button" data-view="practice"><span class="link-icon">◈</span>案例线索自测</button>
+  <button class="side-link" type="button" data-view="favorites"><span class="link-icon">☆</span>我的收藏</button>
+  <div class="side-divider"></div>
+  <div class="side-label">九大专题</div>
+  <div id="topic-nav"></div>
+ </div>
+ <div class="side-bottom">学习记录只保存在当前浏览器。<br/>不影响原有 24 章、800 题及计算专题。</div>
+</aside>
+<div class="workspace">
+<header class="topbar">
+ <div class="breadcrumb"><span>备考中心</span><span> / </span><a href="../index.html#/home">高项研习社</a><span> / </span><b>案例分析 · 找错改错</b></div>
+ <nav class="toplinks"><a href="../index.html#/home">24 章课程</a><a href="../calculations/">计算专题</a><a href="https://github.com/1524701427/soft-exam" target="_blank" rel="noopener">项目源码 ↗</a></nav>
+</header>
+<main class="main">
+ <div class="mobile-topic"><select id="topic-select" aria-label="切换案例管理领域"><option value="all">全部领域</option></select></div>
+ <section class="hero">
+  <div>
+    <div class="eyebrow">SPECIAL COURSE · CASE STUDY</div>
+    <h1>从题干里找问题，<br/><em>把改错思路写清楚。</em></h1>
+    <p>整合、范围、质量、资源、沟通干系人、风险、采购合同、立项招投标、配置变更。根据 9 份案例辅导资料整理，逐个拆开「题干线索 → 错误描述 → 正确做法」。</p>
+    <div class="hero-buttons"><button id="hero-start" class="button button-white" type="button">开始找错训练 →</button><button id="hero-practice" class="button button-outline" type="button">随机抽题自测 ↗</button></div>
+  </div>
+  <div class="hero-side" aria-hidden="true"><div class="hero-figure"><div class="hero-paper"><span></span><span></span><span></span><b>✓</b></div></div></div>
+ </section>
+ <div class="metrics">
+   <div class="metric"><strong id="stat-domains">9</strong><label>管理专题</label></div>
+   <div class="metric"><strong id="stat-cards">—</strong><label>找错改错要点</label></div>
+   <div class="metric"><strong id="stat-mastered">0</strong><label>已标记掌握</label><div class="progress-bar"><i id="progress-fill"></i></div><div class="progress-hint" id="progress-value">0%</div></div>
+   <div class="metric"><strong id="stat-favs">0</strong><label>个人收藏</label></div>
+ </div>
+
+ <section id="main-library">
+  <div class="heading"><div><span class="eyebrow">LEARNING ROADMAP</span><h2>九大管理专题</h2><p>选择一个领域，再按案例编号或关键词检索。</p></div><span class="line-link">独立专题 · 原课程不变</span></div>
+  <div id="topic-grid" class="domain-grid"></div>
+  <div class="study-area">
+   <div class="heading"><div><span class="eyebrow">FIND & CORRECT</span><h2 id="current-domain">全部领域</h2><p id="domain-summary">按领域分类、按案例检索。</p></div></div>
+   <div class="toolbar">
+    <input id="search-field" type="search" aria-label="检索找错要点" placeholder="搜索：变更审批、需求确认、质量审计、风险登记册……" autocomplete="off" />
+    <select id="case-filter" aria-label="筛选案例编号"><option value="all">全部案例编号</option></select>
+    <select id="filter-select" aria-label="筛选掌握状态"><option value="all">全部状态</option><option value="unmastered">未掌握</option><option value="mastered">已掌握</option><option value="favorite">我的收藏</option></select>
+    <button id="clear-filters" type="button" class="clear">清除筛选</button>
+   </div>
+   <div class="results-line"><b id="result-count">筛选结果 — 条</b><span>点击题目展开题干依据与改错措施</span></div>
+   <div id="cards-list" class="card-list"></div>
+   <div id="empty-result" class="empty-box" hidden>当前条件下没有符合的找错点，请调整关键词或领域。</div>
+   <button id="load-more" type="button" class="load-button" hidden>加载更多找错点 ↓</button>
+  </div>
+ </section>
+ <section id="main-method" hidden>
+  <div class="heading"><div><span class="eyebrow">METHOD / ANSWER FRAMEWORK</span><h2>案例找错的通用方法</h2><p>用管理过程的逻辑去定位问题，不是只背一串关键词。</p></div></div>
+  <div class="method-intro"><h3>答题三步：定位事实 → 指出错误 → 给出可执行改正</h3><p>1. 先圈题干中的<strong>角色、流程、时间顺序、批准、记录、标准、检查</strong>等信号词。</p><p>2. 归入相关领域（如范围、变更、质量、风险），对照正常流程找被跳过的环节。</p><p>3. 写答案时不要只说「管理不到位」，而要补上<strong>谁来做、按什么依据、如何评审和留痕、如何验证</strong>。</p></div>
+  <div id="method-grid" class="method-grid"></div>
+  <div class="heading"><div><h2>可复用的作答框架</h2><p>把题干事实写进答案，避免只写概念。</p></div><button id="copy-template" class="button" type="button">复制答题框架</button></div>
+  <div class="template"><strong>错误：</strong>题干中【关键事实】说明项目在【具体管理过程】存在【明确错误或缺失环节】。<br/><strong>改正：</strong>应由【责任人】依据【计划、标准或管理流程】，完成【评估与审批】，再【执行和跟踪】，并形成【记录、验证结果和更新文件】。</div>
+ </section>
+ <section id="main-practice" hidden>
+  <div class="heading"><div><span class="eyebrow">ACTIVE RECALL</span><h2>线索识别 · 随机自测</h2><p>先只看题干中的关键线索，自己说出错误点及正确做法，然后揭晓讲义思路。</p></div><button id="quiz-new" class="button" type="button">重新抽取 15 题 ↻</button></div>
+  <div class="practice-box">
+   <div class="practice-head"><span id="quiz-progress">题目 — / 15</span><span id="quiz-domain">案例分析</span></div>
+   <div class="practice-stem">BACKGROUND CLUE · 题干定位线索</div>
+   <h3 id="quiz-clue">选择抽题后展示题干线索。</h3>
+   <div id="quiz-answer" class="quiz-answer" hidden></div>
+   <div class="practice-actions"><button id="quiz-prev" type="button">← 上一题</button><button id="quiz-reveal" class="primary" type="button">揭晓找错与改错思路</button><button id="quiz-next" type="button">下一题 →</button></div>
+   <p class="practice-notes">这是基于讲义的辨识练习，不是原始真题的逐字复刻；具体问题以当次试卷题干为准。</p>
+  </div>
+ </section>
+ <section id="main-favorites" hidden>
+  <div class="heading"><div><span class="eyebrow">SAVED FOR REVIEW</span><h2>我的收藏</h2><p>把容易混淆的错误点集中起来复习，保留在此设备的浏览器中。</p></div></div>
+  <div id="favorite-list" class="favorite-list"></div>
+ </section>
+ <footer class="attribution"><b>资料说明：</b>本专题依据用户提供的 9 份《案例分析真题·补充找错和改错思路》讲义提取重点，保留对应 PDF 页码以便自行查阅；并非官方标准答案或逐题命题认定。原版 PDF 未在公开站点发布。部分法规、招投标流程和项目管理实践需要结合题干情形及现行适用规定核查。<br/>高项研习社 · 独立案例专题 · 2026</footer>
+</main>
+</div>
+</div>
+<script src="./data/integration.js"></script>
+<script src="./data/scope.js"></script>
+<script src="./data/quality.js"></script>
+<script src="./data/resources.js"></script>
+<script src="./data/communication.js"></script>
+<script src="./data/risk.js"></script>
+<script src="./data/procurement.js"></script>
+<script src="./data/initiation.js"></script>
+<script src="./data/configuration.js"></script>
+<script src="./app.js?v=2.4.0"></script>
+</body>
+</html>
