@@ -84,3 +84,9 @@
 @media(max-width:1180px){.learning-layout{grid-template-columns:245px minmax(0,1fr)!important;gap:16px!important}.lesson-area{padding:24px!important}.reading-overall{min-width:190px}}
 @media(max-width:960px){.learning-layout{grid-template-columns:minmax(0,1fr)!important}.learning-outline{position:relative;top:auto;max-height:220px;overflow:auto}.reading-page-heading{align-items:flex-start!important;flex-wrap:wrap}.reading-overall{min-width:180px;max-width:100%}.reading-notes .definition-row{grid-template-columns:1fr!important;gap:5px!important}}
 @media(max-width:580px){.reading-page-heading{margin-bottom:13px!important}.reading-page-heading h1{font-size:23px!important}.reading-overall{padding:9px 12px;min-width:0;width:100%}.learning-outline{max-height:180px}.lesson-area{padding:18px 15px!important;border-radius:12px!important}.lesson-topline>div:first-child{gap:6px}.lesson-label{margin-left:0}.lesson-actions{gap:12px}.lesson-title{font-size:26px!important;margin-top:14px!important}.lesson-lead{font-size:13px!important}.reading-section-header{gap:9px}.reading-figure-section>.exam-visual{padding:10px!important}.reading-notes .definition-row{padding:12px!important}.lesson-tabs{gap:14px!important}.lesson-tabs button{font-size:12px!important}.reading-notes .note-block-heading h3{font-size:14px!important}}
+
+/* 外部资料核对：与教材/讲义现有知识点分开展示，保留可验证来源。 */
+.knowledge-external-tag{font-size:10px;font-weight:750;color:#1c806b;background:#e9f7f1;border-radius:7px;padding:4px 7px;white-space:nowrap;margin-left:auto}
+.knowledge-source-links{display:flex;align-items:center;flex-wrap:wrap;gap:7px 12px;padding:6px 0 13px;color:#7f8fa2;font-size:11px}
+.knowledge-source-links a{color:#15826e;font-weight:750;text-decoration:none;overflow-wrap:anywhere}
+.knowledge-source-links a:hover{text-decoration:underline}

@@ -197,6 +197,23 @@ window.EXAM_CH2 = {
           ]
         },
         {
+          "title": "SDN 接口缩写补充：NBI、SBI 与 CPI（外部资料核对）",
+          "type": "concept",
+          "items": [
+            ["NBI — Northbound Interface", "北向接口：应用平面与控制平面之间的接口。ONF 将应用—控制器接口称为 A-CPI，也称 NBI。"],
+            ["A-CPI — Applications–Controller Plane Interface", "应用—控制器平面接口：应用通过该接口调用 SDN 控制器提供的服务；对应北向接口 NBI。"],
+            ["SBI — Southbound Interface", "南向接口：控制平面与数据/基础设施平面之间的接口；常见协议或机制包括 OpenFlow、NETCONF。"],
+            ["D-CPI — Data–Controller Plane Interface", "数据—控制器平面接口：ONF 对控制器与其直接控制的资源组之间接口的称谓，通常对应 SDN 的南向接口这一方向。"],
+            ["CPI — Controller Plane Interface", "控制器平面接口的总称（ONF 术语）；A-CPI 和 D-CPI 是两种不同方向的 CPI，不是额外的第四层。"],
+            ["EBI / WBI — Eastbound / Westbound Interface", "东西向接口：常用于控制器间协同、跨域信息交换；名称与协议并非所有 SDN 产品统一，区分于北向和南向。"],
+            ["速记与常见陷阱", "上：NBI / A-CPI（应用⇄控制）；下：SBI / D-CPI（控制⇄数据）；东西向用于控制器协同。OpenFlow 主要属于南向，不是北向 API。"]
+          ],
+          "sources": [
+            {"label": "ONF TR-521 §8.1.1 / 术语表", "url": "https://opennetworking.org/wp-content/uploads/2014/10/TR-521_SDN_Architecture_issue_1.1.pdf"},
+            {"label": "SDN 接口应用概览（hpc.mil）", "url": "https://hpc.mil/solution-areas/networking/sdn-knowledge-base/software-defined-overview"}
+          ]
+        },
+        {
           "title": "5G 的三大典型场景",
           "type": "concept",
           "items": [

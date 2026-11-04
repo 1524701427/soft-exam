@@ -29,6 +29,8 @@ jobs:
           test -f index.html || { echo "缺少根目录 index.html，请把网站文件放在仓库根目录"; exit 1; }
           test -f assets/app.js || { echo "缺少 assets/app.js"; exit 1; }
           test -f assets/vue.global.prod.js || { echo "缺少 Vue runtime"; exit 1; }
+      - name: Check 24-chapter knowledge integrity
+        run: python3 scripts/check_knowledge_integrity.py
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
