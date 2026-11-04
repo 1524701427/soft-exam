@@ -188,6 +188,8 @@
       currentChapterData(){return this.state.importedChapters[this.selectedChapter]||BUILTINS[this.selectedChapter]||null},
       currentChapterSections(){return this.currentChapterData?.sections||[]},
       currentChapterTopicList(){return this.currentChapterSections.flatMap(s=>s.children||[])},
+      chapterDocExampleTopics(){return (window.EXAM_DOC_EXAMPLES_2026?.topics||[]).filter(g=>Number(g.chapter)===Number(this.selectedChapter))},
+      chapterDocExampleCount(){return this.chapterDocExampleTopics.reduce((sum,item)=>sum+item.count,0)},
       currentNote(){return this.currentChapterData?.notes?.[this.selectedTopic]},
       currentTopicTitle(){return this.topicTitle(this.selectedTopic)},
       currentTopicPage(){return this.currentNote?.page || this.currentChapterTopicList.find(t=>t.id===this.selectedTopic)?.page || 1},

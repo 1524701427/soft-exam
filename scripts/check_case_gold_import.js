@@ -69,4 +69,47 @@ const mainHTML=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert(mainHTML.includes("openCaseSection('gold')"),'Root side navigation missing case-gold tab');
 for(const file of ['cases/app.js','assets/app.js','data/case-gold-2026-notes.js','data/case-gold-2026-questions.js'])new vm.Script(fs.readFileSync(path.join(root,file),'utf8'),{filename:file});
 
-console.log('PASS: original 800 questions preserved; 28 knowledge blocks; 63 adapted questions; total 863; source and topic links verified; 10 open-ended cases linked.');
+/* 文件补充只追加：任何章节原正文、金色考点补充或习题不能被替换。 */
+const originalWithCases=new Map();
+for(let n=1;n<=24;n++){
+  const ch=sandbox.window['EXAM_CH'+n];
+  for(const [section,note] of Object.entries(ch.notes||{}))
+    originalWithCases.set(n+':'+section,JSON.stringify(note.blocks));
+}
+const manifest=JSON.parse(fs.readFileSync(path.join(root,'data/project-doc-examples-2026.json'),'utf8'));
+assert(Array.isArray(manifest.groups)&&manifest.groups.length===58,'Expected 58 groups');
+const wanted=new Map();let expectedDocs=0;
+for(const g of manifest.groups){
+ assert(g.chapter>=3&&g.chapter<=24,'Invalid chapter '+g.chapter);
+ assert(sandbox.window['EXAM_CH'+g.chapter].notes[g.sectionId],'Missing target section '+g.chapter+'/'+g.sectionId);
+ const k=g.chapter+':'+g.sectionId;
+ assert(!wanted.has(k),'Duplicate document example group '+k);
+ wanted.set(k,g.rows.length);
+ for(const row of g.rows){
+  assert(row.kind&&row.name&&row.contents&&row.example&&row.process,'Incomplete document content '+k);
+  expectedDocs++;
+ }
+}
+assert.strictEqual(expectedDocs,103,'Expected 103 document examples');
+run('data/project-doc-examples-2026.js');
+assert.strictEqual(sandbox.window.EXAM_DOC_EXAMPLES_2026.documents,103,'Document count mismatch');
+assert.strictEqual(sandbox.window.EXAM_DOC_EXAMPLES_2026.groups,58,'Group count mismatch');
+assert.strictEqual(sandbox.window.EXAM_DOC_EXAMPLES_2026.chapters.length,22,'Relevant chapter count mismatch');
+for(const [key,before] of originalWithCases){
+ const [chapter,section]=key.split(':');
+ const blocks=sandbox.window['EXAM_CH'+chapter].notes[section].blocks;
+ const previous=JSON.parse(before);
+ assert.strictEqual(JSON.stringify(blocks.slice(0,previous.length)),before,'Existing notes modified '+key);
+ const appended=blocks.slice(previous.length);
+ assert.strictEqual(appended.length,wanted.has(key)?1:0,'Unexpected block count '+key);
+ if(appended.length){
+  assert(appended[0].documentExampleKey&&appended[0].type==='concept','Invalid example block '+key);
+  assert(Array.isArray(appended[0].items)&&appended[0].items.length===wanted.get(key),'Document sample count missing '+key);
+ }
+}
+const totalAfterDoc=[...originalQuestions].reduce((total,[n,_])=>total+sandbox.window['EXAM_CH'+n].questions.length,0);
+assert.strictEqual(totalAfterDoc,863,'Document examples must not change question count');
+assert(index.includes('data/project-doc-examples-2026.js'),'Document example script not loaded');
+assert(index.indexOf('data/project-doc-examples-2026.js')<index.indexOf('assets/app.js'),'Document examples must load before app');
+assert(index.includes('chapterDocExampleTopics')&&index.includes('document-example-text'),'Chapter document UI missing');
+console.log('PASS: 800 original and 63 adapted questions; 28 case blocks; 10 open-answer cases; 58 document groups and 103 examples across 22 chapters; UI verified.');
