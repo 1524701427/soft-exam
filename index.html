@@ -45,6 +45,7 @@
         <button :class="{'is-current':activeView==='casebook' && caseSubView==='library' && caseSubTopic==='all'}" @click="openCaseSection('library')">找错要点库</button>
         <button :class="{'is-current':activeView==='casebook' && caseSubView==='method'}" @click="openCaseSection('method')">通用找错方法</button>
         <button :class="{'is-current':activeView==='casebook' && caseSubView==='practice'}" @click="openCaseSection('practice')">案例线索自测</button>
+        <button :class="{'is-current':activeView==='casebook' && caseSubView==='gold'}" @click="openCaseSection('gold')">案例简答解析（10题）</button>
         <button :class="{'is-current':activeView==='casebook' && caseSubView==='favorites'}" @click="openCaseSection('favorites')">我的案例收藏</button>
         <button :class="{'is-current':activeView==='cases'}" @click="navigate('cases')">案例作答训练</button>
         <details class="six-sub-detail" open>

@@ -53,4 +53,20 @@ const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
 for(const f of ['data/case-gold-2026-notes.js','data/case-gold-2026-questions.js','assets/app.js'])assert(index.includes(f),'index.html not loading '+f);
 assert(index.indexOf('data/chapter24.js')<index.indexOf('data/case-gold-2026-notes.js'),'Supplement must load after chapter data');
 assert(index.indexOf('data/case-gold-2026-questions.js')<index.indexOf('assets/app.js'),'Questions must load before Vue app');
-console.log('PASS: original 800 questions preserved; 28 knowledge blocks; 63 adapted questions; total 863; source and topic links verified.');
+
+run('cases/data/gold-questions.js');
+const caseItems=sandbox.window.CASE_GOLD_OPEN_2026;
+assert(Array.isArray(caseItems)&&caseItems.length===10,'Expected 10 sourced short-answer cases');
+for(const [i,c] of caseItems.entries()){
+ assert(c.topic&&c.title&&c.scenario,'Missing case statement '+(i+1));
+ assert(c.page>=1&&c.page<=476,'Invalid case page '+(i+1));
+ assert(Array.isArray(c.points)&&c.points.length>=3,'Missing case-answer points '+(i+1));
+}
+const caseHTML=fs.readFileSync(path.join(root,'cases/index.html'),'utf8');
+assert(caseHTML.includes('id="main-gold"')&&caseHTML.includes('data-view="gold"'),'Casebook gold tab is unavailable');
+assert(caseHTML.includes('cases/data/gold-questions.js')||caseHTML.includes('./data/gold-questions.js'),'Casebook script missing');
+const mainHTML=fs.readFileSync(path.join(root,'index.html'),'utf8');
+assert(mainHTML.includes("openCaseSection('gold')"),'Root side navigation missing case-gold tab');
+for(const file of ['cases/app.js','assets/app.js','data/case-gold-2026-notes.js','data/case-gold-2026-questions.js'])new vm.Script(fs.readFileSync(path.join(root,file),'utf8'),{filename:file});
+
+console.log('PASS: original 800 questions preserved; 28 knowledge blocks; 63 adapted questions; total 863; source and topic links verified; 10 open-ended cases linked.');

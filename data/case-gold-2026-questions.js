@@ -12,7 +12,7 @@ for(const [i,q] of questions.entries()){
  if(used.has(id))throw Error('重复题目ID '+id);used.add(id);
  if(ch.questions.some(t=>t.id===id))continue;
  if(!Array.isArray(q.options)||q.options.length!==4||!['A','B','C','D'].includes(q.answer))throw Error('题目格式不符: '+id);
- const overlap=ch.questions.some(t=>String(t.title||'').replace(/\\s+/g,'')===q.title.replace(/\\s+/g,''));
+ const overlap=ch.questions.some(t=>String(t.title||'').replace(/\s+/g,'')===q.title.replace(/\s+/g,''));
  if(overlap)continue;
  ch.questions.push({id,number:ch.questions.length+1,chapterId:q.chapterId,sectionId:q.sectionId,title:q.title,options:q.options,answer:q.answer,sourcePage:q.page,sourceLabel:'案例金色考点 · PDF第'+q.page+'页',kind,explanation:q.explanation+'【资料：'+source+'，PDF第'+q.page+'页；题干与选项为改编练习。】'});
 }

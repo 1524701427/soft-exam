@@ -261,7 +261,7 @@
         this.$nextTick(()=>this.postEmbeddedNavigation('calculations'));
       },
       openCaseSection(view){
-        if(!['library','method','practice','favorites'].includes(view))return;
+        if(!['library','method','practice','gold','favorites'].includes(view))return;
         this.caseSubView=view;
         if(view==='library')this.caseSubTopic='all';
         this.navigate('casebook');

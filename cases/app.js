@@ -1,6 +1,7 @@
 (()=>{
 "use strict";
 const topics=window.CASE_BANK||[];
+const goldCaseQuestions=window.CASE_GOLD_OPEN_2026||[];
 const all=topics.flatMap(t=>t.cards.map(c=>({...c,groupId:t.id,groupName:t.name,source:t.source,reference:t.reference})));
 const storeKey="gao-xiang-cases-v1";
 let saved={favorites:[],mastered:[],practiceHistory:[]};
@@ -20,7 +21,7 @@ const isFav=id=>saved.favorites.includes(id);
 const isDone=id=>saved.mastered.includes(id);
 function persist(){localStorage.setItem(storeKey,JSON.stringify(saved))}
 function toggle(key,id){let a=saved[key];saved[key]=a.includes(id)?a.filter(x=>x!==id):[...a,id];persist();renderStats();renderCards();renderTopbar()}
-function setView(view){state.view=view;el("main-library").hidden=view!=="library";el("main-method").hidden=view!=="method";el("main-practice").hidden=view!=="practice";el("main-favorites").hidden=view!=="favorites";document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("selected",b.dataset.view===view));if(view==="favorites")renderFavorites();if(view==="practice")renderQuiz();reportEmbeddedNav();window.scrollTo({top:0,behavior:"smooth"});if(document.documentElement.classList.contains("is-embedded"))window.parent.postMessage({type:"gao-xiang-embed-top"},location.origin)}
+function setView(view){state.view=view;el("main-library").hidden=view!=="library";el("main-method").hidden=view!=="method";el("main-practice").hidden=view!=="practice";el("main-gold").hidden=view!=="gold";el("main-favorites").hidden=view!=="favorites";document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("selected",b.dataset.view===view));if(view==="favorites")renderFavorites();if(view==="practice")renderQuiz();if(view==="gold")renderGold();reportEmbeddedNav();window.scrollTo({top:0,behavior:"smooth"});if(document.documentElement.classList.contains("is-embedded"))window.parent.postMessage({type:"gao-xiang-embed-top"},location.origin)}
 function setTopic(id){state.topic=id;state.caseName="all";state.shown=80;el("topic-select").value=id;document.querySelectorAll("[data-topic]").forEach(x=>x.classList.toggle("selected",x.dataset.topic===id));if(state.view!=="library")setView("library");renderCases();renderCards();renderTopbar();reportEmbeddedNav();}
 function renderGroups(){
 const nav=el("topic-nav");nav.innerHTML='<button type="button" data-topic="all" class="group-button selected"><span class="group-dot">✦</span><span>全部领域</span><b>'+all.length+'</b></button>'+topics.map((t,i)=>'<button type="button" class="group-button" data-topic="'+t.id+'"><span class="group-dot">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(t.name)+'</span><b>'+t.cards.length+'</b></button>').join("");
@@ -98,6 +99,15 @@ const METHOD=[
 function renderMethod(){
 el("method-grid").innerHTML=METHOD.map((m,i)=>'<article class="method-card"><span class="step-id">'+String(i+1).padStart(2,"0")+'</span><h3>'+esc(m.signal)+'</h3><p><b>可能存在：</b>'+esc(m.bad)+'</p><p><b>改正方向：</b>'+esc(m.correct)+'</p></article>').join("");
 }
+
+function renderGold(){
+ const root=el("gold-case-list");
+ if(!root)return;
+ root.innerHTML='<div class="gold-case-head"><span>题目 / 来源</span><span>作答要点（对照版）</span></div>'+goldCaseQuestions.map((q,i)=>
+ '<article class="gold-case-row"><div class="gold-case-question"><span class="gold-case-number">'+String(i+1).padStart(2,"0")+'</span><strong>'+esc(q.title)+'</strong><p>'+esc(q.scenario)+'</p><small>'+esc(q.topic)+' · 原书 PDF 第'+Number(q.page)+'页</small></div>'+
+ '<div class="gold-case-answer"><span class="gold-answer-label">参考要点 · 自查</span><ol>'+q.points.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></div></article>'
+ ).join('');
+}
 function renderFavorites(){
 const ids=saved.favorites.map(id=>byId.get(id)).filter(Boolean);
 const root=el("favorite-list");
@@ -138,11 +148,11 @@ el("copy-template").addEventListener("click",async()=>{const str="存在问题�
 el("hero-start").addEventListener("click",()=>{setView("library");el("search-field").focus()});
 el("hero-practice").addEventListener("click",()=>setView("practice"));
 }
-renderGroups();renderStats();renderTopbar();renderCases();renderCards();renderMethod();bind();
+renderGroups();renderStats();renderTopbar();renderCases();renderCards();renderMethod();renderGold();bind();
 window.addEventListener('message',e=>{
  if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='gao-xiang-embed-command'||e.data.target!=='casebook')return;
  if(e.data.action==='topic'&&(e.data.topic==='all'||topics.some(t=>t.id===e.data.topic)))setTopic(e.data.topic);
- if(e.data.action==='view'&&['library','method','practice','favorites'].includes(e.data.view)){
+ if(e.data.action==='view'&&['library','method','practice','gold','favorites'].includes(e.data.view)){
    if(e.data.view==='library'&&e.data.topic==='all'&&state.topic!=='all')setTopic('all');
    setView(e.data.view);
  }

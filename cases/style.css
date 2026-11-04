@@ -77,3 +77,27 @@
  .results-line{gap:10px;align-items:flex-start}
  .results-line span{max-width:62%;text-align:right}
 }
+
+/* 金色考点案例简答：直接列出题干与作答要点，不需要逐张点开。 */
+.gold-case-list{margin-top:18px;background:#fff;border:1px solid #dfe8ed;border-radius:12px;overflow:hidden}
+.gold-case-head,.gold-case-row{display:grid;grid-template-columns:minmax(240px,1fr) minmax(360px,1.35fr);align-items:stretch}
+.gold-case-head{background:#eef4f6;font-size:12px;font-weight:800;color:#496b7e}
+.gold-case-head>span{padding:12px 16px}
+.gold-case-head>span+span,.gold-case-row>div+div{border-left:1px solid #ebeff2}
+.gold-case-row{border-bottom:1px solid #e7edf0}
+.gold-case-row:last-child{border:0}
+.gold-case-row:nth-child(odd){background:#fbfcfe}
+.gold-case-row>div{padding:15px 17px}
+.gold-case-number{font-size:11px;font-weight:900;color:#a7b6c4;margin-right:10px}
+.gold-case-question strong{font-size:13px;color:#233f59;line-height:1.7}
+.gold-case-question p{font-size:12px;color:#61768e;line-height:1.75;margin:8px 0}
+.gold-case-question small{font-size:10px;color:#12836e}
+.gold-answer-label{display:block;color:#12836e;font-size:10px;font-weight:900;margin-bottom:9px}
+.gold-case-answer ol{margin:0;padding-left:21px;color:#2e5753;font-size:12px;line-height:1.95}
+.gold-case-answer li{margin-bottom:4px}
+@media(max-width:780px){
+ .gold-case-list{background:transparent;border:0;display:grid;gap:10px}
+ .gold-case-head{display:none}
+ .gold-case-row{grid-template-columns:1fr;border:1px solid #dce6e8!important;border-radius:11px;overflow:hidden;background:white!important}
+ .gold-case-row>div+div{border-left:0;border-top:1px solid #e2edeb;background:#f5faf7}
+}

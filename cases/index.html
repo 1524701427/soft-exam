@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#142744" />
 <meta name="description" content="高项研习社案例分析找错改错专题：整合、范围、质量、资源、沟通干系人、风险、采购合同、立项招投标、配置变更，按题干线索梳理错误点与改正措施。" />
 <title>案例分析 · 找错改错专题 | 高项研习社</title>
-<link rel="stylesheet" href="./style.css?v=2.5.0" /><link rel="stylesheet" href="../assets/nav-six.css?v=1.2" /><link rel="stylesheet" href="../assets/module-embedded.css?v=1.0" /><script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("is-embedded")</script>
+<link rel="stylesheet" href="./style.css?v=2.6.0" /><link rel="stylesheet" href="../assets/nav-six.css?v=1.2" /><link rel="stylesheet" href="../assets/module-embedded.css?v=1.0" /><script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("is-embedded")</script>
 </head>
 <body>
 <div class="layout">
@@ -20,6 +20,7 @@
   <button class="side-link selected" type="button" data-view="library"><span class="link-icon">▦</span>找错要点库</button>
   <button class="side-link" type="button" data-view="method"><span class="link-icon">✦</span>通用找错方法</button>
   <button class="side-link" type="button" data-view="practice"><span class="link-icon">◈</span>案例线索自测</button>
+  <button class="side-link" type="button" data-view="gold"><span class="link-icon">▤</span>案例简答解析（10题）</button>
   <button class="side-link" type="button" data-view="favorites"><span class="link-icon">☆</span>我的收藏</button>
   <div class="side-divider"></div>
   <div class="side-label">九大专题</div>
@@ -41,7 +42,7 @@
  <nav class="toplinks"><a href="../index.html#/cases">案例作答训练</a><a href="../index.html#/home">返回学习总览</a></nav>
 </header>
 <main class="main">
- <nav class="case-embedded-local-nav" aria-label="案例分析内部功能"><button type="button" data-view="library" class="selected">找错要点库</button><button type="button" data-view="method">通用找错方法</button><button type="button" data-view="practice">线索随机自测</button><button type="button" data-view="favorites">我的收藏</button></nav>
+ <nav class="case-embedded-local-nav" aria-label="案例分析内部功能"><button type="button" data-view="library" class="selected">找错要点库</button><button type="button" data-view="method">通用找错方法</button><button type="button" data-view="practice">线索随机自测</button><button type="button" data-view="gold">案例简答解析</button><button type="button" data-view="favorites">我的收藏</button></nav>
  <div class="mobile-topic"><select id="topic-select" aria-label="切换案例管理领域"><option value="all">全部领域</option></select></div>
  <section class="hero">
   <div>
@@ -92,6 +93,14 @@
   <div class="heading"><div><h2>可复用的作答框架</h2><p>把题干事实写进答案，避免只写概念。</p></div><button id="copy-template" class="button" type="button">复制答题框架</button></div>
   <div class="template"><strong>错误：</strong>题干中【关键事实】说明项目在【具体管理过程】存在【明确错误或缺失环节】。<br/><strong>改正：</strong>应由【责任人】依据【计划、标准或管理流程】，完成【评估与审批】，再【执行和跟踪】，并形成【记录、验证结果和更新文件】。</div>
  </section>
+ <section id="main-gold" hidden>
+  <div class="heading"><div><span class="eyebrow">GOLDEN CASE · LONG ANSWER</span><h2>案例简答解析 · 典型题</h2><p>原书案例题型保留简答训练方式；题干为情境摘要，答案是复习用评分要点归纳，不逐字复制原卷。</p></div></div>
+  <div class="method-intro">
+   <h3>已核对 10 组典型题目</h3>
+   <p>资料：《2026年高项案例金色考点及真题解析》扫描PDF，现阶段对应 PDF 第 193、196、210、440、476 页。每条列出来源和答案要点，题型与综合知识四选一改编题分开管理；全书未核实的案例尚未批量导入。</p>
+  </div>
+  <div id="gold-case-list" class="gold-case-list" aria-label="案例简答训练题干和参考要点对照列表"></div>
+ </section>
  <section id="main-practice" hidden>
   <div class="heading"><div><span class="eyebrow">ACTIVE RECALL</span><h2>线索识别 · 随机自测</h2><p>先只看题干中的关键线索，自己说出错误点及正确做法，然后揭晓讲义思路。</p></div><button id="quiz-new" class="button" type="button">重新抽取 15 题 ↻</button></div>
   <div class="practice-box">
@@ -120,6 +129,6 @@
 <script src="./data/procurement.js"></script>
 <script src="./data/initiation.js"></script>
 <script src="./data/configuration.js"></script>
-<script src="./app.js?v=2.5.0"></script><script src="../assets/embed-bridge.js?v=1.0"></script>
+<script src="./data/gold-questions.js?v=1.0"></script><script src="./app.js?v=2.6.0"></script><script src="../assets/embed-bridge.js?v=1.0"></script>
 </body>
 </html>
