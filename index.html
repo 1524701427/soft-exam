@@ -58,9 +58,10 @@
       <div class="site-six-sub" v-if="activeView==='essays'">
         <button class="is-current" @click="navigate('essays')">论文选题与写作练习</button>
       </div>
-      <button class="site-six-primary" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam'].includes(activeView)}" @click="navigate('practice')"><span class="six-side-symbol">▦</span><span>题库</span><span class="six-side-arrow">›</span></button>
-      <div class="site-six-sub" v-if="['practice','pastpapers','wrong','favorites','exam'].includes(activeView)">
+      <button class="site-six-primary" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam','challenge'].includes(activeView)}" @click="navigate('practice')"><span class="six-side-symbol">▦</span><span>题库</span><span class="six-side-arrow">›</span></button>
+      <div class="site-six-sub" v-if="['practice','pastpapers','wrong','favorites','exam','challenge'].includes(activeView)">
         <button :class="{'is-current':activeView==='practice'}" @click="navigate('practice')">章节练习</button>
+        <button :class="{'is-current':activeView==='challenge'}" @click="navigate('challenge')">千题闯关</button>
         <button :class="{'is-current':activeView==='pastpapers'}" @click="navigate('pastpapers')">历年真题</button>
         <button :class="{'is-current':activeView==='exam'}" @click="navigate('exam')">模拟考试</button>
         <button :class="{'is-current':activeView==='wrong'}" @click="navigate('wrong')">错题本 <span class="six-sub-count" v-if="state.wrongIds.length">{{state.wrongIds.length}}</span></button>
@@ -78,17 +79,20 @@
  <a class="study-six-link" href="#/calculations" :class="{'is-current':activeView==='calculations'}" @click.prevent="navigate('calculations')"><span class="six-nav-symbol">∑</span>计算专题</a>
  <a class="study-six-link" href="#/casebook" :class="{'is-current':['casebook','cases'].includes(activeView)}" @click.prevent="navigate('casebook')"><span class="six-nav-symbol">✓</span>案例分析</a>
  <a class="study-six-link" href="#/essays" @click.prevent="navigate('essays')" :class="{'is-current':activeView==='essays'}"><span class="six-nav-symbol">✎</span>论文</a>
- <a class="study-six-link" href="#/practice" @click.prevent="navigate('practice')" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam'].includes(activeView)}"><span class="six-nav-symbol">▦</span>题库</a>
+ <a class="study-six-link" href="#/practice" @click.prevent="navigate('practice')" :class="{'is-current':['practice','pastpapers','wrong','favorites','exam','challenge'].includes(activeView)}"><span class="six-nav-symbol">▦</span>题库</a>
  <a class="study-six-link" href="#/progress" @click.prevent="navigate('progress')" :class="{'is-current':activeView==='progress'}"><span class="six-nav-symbol">◴</span>学习统计</a>
 </nav>
-    <main class="main-content" :class="{'has-embedded-module':['calculations','casebook'].includes(activeView)}">
+    <main class="main-content" :class="{'has-embedded-module':['calculations','casebook','challenge'].includes(activeView)}">
       <section v-if="loadedModules.calculations" v-show="activeView==='calculations'" class="embedded-module" aria-label="计算专题">
         <iframe ref="calcFrame" title="计算专题交互课程" src="./calculations/index.html?embed=1" :style="{height:embeddedHeights.calculations+'px'}" class="module-frame" @load="onModuleLoad('calculations')" loading="eager"></iframe>
       </section>
       <section v-if="loadedModules.casebook" v-show="activeView==='casebook'" class="embedded-module" aria-label="案例分析找错专题">
         <iframe ref="caseFrame" title="案例分析找错改错专题" src="./cases/index.html?embed=1" :style="{height:embeddedHeights.casebook+'px'}" class="module-frame" @load="onModuleLoad('casebook')" loading="eager"></iframe>
       </section>
-      <!-- 首页 -->
+      <section v-if="loadedModules.challenge" v-show="activeView==='challenge'" class="embedded-module" aria-label="千题闯关题库">
+        <iframe ref="challengeFrame" title="千题闯关 · 答案与解析复习" src="./challenge/index.html?embed=1" :style="{height:embeddedHeights.challenge+'px'}" class="module-frame" @load="onModuleLoad('challenge')" loading="eager"></iframe>
+       </section>
+       <!-- 首页 -->
       <template v-if="activeView==='home'">
         <div class="page-heading"><div><div class="eyebrow"><span class="tiny-dot"></span> 2026 软考高级 · 备考空间</div><h1>每一个知识点，都算数。<span class="wave">✦</span></h1><p>把繁杂的教材变成清晰的学习路径，从理解考点到熟练答题。</p></div><div class="date-pill"><span v-html="icon('calendar')"></span>{{todayLabel}}</div></div>
         <div class="hero-banner"><div class="hero-content"><div class="hero-kicker">YOUR STUDY JOURNEY · 24 CHAPTERS · DIVERSE VISUAL LEARNING</div><h2>继续学习，向拿证更近一步</h2><p>24 章知识学习 · 多形态互动图解 · {{allQuestions.length}} 道习题</p><div class="hero-actions"><button class="primary-light-btn" @click="openKnowledge(recommendedTopic)">接着学 <span>→</span></button><button class="ghost-light-btn" @click="navigate('practice')">去刷题 <span>↗</span></button></div></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="floating-card card-1">✓ <span>知识点掌握</span></div><div class="floating-card card-2">✦ <span>每日进步</span></div><div class="book-graphic"><span>高项</span><small>STUDY</small></div><div class="floating-star s1">✦</div><div class="floating-star s2">✧</div></div></div>
@@ -205,5 +209,5 @@
   <div v-if="toast" class="toast" role="status">{{toast}}</div>
 </div>
 <script src="./assets/vue.global.prod.js"></script><script src="./data/catalog.js"></script><script src="./data/content.js"></script><script src="./data/chapter01.js"></script><script src="./data/chapter02.js?v=2.4"></script><script src="./data/chapter03.js"></script><script src="./data/chapter04.js"></script><script src="./data/chapter05.js"></script><script src="./data/chapter06.js"></script><script src="./data/chapter07.js"></script><script src="./data/chapter08.js"></script><script src="./data/chapter09.js"></script><script src="./data/chapter10.js"></script><script src="./data/chapter11.js"></script><script src="./data/chapter12.js?v=2.4"></script><script src="./data/chapter13.js?v=2.4"></script><script src="./data/chapter14.js"></script><script src="./data/chapter15.js?v=2.4"></script><script src="./data/chapter16.js?v=2.4"></script><script src="./data/chapter17.js"></script><script src="./data/chapter18.js?v=2.4"></script><script src="./data/chapter19.js?v=2.4"></script><script src="./data/chapter20.js"></script><script src="./data/chapter21.js?v=2.0"></script><script src="./data/chapter22.js?v=2.4"></script><script src="./data/chapter23.js?v=2.0"></script><script src="./data/chapter24.js?v=2.4"></script><script src="./assets/ch21-math.js?v=2.0"></script><script src="./data/visuals.js?v=2.0"></script><script src="./data/visual-modes.js?v=2.2"></script>
-<script src="./assets/visuals-ui.js?v=2.2"></script><script src="./data/case-gold-2026-notes.js?v=1.0"></script><script src="./data/case-gold-2026-questions.js?v=1.0"></script><script src="./data/project-doc-examples-2026.js?v=1.0"></script><script src="./assets/app.js?v=2.7"></script>
+<script src="./assets/visuals-ui.js?v=2.2"></script><script src="./data/case-gold-2026-notes.js?v=1.0"></script><script src="./data/case-gold-2026-questions.js?v=1.0"></script><script src="./data/project-doc-examples-2026.js?v=1.0"></script><script src="./assets/app.js?v=2.8"></script>
 </body></html>

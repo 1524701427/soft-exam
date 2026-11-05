@@ -57,7 +57,7 @@
   const app=Vue.createApp({
     data(){return {
       EXAM_CATALOG:window.EXAM_CATALOG, EXAM_CHAPTERS:window.EXAM_CHAPTERS, EXAM_SECTIONS:window.EXAM_SECTIONS,essayPrompts:ESSAY_BANK,selectedEssayPromptId:'e13',
-      state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',visualTypeFilter:'all',activeView:'home',sidebarOpen:false,loadedModules:{calculations:false,casebook:false},embeddedHeights:{calculations:1350,casebook:1750},calcSubTab:'home',calcLesson:'',calcLessonGroup:'schedule',calcLessonGroups:[{"id":"schedule","name":"进度计算","lessons":[{"id":"01","name":"网络图基础"},{"id":"02","name":"三点估算与赶工"},{"id":"03","name":"甘特图与资源平滑"},{"id":"04","name":"巩固习题"}]},{"id":"cost","name":"成本计算","lessons":[{"id":"05","name":"挣值基础"},{"id":"06","name":"挣值巩固"}]},{"id":"combined","name":"进度成本综合","lessons":[{"id":"07","name":"网络图 + EVM"},{"id":"08","name":"多工作包"},{"id":"09","name":"赶工与资源"}]},{"id":"essentials","name":"小计算与速记","lessons":[{"id":"10","name":"十类高频题型"},{"id":"11","name":"考点与公式速查"}]}],caseSubView:'library',caseSubTopic:'all',caseTopics:[{"id":"integration","name":"整合管理"},{"id":"scope","name":"范围管理"},{"id":"quality","name":"质量管理"},{"id":"resources","name":"资源管理"},{"id":"communication","name":"沟通与干系人"},{"id":"risk","name":"风险管理"},{"id":"procurement","name":"采购与合同"},{"id":"initiation","name":"立项与招投标"},{"id":"configuration","name":"配置与变更"}],selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
+      state:readStore(),EXAM_VISUALS:window.EXAM_VISUALS||[],visualFocusId:'',visualTypeFilter:'all',activeView:'home',sidebarOpen:false,loadedModules:{calculations:false,casebook:false,challenge:false},embeddedHeights:{calculations:1350,casebook:1750,challenge:1400},calcSubTab:'home',calcLesson:'',calcLessonGroup:'schedule',calcLessonGroups:[{"id":"schedule","name":"进度计算","lessons":[{"id":"01","name":"网络图基础"},{"id":"02","name":"三点估算与赶工"},{"id":"03","name":"甘特图与资源平滑"},{"id":"04","name":"巩固习题"}]},{"id":"cost","name":"成本计算","lessons":[{"id":"05","name":"挣值基础"},{"id":"06","name":"挣值巩固"}]},{"id":"combined","name":"进度成本综合","lessons":[{"id":"07","name":"网络图 + EVM"},{"id":"08","name":"多工作包"},{"id":"09","name":"赶工与资源"}]},{"id":"essentials","name":"小计算与速记","lessons":[{"id":"10","name":"十类高频题型"},{"id":"11","name":"考点与公式速查"}]}],caseSubView:'library',caseSubTopic:'all',caseTopics:[{"id":"integration","name":"整合管理"},{"id":"scope","name":"范围管理"},{"id":"quality","name":"质量管理"},{"id":"resources","name":"资源管理"},{"id":"communication","name":"沟通与干系人"},{"id":"risk","name":"风险管理"},{"id":"procurement","name":"采购与合同"},{"id":"initiation","name":"立项与招投标"},{"id":"configuration","name":"配置与变更"}],selectedChapter:1,selectedTopic:'1.1.1',readingTab:'course',openSectionGroups:['1.1','1.2','1.3','1.4','1.5'],
       evmValues:{pv:80,ev:70,ac:90,bac:200},evmForecastMode:'typical',stakeholderPower:8,stakeholderInterest:8,domainFocus:0,changeFocus:0,versionStatus:'draft',opmLevel:3,communicationPeople:12,riskCalc:{chance:0.45,gain:80,threatChance:0.25,loss:30,investment:0},procCalc:{targetCost:200,targetFee:20,actualCost:230,sellerShare:30,ceiling:260},networkDurations:{A:3,B:4,C:5,D:2,E:4,F:3},
       mathTab:'econ',mathTabs:[{id:'econ',icon:'∑',label:'工程经济'},{id:'lp',icon:'▱',label:'线性规划'},{id:'vogel',icon:'⇄',label:'伏格尔法'},{id:'hungarian',icon:'▦',label:'匈牙利法'},{id:'path',icon:'⌁',label:'最短路径'},{id:'game',icon:'◇',label:'博弈论'},{id:'decision',icon:'≋',label:'决策分析'}],
       mathCapital:100,mathRate:10,mathYears:3,mathCashflows:'40,40,40,40',mathC1:5,mathC2:4,vogelStep:0,hungarianStage:0,
@@ -73,7 +73,7 @@
       quickActions:[{view:'knowledge',name:'知识点学习',desc:'全24章知识点已录入',icon:'book',tone:'lilac'},{view:'practice',name:'章节练习',desc:'讲义配套、案例改编与知识自测',icon:'clipboard',tone:'peach'},{view:'wrong',name:'错题复习',desc:'精准查漏补缺',icon:'alert',tone:'blue'}]
     }},
     computed:{
-      viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',calculations:'计算专题',casebook:'案例分析',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
+      viewTitle(){return ({home:'学习总览',chapters:'章节管理',knowledge:'知识点学习',maps:'知识图解',practice:'章节练习',pastpapers:'历年真题',wrong:'错题本',favorites:'我的收藏',exam:'模拟考试',cases:'案例分析',essays:'论文训练',progress:'学习统计',calculations:'计算专题',casebook:'案例分析',challenge:'千题闯关',settings:'数据与设置',search:'全站搜索'})[this.activeView]||'备考中心'},
       todayLabel(){return new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'})},
       chapterTitle(){return this.EXAM_CHAPTERS.find(c=>c.id===this.selectedChapter)?.name||'未知章节'},
       stakeholderStrategy(){
@@ -277,19 +277,20 @@
       },
       onModuleLoad(which){
         try{
-          const frame=which==='calculations'?this.$refs.calcFrame:this.$refs.caseFrame;
+          const frame=which==='calculations'?this.$refs.calcFrame:which==='casebook'?this.$refs.caseFrame:this.$refs.challengeFrame;
           const doc=frame?.contentDocument;
           if(doc){const height=Math.max(doc.documentElement?.scrollHeight||0,doc.body?.scrollHeight||0);if(height>100)this.embeddedHeights[which]=Math.max(400,Math.ceil(height)+10)}
-          this.postEmbeddedNavigation(which);
+          if(which!=='challenge')this.postEmbeddedNavigation(which);
         }catch(e){}
       },
       handleModuleMessage(e){if(e.origin!==location.origin||!e.data||typeof e.data!=='object')return;
-        const calc=this.$refs.calcFrame,caseFrame=this.$refs.caseFrame;
-        const which=e.source===calc?.contentWindow?'calculations':e.source===caseFrame?.contentWindow?'casebook':null;
+        const calc=this.$refs.calcFrame,caseFrame=this.$refs.caseFrame,challengeFrame=this.$refs.challengeFrame;
+        const which=e.source===calc?.contentWindow?'calculations':e.source===caseFrame?.contentWindow?'casebook':e.source===challengeFrame?.contentWindow?'challenge':null;
         if(!which)return;
         if(e.data.type==='gao-xiang-embed-resize'){const h=Number(e.data.height);if(Number.isFinite(h)&&h>=180&&h<=100000)this.embeddedHeights[which]=Math.ceil(h)+8;}
         if(e.data.type==='gao-xiang-embed-top')window.scrollTo({top:0,behavior:'instant'});
         if(e.data.type==='gao-xiang-embed-nav-state' && e.data.target===which){
+          if(which==='challenge')return;
           if(which==='calculations'){
             const tab=String(e.data.tab||'home'),lesson=String(e.data.lessonId||'');
             if(['home','lesson','formulas','tools','training'].includes(tab)){
@@ -325,7 +326,7 @@
           this.notify('当前知识小节暂无独立习题，已跳转到第 '+chapterId+' 章全部练习');
         }
       },
-      navigate(view){if(view==='maps')view='knowledge';if(view==='calculations'||view==='casebook')this.loadedModules[view]=true;this.activeView=view;this.sidebarOpen=false;this.lastExamReport=view==='exam'?this.lastExamReport:null;
+      navigate(view){if(view==='maps')view='knowledge';if(['calculations','casebook','challenge'].includes(view))this.loadedModules[view]=true;this.activeView=view;this.sidebarOpen=false;this.lastExamReport=view==='exam'?this.lastExamReport:null;
         if(view==='wrong')this.practiceFilter='wrong';else if(view==='favorites')this.practiceFilter='favorite';else if(view==='practice'){this.practiceFilter='all';this.practiceSectionFilter='all';}
         if(['wrong','favorites','practice'].includes(view)){this.drillIndex=0;if(view!=='practice')this.practiceSectionFilter='all';}
         window.scrollTo(0,0);if(location.hash!==`#/${view}`)location.hash=`/${view}`},
@@ -370,7 +371,7 @@
       importProgress(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);if(obj.app!=='soft-exam-study'||!obj.data||!Array.isArray(obj.data.mastered))throw Error('不是有效的高项学习记录备份');if(!confirm('导入将替换当前学习记录。是否继续？'))return;this.state=Object.assign(EMPTY(),obj.data);this.state.essayDraft=Object.assign({title:'',body:''},this.state.essayDraft);this.state.caseDraft=Object.assign({title:'',material:'',answer:''},this.state.caseDraft);this.notify('学习记录恢复成功')}catch(err){this.notify('导入失败：'+err.message)}};reader.readAsText(file);e.target.value=''},
       clearProgress(){if(!confirm('确定清空全部答题、错题、笔记及导入章节吗？此操作不可撤销，建议先导出备份。'))return;this.state=EMPTY();this.examActive=null;this.lastExamReport=null;this.notify('已清空学习记录')}
     },
-    mounted(){let view=(location.hash||'').replace(/^#\//,'');const valid=['home','chapters','knowledge','practice','pastpapers','wrong','favorites','exam','cases','essays','progress','settings','search','calculations','casebook'];if(view==='maps')view='knowledge';if(valid.includes(view)){this.activeView=view;if(view==='calculations'||view==='casebook')this.loadedModules[view]=true;if(view==='wrong')this.practiceFilter='wrong';if(view==='favorites')this.practiceFilter='favorite'}this._embedMessageHandler=e=>this.handleModuleMessage(e);window.addEventListener('message',this._embedMessageHandler);this._ticker=setInterval(()=>{if(this.examActive)this.tickExam()},1000);if(this.examActive)this.tickExam();window.addEventListener('hashchange',this._hashHandler=()=>{const v=(location.hash||'').replace(/^#\//,'');if(v==='maps'){this.navigate('knowledge');return}if(valid.includes(v)&&v!==this.activeView)this.navigate(v)})},
+    mounted(){let view=(location.hash||'').replace(/^#\//,'');const valid=['home','chapters','knowledge','practice','pastpapers','wrong','favorites','exam','cases','essays','progress','settings','search','calculations','casebook','challenge'];if(view==='maps')view='knowledge';if(valid.includes(view)){this.activeView=view;if(['calculations','casebook','challenge'].includes(view))this.loadedModules[view]=true;if(view==='wrong')this.practiceFilter='wrong';if(view==='favorites')this.practiceFilter='favorite'}this._embedMessageHandler=e=>this.handleModuleMessage(e);window.addEventListener('message',this._embedMessageHandler);this._ticker=setInterval(()=>{if(this.examActive)this.tickExam()},1000);if(this.examActive)this.tickExam();window.addEventListener('hashchange',this._hashHandler=()=>{const v=(location.hash||'').replace(/^#\//,'');if(v==='maps'){this.navigate('knowledge');return}if(valid.includes(v)&&v!==this.activeView)this.navigate(v)})},
     beforeUnmount(){clearInterval(this._ticker);clearTimeout(this._toastTimer);window.removeEventListener('hashchange',this._hashHandler);window.removeEventListener('message',this._embedMessageHandler)}
   });
   app.component('exam-visual',window.ExamVisualComponent);
