@@ -9,6 +9,17 @@ function tokens(s){const v=normalize(s);const a=new Set();for(let i=0;i<v.length
 const alias={
 "it":"", "docs":"", "cases":"", "math":"", "flows":"", "domains":"", "changes":"", "compare":""
 };
+const EXACT_TOPICS={
+  8:{"制定项目章程":"8.3","制定项目管理计划":"8.4","指导与管理项目工作":"8.5","监控项目工作":"8.7","实施整体变更控制":"8.8","变更请求全生命周期":"8.8","整体变更控制与CCB职责":"8.8"},
+  9:{"规划范围管理":"9.3.1","收集需求":"9.4.1","定义范围":"9.5.1","创建 WBS":"9.6.1","确认范围":"9.7.1","控制范围":"9.8.1","范围蔓延":"9.1.2","需求变更缺少追踪":"9.4.4","核实的成果与验收的成果":"9.7.1"},
+  10:{"排列活动顺序":"10.5.1","制定进度计划":"10.7.1","只压缩关键路径但忽略风险":"10.7.4","进度压缩":"10.7.4","工作绩效数据到报告":"10.8.2"},
+  11:{"工作绩效数据到报告":"11.6.2"},
+  13:{"干系人与沟通及资源":"13.3.1"},
+  14:{"重大风险只发邮件不确认":"14.4.1"},
+  15:{"规避、转移、减轻与接受":"15.7.1"},
+  18:{"机械照搬同一管理流程":"18.3.2"},
+  19:{"配置项标识与基线":"19.1.4","问题、风险、缺陷、变更区别":"19.2.1","紧急变更与回退":"19.2.6"}
+};
 const fixed={
 "实施整体变更控制":"整体变更控制",
 "规划范围管理":"规划范围管理",
@@ -51,7 +62,9 @@ const fixed={
 "问题、风险、缺陷、变更区别":"配置管理",
 "紧急变更与回退":"变更"
 };
-function chooseTopic(chapter,title){
+function chooseTopic(chapter,title,chapterId){
+ const explicit=EXACT_TOPICS[chapterId]?.[title];
+ if(explicit&&chapter.notes?.[explicit]?.blocks)return explicit;
  const notes=chapter.notes||{};
  const sections=(chapter.sections||[]).flatMap(g=>[g,...(g.children||[])]);
  const valid=sections.filter(s=>notes[s.id]&&Array.isArray(notes[s.id].blocks));
@@ -81,7 +94,7 @@ for(const entry of ENTRIES){
  for(const chapterId of [...new Set(entry.chapters)]){
   const chapter=chapterId===1?{sections:window.EXAM_SECTIONS||[],notes:window.EXAM_NOTES||{}}:window['EXAM_CH'+chapterId];
   if(!chapter?.notes){stats.missing.push({chapter:chapterId,title:entry.title,reason:'章节数据缺失'});continue}
-  const topicId=chooseTopic(chapter,entry.title),note=chapter.notes[topicId];
+  const topicId=chooseTopic(chapter,entry.title,chapterId),note=chapter.notes[topicId];
   if(!note?.blocks){stats.missing.push({chapter:chapterId,title:entry.title,reason:'未匹配知识点'});continue}
   const key=entry.boostId+'-ch'+chapterId;
   if(note.blocks.some(b=>b.knowledgeBoostKey===key))continue;
