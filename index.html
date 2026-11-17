@@ -138,6 +138,7 @@
   <div v-else class="definition-grid"><div class="definition-row" v-for="(item,k) in b.items||[]" :key="k"><strong>{{item[0]}}</strong><p>{{item[1]}}</p></div></div>
   <p v-if="b.knowledgeBoostTip" class="kb-inline-tip">{{b.knowledgeBoostTip}}</p>
 </template>
+<div v-else-if="b.type==='concept' && (b.items?.length||0)>=4" class="kb-table-scroll"><table class="kb-study-table kb-core-table"><caption class="kb-sr-only">{{b.title}} · 知识点表格</caption><thead><tr><th scope="col">知识点</th><th scope="col">核心说明</th></tr></thead><tbody><tr v-for="(item,k) in b.items" :key="k"><th scope="row">{{item[0]}}</th><td>{{item[1]}}</td></tr></tbody></table></div>
 <div v-else-if="b.type==='concept'" class="definition-grid"><div class="definition-row" v-for="(item,k) in b.items" :key="k"><strong>{{item[0]}}</strong><p :class="{'document-example-text':!!b.documentExampleKey}">{{item[1]}}</p></div></div>
 <div v-else-if="b.type==='chips'" class="chip-cloud"><span v-for="chip in b.items" :key="chip">{{chip}}</span></div>
 <div v-else-if="b.type==='steps'" class="step-stack"><div v-for="(step,j) in b.items" :key="j" class="study-step"><span class="step-number">{{j+1}}</span><div><strong>{{step[0]}}</strong><p>{{step[1]}}</p></div></div></div>
