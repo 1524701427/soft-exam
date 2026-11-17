@@ -21,6 +21,7 @@
         <button :class="{'is-current':activeView==='home'}" @click="navigate('home')">学习总览</button>
         <button :class="{'is-current':activeView==='chapters'}" @click="navigate('chapters')">24 章教材目录</button>
         <button :class="{'is-current':activeView==='knowledge'}" @click="navigate('knowledge')">知识点学习与图解</button>
+        <a href="./knowledge-boost/index.html" style="display:block;padding:9px 14px;color:inherit;text-decoration:none;font-size:13px;border-radius:8px">知识强化专题 · 8大模块（新增）</a>
         <details class="site-six-chapters"><summary>展开 24 章快捷目录</summary>
           <div v-for="g in EXAM_CATALOG" :key="g.group" class="chapter-side-group">
             <div class="chapter-group-label">{{g.group}}</div>
