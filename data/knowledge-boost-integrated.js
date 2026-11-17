@@ -98,9 +98,17 @@ for(const entry of ENTRIES){
   if(!note?.blocks){stats.missing.push({chapter:chapterId,title:entry.title,reason:'未匹配知识点'});continue}
   const key=entry.boostId+'-ch'+chapterId;
   if(note.blocks.some(b=>b.knowledgeBoostKey===key))continue;
-  const rows=lines(entry.body);
+  let rows=lines(entry.body);
+  if(entry.group==='compare'){
+    const parts=String(entry.body).split('；').map(x=>x.trim()).filter(Boolean);
+    if(parts.length>1){
+      const labels=entry.title.split(/、|与|和|VS|vs|／/).map(x=>x.trim()).filter(Boolean);
+      rows=parts.map((txt,i)=>[labels.length===parts.length?labels[i]:'辨析 '+String(i+1).padStart(2,'0'),txt]);
+    }
+  }
   if(entry.tip)rows.push(['考点提示',entry.tip]);
-  note.blocks.push({title:GROUPS[entry.group]+'｜'+entry.title,type:'concept',items:rows,knowledgeBoostKey:key,knowledgeBoostGroup:entry.group,sourceKind:'增量学习补充；公式示例和案例为教学资料，请与现行教材口径核对'});
+  const steps=['flows','changes'].includes(entry.group)&&entry.body.includes('→')?entry.body.split('→').map(x=>x.trim()).filter(Boolean):null;
+  note.blocks.push({title:GROUPS[entry.group]+'｜'+entry.title,type:'concept',items:rows,flowSteps:steps,knowledgeBoostKey:key,knowledgeBoostGroup:entry.group,sourceKind:'增量学习补充；公式示例和案例为教学资料，请与现行教材口径核对'});
   stats.total++;stats.chapters[chapterId]=(stats.chapters[chapterId]||0)+1;
   stats.topics.push({chapter:chapterId,sectionId:topicId,group:entry.group,title:entry.title});
  }
