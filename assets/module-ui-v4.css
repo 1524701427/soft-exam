@@ -1,0 +1,34 @@
+/* 高项研习社统一专题皮肤 / v4：计算、案例、千题闯关 */
+:root{--study-ink:#23364d;--study-sub:#687c8c;--study-bg:#f5f7fa;--study-accent:#168678;--study-accent-soft:#eaf6f1;--study-line:#e3eaf0}
+body{background:var(--study-bg);color:var(--study-ink);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit}
+:where(button,a,input,select,textarea):focus-visible{outline:3px solid rgba(30,149,130,.3);outline-offset:2px}
+:where(.panel,.group-card,.lesson-card,.domain-card,.case-card,.qcard,.stat,.stat-card,.filter-panel,.formula-card,.card){
+  border-radius:13px;border-color:var(--study-line);box-shadow:0 3px 15px rgba(24,46,70,.035)
+}
+:where(.container,.main,.wrap){color:var(--study-ink)}
+:where(.section-title h2,.panel h2,.panel h3,.group-card strong,.lesson-card strong){color:#263b50}
+:where(.section-title p,.panel p,.subline,.card-desc,.group-card small){line-height:1.83}
+:where(.eyebrow,.kicker){letter-spacing:.105em}
+:where(.btn,.button,.btn-line,.mini-btn,.calc-embedded-local-nav button,.case-embedded-local-nav button){
+  border-radius:9px;transition:background .15s ease,border-color .15s ease;
+}
+:where(.calc-embedded-local-nav,.case-embedded-local-nav){
+  background:#fff;border:1px solid var(--study-line);border-radius:11px;box-shadow:none;
+}
+:where(.calc-embedded-local-nav,.case-embedded-local-nav) button.selected{
+  background:var(--study-accent-soft)!important;color:#127566!important;border-color:#bcded4!important;
+}
+:where(.calc-embedded-local-nav,.case-embedded-local-nav) button:hover{
+  background:var(--study-accent-soft)!important;color:#127566!important;
+}
+html.is-embedded body{background:transparent!important}
+html.is-embedded :where(.container,.main,.wrap){padding-top:4px}
+html.is-embedded .hero{margin-top:6px}
+html.is-embedded :where(.site-header,.topbar,.study-six-nav){box-shadow:none}
+/* 独立访问时专题导航仍保留，嵌入主站时使用主站导航，不重复叠加 */
+html.is-embedded .study-six-nav{display:none!important}
+@media(max-width:660px){
+  :where(.panel,.group-card,.lesson-card,.domain-card,.case-card){border-radius:11px}
+  :where(.section-title h2){font-size:19px}
+}
