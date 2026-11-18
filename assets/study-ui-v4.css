@@ -182,3 +182,13 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
   #app .kb-study-table th,#app .kb-study-table td{padding:9px 10px!important;font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#app .quick-card,#app .chapter-card{transition:none!important}}
+
+/* 原站已存在上一节/下一节组件，统一为阅读导航卡，避免重复添加功能。 */
+#app .lesson-next{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:17px}
+#app .lesson-next button{border:1px solid #e0e9ed;border-radius:10px;background:#f9fcfb;padding:13px 15px;text-align:left;min-width:0}
+#app .lesson-next button:hover:not(:disabled){border-color:#93c7be;background:#ecf7f2}
+#app .lesson-next button>span{display:block;color:#168678;font-size:11px;font-weight:760;margin-bottom:5px}
+#app .lesson-next button>strong{display:block;color:#364f61;font-size:13px;font-weight:740;line-height:1.6;overflow-wrap:anywhere}
+#app.dark-mode .lesson-next button{background:#263e4a;border-color:#3f5b68}
+#app.dark-mode .lesson-next button>strong{color:#dcebf0}
+@media(max-width:560px){#app .lesson-next{gap:7px}#app .lesson-next button{padding:11px}}
