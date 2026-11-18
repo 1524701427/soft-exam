@@ -171,8 +171,14 @@
       filteredChapterVisuals(){return this.currentChapterVisuals.filter(v=>this.visualTypeFilter==='all'||v.kind===this.visualTypeFilter)},
       topicVisuals(){return this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic)},
       lessonVisuals(){
-        // 严格按知识点 ID 归属图解；不再用邻近小节的无关图填充。
-        return this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic);
+        // 优先显示已人工整理、严格匹配知识点的原有交互图。
+        const exact=this.currentChapterVisuals.filter(v=>v.topicId===this.selectedTopic);
+        if(exact.length)return exact;
+        // 当前知识点无专业图时，只从该节实际笔记构建知识导图，绝不挪用邻节图。
+        const fromNote=window.EXAM_BUILD_LESSON_VISUAL?.(
+          this.selectedTopic,this.currentTopicTitle,this.currentNote
+        );
+        return fromNote?[fromNote]:[];
       },
       activeLessonVisual(){return this.lessonVisuals.find(v=>v.id===this.visualFocusId)||this.lessonVisuals[0]||null},
       lessonVisualIsDirect(){return this.activeLessonVisual?.topicId===this.selectedTopic},

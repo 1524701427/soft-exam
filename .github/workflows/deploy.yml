@@ -35,6 +35,8 @@ jobs:
         run: node scripts/check_case_gold_import.js
       - name: Check design and detailed exam notes
         run: node scripts/check_deep_notes_2026.js
+      - name: Check illustrated reading and lesson diagrams
+        run: node scripts/check_illustrated_reading_v6.js
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site

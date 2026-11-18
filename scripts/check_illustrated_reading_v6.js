@@ -1,0 +1,63 @@
+/* v6 图解发布前验证：只使用原考点、旧图保持优先、三类资源加载顺序正确。 */
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const vm=require('node:vm');
+const root=path.resolve(__dirname,'..');
+const load=p=>fs.readFileSync(path.join(root,p),'utf8');
+const ctx=vm.createContext({window:{}});
+vm.runInContext(load('data/content.js'),ctx,{filename:'data/content.js'});
+vm.runInContext(load('data/visuals.js'),ctx,{filename:'data/visuals.js'});
+vm.runInContext(load('assets/lesson-diagrams-v6.js'),ctx,{filename:'assets/lesson-diagrams-v6.js'});
+const factory=ctx.window.EXAM_BUILD_LESSON_VISUAL;
+assert.equal(typeof factory,'function','缺少考点导图生成函数');
+const old=ctx.window.EXAM_VISUALS;
+assert(old.length>=426,'原有图解数据意外丢失');
+assert(!old.some(x=>x.topicId==='1.1.1'),'测试预期变更：1.1.1 曾无匹配图');
+assert(old.some(x=>x.topicId==='1.1.2'),'既有第一章生命周期图丢失');
+
+const note=ctx.window.EXAM_NOTES['1.1.1'];
+const map=factory('1.1.1','信息',note);
+assert.equal(map.kind,'mindmap');
+assert.equal(map.topicId,'1.1.1');
+assert.equal(map.items.length,4);
+assert(map.items.find(x=>x.label.includes('11'))?.detail.includes('客观性'));
+assert(map.items.find(x=>x.label.includes('7'))?.detail.includes('精确性'));
+assert.equal(factory('1.1.1','信息',note),map,'重复渲染图解未复用');
+assert.equal(factory('1.1.1','信息',null),null,'没有教材笔记时不应虚构知识图');
+assert.equal(factory('1.1.1','信息',{}),null,'缺少块内容时不应生成空图');
+
+const chapters=[];
+for(let i=2;i<=24;i++){
+ const file='data/chapter'+String(i).padStart(2,'0')+'.json';
+ const d=JSON.parse(load(file));
+ chapters.push(d);
+}
+const sample=chapters.map((ch,index)=>{
+ const entry=Object.entries(ch.notes||{}).find(([id,n])=>Array.isArray(n.blocks)&&n.blocks.length>=2&&
+      !old.some(v=>v.topicId===id));
+ return entry&&{chapter:index+2,entry};
+}).find(Boolean);
+assert(sample,'缺少其他章节的自动导图测试样例');
+const [topicId,otherNote]=sample.entry;
+const other=factory(topicId,'本章知识点',otherNote);
+assert(other&&other.items?.length>=2,'其他章节笔记导图生成失败：'+topicId);
+assert.equal(other.chapterId,sample.chapter,'生成图解跨章节归属异常');
+assert(other.items.every(item=>item.label&&item.detail),'图解分支不完整');
+
+const app=load('assets/app.js');
+assert(app.includes('if(exact.length)return exact;'),'必须优先显示原有人工整理的图解');
+assert(app.includes('EXAM_BUILD_LESSON_VISUAL'),'阅读页缺失知识导图回退逻辑');
+new Function(app);
+new Function(load('assets/visuals-ui.js'));
+assert(load('assets/visuals-ui.js').includes("diagram.kind==='mindmap'"),'未注册知识导图渲染分支');
+const index=load('index.html');
+const ordered=['data/visuals.js','assets/visuals-ui.js','data/deep-exam-notes-2026.js',
+ 'assets/lesson-diagrams-v6.js','assets/app.js'];
+const positions=ordered.map(file=>{const at=index.indexOf(file);assert(at>=0,'HTML 未加载 '+file);return at});
+assert(positions.every((pos,i)=>i===0||pos>positions[i-1]),'图解依赖加载顺序错误');
+for(const file of ['assets/illustrated-reading-v6.css','assets/lesson-diagrams-v6.js'])
+ assert(index.includes(file)&&fs.existsSync(path.join(root,file)),'新增资源不存在：'+file);
+assert(index.includes('先看图，再理解知识点'),'章节学习页未启用图解导读');
+
+console.log('图解教材发布检查通过：旧图 '+old.length+' 张；1.1.1 手绘结构图；第'+sample.chapter+'章 '+topicId+' 自动导图；资源与交互组件完整。');

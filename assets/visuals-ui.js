@@ -110,6 +110,35 @@ window.ExamVisualComponent = {
       <!-- 考试公式比普通长段落更易记忆 -->
       <div v-else-if="diagram.kind==='formula'" class="vd-formula-grid"><button v-for="(item,i) in diagram.items" :key="i" :class="{'picked':selectedIndex===i}" @click="select(i)" :aria-pressed="selectedIndex===i"><span>公式 0{{i+1}}</span><strong>{{item.label}}</strong><code>{{item.detail}}</code></button></div>
 
+      <!-- 教材结构导图：中心主题 + 有意义的知识分支，节点可点选展开 -->
+      <div v-else-if="diagram.kind==='mindmap'" class="vd-knowledge-map" role="group" :aria-label="diagram.title">
+        <div class="vd-map-hub">
+          <div class="vd-map-book-illus" aria-hidden="true">
+            <svg viewBox="0 0 200 126" width="200" height="126" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="99" cy="114" rx="83" ry="9" fill="#b8a483" opacity=".2"/>
+              <path d="M100 102 C69 82 40 85 16 87 L16 26 C47 23 75 26 100 43Z" fill="#fef9ed" stroke="#b8a17a" stroke-width="3"/>
+              <path d="M100 102 C128 82 160 85 184 87 L184 26 C152 23 128 26 100 43Z" fill="#fffdf6" stroke="#b8a17a" stroke-width="3"/>
+              <path d="M100 43 L100 104" fill="none" stroke="#9e855e" stroke-width="2"/>
+              <path d="M24 39 C50 35 75 40 90 49 M24 53 C48 50 72 55 90 64 M24 67 C44 65 68 69 90 78" fill="none" stroke="#e7d8ba" stroke-width="3" stroke-linecap="round"/>
+              <path d="M109 49 C129 40 152 35 176 39 M109 64 C132 54 154 51 176 53 M109 78 C132 69 154 65 176 67" fill="none" stroke="#e7d8ba" stroke-width="3" stroke-linecap="round"/>
+              <path d="M89 19 l11 -13 l11 13 l-11 14Z" fill="#b18a54" opacity=".9"/>
+              <circle cx="32" cy="13" r="4" fill="#90a89b"/><circle cx="166" cy="10" r="3.5" fill="#c98b67"/>
+            </svg>
+          </div>
+          <small>本节核心主题</small>
+          <strong>{{diagram.center||diagram.title}}</strong>
+          <span>由此展开知识结构</span>
+        </div>
+        <div class="vd-map-branches">
+          <button v-for="(item,i) in diagram.items" :key="i" type="button"
+             class="vd-map-node" :class="['vd-map-tone-'+(i%4),{'picked':selectedIndex===i}]"
+             :aria-pressed="selectedIndex===i" @click="select(i)">
+            <span class="vd-map-number">{{nodeNumber(i)}}</span>
+            <span class="vd-map-copy"><strong>{{item.label}}</strong><small>{{item.detail}}</small></span>
+            <span class="vd-map-open" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </div>
       <div v-else-if="diagram.kind==='path'" class="visual-flow" role="group" :aria-label="diagram.title">
         <button v-for="(step,i) in diagram.items" :key="i" class="visual-flow-node" :class="{'picked':selectedIndex===i}" @click="select(i)" :aria-pressed="selectedIndex===i"><b>{{nodeNumber(i)}}</b><strong>{{step.label}}</strong><span>{{i===diagram.items.length-1?'完成':'下一步 →'}}</span></button>
       </div>
