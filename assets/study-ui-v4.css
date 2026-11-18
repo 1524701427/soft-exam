@@ -27,7 +27,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
 #app .brand strong{color:#453522!important;font-size:17px;letter-spacing:.035em;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;font-weight:800}
 #app .brand small{color:#846d4f!important;letter-spacing:.02em;font-size:10px}
 #app .sidebar-scroll{padding:13px 11px 20px;scrollbar-color:#c8ae84 transparent}
-#app .sidebar .nav-label{color:#8e795d!important;letter-spacing:.14em;font-size:10px;padding:11px 12px 12px}
+#app .sidebar .nav-label{color:#786044!important;letter-spacing:.14em;font-size:10px;padding:11px 12px 12px}
 #app .site-six-primary{
  display:flex;align-items:center;gap:11px;padding:10px 11px;min-height:48px;margin:2px 0;
  border-radius:9px!important;color:#594831!important;font-size:13px;font-weight:760;
@@ -52,7 +52,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
 #app .site-six-sub button.is-current{background:#e3c99d!important;color:#63401e!important;font-weight:780}
 #app .site-six-sub .six-sub-count{background:#d3b989;color:#593c1d}
 #app .site-six-chapters summary,#app .site-six-sub .six-sub-detail summary,#app .six-sub-heading{color:#876f4d!important;font-size:11px}
-#app .site-six-chapters .chapter-group-label{color:#80613c!important;font-size:10px;font-weight:800;padding:14px 7px 5px}
+#app .site-six-chapters .chapter-group-label{color:#70512c!important;font-size:10px;font-weight:800;padding:14px 7px 5px}
 #app .site-six-chapters .chapter-mini{min-height:34px;color:#725a3e!important;border-radius:7px}
 #app .site-six-chapters .chapter-mini:hover{background:#e6d3b0!important;color:#47331e!important}
 #app .site-six-chapters .chapter-mini.selected{background:#dcc092!important;color:#49351c!important}
@@ -90,7 +90,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
  font-size:clamp(24px,2.3vw,31px);font-weight:800!important;letter-spacing:0!important;line-height:1.45!important
 }
 #app .page-heading p{font-size:13px!important;line-height:1.9!important;color:#7d6c55!important;max-width:760px}
-#app .eyebrow{color:#90663a!important;font-size:10px;font-weight:800;letter-spacing:.115em}
+#app .eyebrow{color:#815b30!important;font-size:10px;font-weight:800;letter-spacing:.115em}
 #app .panel,#app .stat-card,#app .quick-card{
  background:#fffaf0!important;border:1px solid #e6dac4!important;
  border-radius:11px!important;box-shadow:0 4px 20px rgba(101,72,36,.04)!important;
@@ -101,7 +101,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
  font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
  font-size:17px!important;line-height:1.5;color:#553f28!important;font-weight:800!important
 }
-#app .panel-heading p{font-size:12px!important;color:#8b795e!important;line-height:1.8}
+#app .panel-heading p{font-size:12px!important;color:#776044!important;line-height:1.8}
 #app .hero-banner{
  background:linear-gradient(118deg,#efdcaf 0%,#f5e5c2 56%,#e2c491 100%)!important;
  color:#50381f!important;border:1px solid #d8bf90!important;
@@ -114,7 +114,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
  font-size:24px;letter-spacing:.025em
 }
 #app .hero-content p{color:#745939!important;line-height:1.8}
-#app .hero-banner .hero-kicker{color:#996f3b!important;opacity:1;font-weight:850}
+#app .hero-banner .hero-kicker{color:#78532b!important;opacity:1;font-weight:850}
 #app .hero-banner .book-graphic{box-shadow:7px 8px 19px rgba(103,70,28,.16)!important}
 #app .hero-banner .orbit{border-color:rgba(128,93,45,.12)!important}
 #app .hero-banner .floating-card{background:#fffaf0;color:#8e6337;box-shadow:0 5px 18px rgba(83,58,27,.11)}
@@ -125,7 +125,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
 #app .hero-actions button:hover{filter:brightness(.96)}
 #app .stat-card{padding:20px 21px;min-height:136px}
 #app .stat-value{color:#5a4229!important;font-family:Georgia,"STSong",serif}
-#app .stat-desc,#app .stat-name{color:#84735b!important}
+#app .stat-desc,#app .stat-name{color:#746044!important}
 #app .stat-ico,#app .quick-icon{background:#f1e2c5!important;color:#896236!important;border-radius:9px!important}
 #app .chapter-card{
  background:#fffaf1!important;border:1px solid #e4d6bc!important;
@@ -160,7 +160,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
 }
 #app .outline-heading{padding:6px 11px 14px!important}
 #app .outline-heading strong{color:#5d462a!important;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;font-size:15px}
-#app .outline-heading small,#app .outline-progress-num{color:#9b8060}
+#app .outline-heading small,#app .outline-progress-num{color:#795f3e}
 #app .outline-group{margin:3px 0}
 #app .outline-parent{color:#655036!important;border-radius:7px;font-weight:760}
 #app .outline-parent:hover{background:#efe0c4!important}
@@ -189,7 +189,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
 }
 #app .lesson-topline{border-bottom:1px solid #ecdfc9;padding-bottom:11px}
 #app .lesson-id{background:#eee0c7;color:#7a5127;border-radius:5px}
-#app .lesson-label,#app .lesson-source-document{color:#8d7558}
+#app .lesson-label,#app .lesson-source-document{color:#745c3d}
 #app .lesson-title{
  margin-top:21px!important;color:#4e3b27!important;
  font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
@@ -207,7 +207,7 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
 #app .lesson-tabs button{font-size:13px;font-weight:770;color:#826e53}
 #app .lesson-tabs button.on{color:#80542a!important;border-color:#ad8550!important}
 #app .reading-section-header h3{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;font-size:17px!important;color:#56412a!important}
-#app .reading-section-header p{font-size:12px;color:#8c7659;line-height:1.7}
+#app .reading-section-header p{font-size:12px;color:#755b3e;line-height:1.7}
 #app .reading-section-icon{
  background:#e9d6b2!important;color:#78532b!important;
  border:1px solid #dec395;border-radius:6px;font-weight:850
