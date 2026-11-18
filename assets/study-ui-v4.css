@@ -1,194 +1,415 @@
-/* 高项研习社 · 2026.11 统一设计体系
- * 只负责界面，保留原路由、题库、学习记录和业务逻辑。
- * 背景/文字/重点色统一：墨蓝 × 青绿 × 中性灰。
+/* 高项研习社｜暖纸书房主题 v5 · 2026-11-18
+ * 设计原则：暖米黄纸张、茶棕书签、书卷标题、清晰正文，避免高饱和色和过度阴影。
+ * 仅替换既有设计系统的视觉层，保持所有路由、数据和交互逻辑不变。
  */
 :root{color-scheme:light}
 html{scroll-behavior:smooth}
-body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:#f3ecdb}
 #app{
-  --bg:#f5f7fa;--panel:#fff;--text:#23364d;--sub:#68798b;--border:#e5ebf1;
-  --surface:#f8fafc;--primary:#168678;--shadow:0 4px 24px rgba(24,46,70,.045);
-  background:var(--bg)!important;color:var(--text);font-size:14px;
+ --bg:#f3ecdb;--panel:#fffaf0;--field:#fffdf7;--surface:#f7f0e2;
+ --text:#493d2f;--sub:#7d6d58;--border:#e6d9bf;--primary:#906b3f;
+ --book-ink:#493d2f;--book-muted:#7d6d58;--book-accent:#8b6439;
+ --book-paper:#fffaf0;--book-sheet:#fffdf7;--book-edge:#d9bd87;--book-line:#e6d9bf;
+ --shadow:0 5px 24px rgba(107,78,37,.055);
+ background:var(--bg)!important;color:var(--text)!important;font-size:14px;
 }
-#app .sidebar{width:254px;background:#152b40!important;border-right:1px solid #29435a!important}
 #app .app-shell{margin-left:254px}
-#app .brand{height:82px;padding:20px 21px;border-bottom:1px solid rgba(255,255,255,.085)}
-#app .brand-mark{background:#248e82!important;border-radius:12px!important;width:41px;height:41px;box-shadow:none!important}
-#app .brand strong{font-size:16px;font-weight:790;letter-spacing:.01em}
-#app .brand small{font-size:11px;color:#a1b5c5!important;letter-spacing:0}
-#app .sidebar-scroll{padding:12px 11px 30px;scrollbar-color:#456075 transparent}
-#app .sidebar .nav-label{padding:9px 12px 13px;color:#8fa7ba!important;letter-spacing:.13em;font-size:10px}
+#app .sidebar{
+ width:254px;background:#eee1c8!important;color:#554632!important;
+ border-right:1px solid #d5c19d!important;box-shadow:3px 0 15px rgba(96,65,24,.035)
+}
+#app .brand{height:86px;padding:19px 20px;border-bottom:1px solid #d8c5a3;background:#e9d8b8}
+#app .brand-mark{
+ width:42px;height:42px;border-radius:9px!important;
+ background:#997044!important;color:#fff8e9!important;box-shadow:inset -3px 0 0 #6f5031!important;
+ font-family:Georgia,"STSong","SimSun",serif
+}
+#app .brand strong{color:#453522!important;font-size:17px;letter-spacing:.035em;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;font-weight:800}
+#app .brand small{color:#846d4f!important;letter-spacing:.02em;font-size:10px}
+#app .sidebar-scroll{padding:13px 11px 20px;scrollbar-color:#c8ae84 transparent}
+#app .sidebar .nav-label{color:#786044!important;letter-spacing:.14em;font-size:10px;padding:11px 12px 12px}
 #app .site-six-primary{
-  min-height:47px;margin:2px 0;padding:11px 12px;border-radius:10px!important;
-  color:#d0dce5!important;font-size:13px;font-weight:720;letter-spacing:.01em;
-  display:flex;align-items:center;gap:12px;
+ display:flex;align-items:center;gap:11px;padding:10px 11px;min-height:48px;margin:2px 0;
+ border-radius:9px!important;color:#594831!important;font-size:13px;font-weight:760;
+ transition:background .15s ease,color .15s ease;box-shadow:none!important;
 }
 #app .site-six-primary .six-side-symbol{
-  background:rgba(255,255,255,.075)!important;color:#b6d0dc!important;
-  width:28px;height:28px;border-radius:9px;font-size:15px;
+ display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border-radius:7px!important;
+ background:#e2cfac!important;color:#81603c!important;font-family:Georgia,serif;font-size:15px;
 }
-#app .site-six-primary .six-side-arrow{color:#8ba5b7;font-size:18px}
-#app .site-six-primary:hover{background:#24435a!important;color:white!important}
+#app .site-six-primary .six-side-arrow{margin-left:auto;color:#a38b6b}
+#app .site-six-primary:hover{background:#e4d0aa!important;color:#4f3920!important}
 #app .site-six-primary.is-current{
-  background:#244d58!important;color:#fff!important;
-  box-shadow:inset 3px 0 #56c2ac!important;
+ background:#dfc394!important;color:#4b3520!important;box-shadow:inset 3px 0 0 #9b6d39!important
 }
-#app .site-six-primary.is-current .six-side-symbol{background:#2e7d79!important;color:#eafff9!important}
-#app .site-six-sub{margin:5px 3px 13px 18px;padding:3px 0 3px 11px;border-left:1px solid #355167}
+#app .site-six-primary.is-current .six-side-symbol{background:#a37c4a!important;color:#fff9ec!important}
+#app .site-six-sub{margin:5px 3px 14px 18px;padding:4px 0 5px 11px;border-left:1px solid #cbb58e}
 #app .site-six-sub>button,#app .site-six-sub .six-sub-detail>button{
-  min-height:36px;padding:8px 11px;border-radius:8px;color:#aebfce;
-  line-height:1.4;text-align:left;font-size:12px;transition:background .16s,color .16s;
+ min-height:35px;padding:8px 10px;border-radius:7px;color:#766146!important;
+ font-size:12px;line-height:1.5;text-align:left;
 }
-#app .site-six-sub button:hover,#app .site-six-sub button.is-current{background:#2a5260!important;color:#fff!important}
-#app .site-six-chapters summary,#app .site-six-sub .six-sub-heading{font-size:11px;color:#96afbf}
-#app .site-six-chapters .chapter-group-label{font-size:10px;letter-spacing:.04em;color:#a9bdcb;padding:13px 7px 5px}
-#app .site-six-chapters .chapter-mini{padding:7px 9px;margin:1px 0;min-height:33px;color:#c2d0da;font-size:12px}
-#app .site-six-chapters .chapter-mini.selected{background:#2c5863;color:#fff}
-#app .site-six-chapters .chapter-mini-no{font-variant-numeric:tabular-nums;color:#85b3c1}
-#app .sidebar-bottom{margin:0 13px;border-color:#385166}
-#app .user-avatar,#app .top-avatar{background:#248e82;border-radius:11px;box-shadow:none}
+#app .site-six-sub button:hover{background:#e6d4b4!important;color:#573e23!important}
+#app .site-six-sub button.is-current{background:#e3c99d!important;color:#63401e!important;font-weight:780}
+#app .site-six-sub .six-sub-count{background:#d3b989;color:#593c1d}
+#app .site-six-chapters summary,#app .site-six-sub .six-sub-detail summary,#app .six-sub-heading{color:#876f4d!important;font-size:11px}
+#app .site-six-chapters .chapter-group-label{color:#70512c!important;font-size:10px;font-weight:800;padding:14px 7px 5px}
+#app .site-six-chapters .chapter-mini{min-height:34px;color:#725a3e!important;border-radius:7px}
+#app .site-six-chapters .chapter-mini:hover{background:#e6d3b0!important;color:#47331e!important}
+#app .site-six-chapters .chapter-mini.selected{background:#dcc092!important;color:#49351c!important}
+#app .site-six-chapters .chapter-mini-no{font-variant-numeric:tabular-nums;color:#9a7951!important}
+#app .site-six-chapters .side-dot{background:#a07744!important}
+#app .sidebar-bottom{margin:0 13px;border-top:1px solid #d1be9d}
+#app .user-avatar,#app .top-avatar{background:#a77e4d!important;color:#fff9e9!important;border-radius:9px;box-shadow:none}
+#app .user-info strong{color:#57432d}
+#app .user-info small{color:#967d5b}
+#app .side-gear{color:#816b4e}
 #app .topbar{
-  height:68px;padding:0 clamp(20px,3vw,43px);
-  background:#fff;border-bottom:1px solid #e7ecf2;
+ min-height:68px;height:68px;padding:0 clamp(20px,3vw,43px);
+ background:#fff8e9!important;border-bottom:1px solid #e4d6ba!important
 }
-#app .breadcrumbs{font-size:13px;color:#7890a1}
-#app .breadcrumbs strong{color:#263b50;font-weight:740}
-#app .global-search{width:min(310px,31vw);border:1px solid #e1e8ef;background:#f7f9fb;border-radius:10px;height:38px}
-#app .global-search:focus-within{border-color:#83bdb6;background:#fff;box-shadow:0 0 0 3px rgba(33,145,126,.09)}
-#app .top-icon-btn{border-radius:10px}
-#app .study-six-nav{display:none!important} /* 桌面端不重复六大导航；侧边栏是唯一主导航 */
-#app .main-content{width:100%;max-width:1390px!important;margin:0 auto;padding:32px clamp(22px,3vw,47px) 60px!important}
-#app .main-content.has-embedded-module{max-width:1450px!important;padding:20px clamp(13px,2.5vw,35px) 42px!important}
-#app .page-heading{margin-bottom:23px!important;gap:16px}
-#app .page-heading h1{font-size:clamp(24px,2.25vw,31px);font-weight:800;letter-spacing:-.028em;line-height:1.34;color:#1d3348}
-#app .page-heading p{font-size:13px;line-height:1.8;color:#6c7d8e;max-width:740px}
-#app .eyebrow{font-size:10px;font-weight:780;letter-spacing:.11em;color:#168678}
+#app .breadcrumbs{font-size:13px;color:#8f7d63}
+#app .breadcrumbs strong{font-weight:760;color:#58432c!important}
+#app .bread-sep{color:#c5ac85}
+#app .top-right{gap:15px}
+#app .global-search{
+ width:min(310px,31vw);height:38px;border:1px solid #e1d2b7!important;
+ background:#faf4e7!important;border-radius:9px!important;color:#6c5941
+}
+#app .global-search input{color:#4b3b2c;background:transparent}
+#app .global-search:focus-within{background:#fffdf7!important;border-color:#ba9561!important;box-shadow:0 0 0 3px rgba(175,133,71,.12)}
+#app .top-icon-btn{color:#85643f;background:#f4e8d3;border-radius:9px}
+#app .study-six-nav{display:none!important}
+#app .main-content{
+ width:100%;max-width:1400px!important;margin:0 auto;
+ padding:30px clamp(20px,3vw,45px) 60px!important
+}
+#app .main-content.has-embedded-module{width:100%;max-width:1470px!important;padding:20px clamp(12px,2.5vw,33px) 40px!important}
+#app .page-heading{margin-bottom:23px!important;gap:18px}
+#app .page-heading h1{
+ color:#493925!important;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+ font-size:clamp(24px,2.3vw,31px);font-weight:800!important;letter-spacing:0!important;line-height:1.45!important
+}
+#app .page-heading p{font-size:13px!important;line-height:1.9!important;color:#7d6c55!important;max-width:760px}
+#app .eyebrow{color:#815b30!important;font-size:10px;font-weight:800;letter-spacing:.115em}
 #app .panel,#app .stat-card,#app .quick-card{
-  border:1px solid #e4eaf0!important;box-shadow:0 3px 16px rgba(21,48,76,.035)!important;
-  background:#fff!important;border-radius:14px!important;
+ background:#fffaf0!important;border:1px solid #e6dac4!important;
+ border-radius:11px!important;box-shadow:0 4px 20px rgba(101,72,36,.04)!important;
 }
 #app .panel{padding:clamp(17px,2vw,24px)}
-#app .panel-heading{margin-bottom:16px}
-#app .panel-heading h3{font-size:16px;line-height:1.45;font-weight:780;color:#23384d}
-#app .panel-heading p{font-size:12px;line-height:1.7;color:#7c8b98}
-#app .hero-banner{background:linear-gradient(115deg,#193b52,#226471)!important;border-radius:17px!important;box-shadow:none!important}
-#app .hero-kicker{letter-spacing:.12em;opacity:.85}
-#app .hero-actions button{border-radius:9px}
-#app .stat-card{padding:19px 21px}
-#app .stat-value{color:#203a50}
+#app .panel-heading{margin-bottom:14px}
+#app .panel-heading h3{
+ font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+ font-size:17px!important;line-height:1.5;color:#553f28!important;font-weight:800!important
+}
+#app .panel-heading p{font-size:12px!important;color:#776044!important;line-height:1.8}
+#app .hero-banner{
+ background:linear-gradient(118deg,#efdcaf 0%,#f5e5c2 56%,#e2c491 100%)!important;
+ color:#50381f!important;border:1px solid #d8bf90!important;
+ box-shadow:inset 9px 0 0 #b99156,0 9px 24px rgba(123,88,43,.09)!important;
+ border-radius:10px!important;position:relative;overflow:hidden;
+}
+#app .hero-content{color:#553e25!important}
+#app .hero-content h2{
+ font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;color:#503822!important;
+ font-size:24px;letter-spacing:.025em
+}
+#app .hero-content p{color:#745939!important;line-height:1.8}
+#app .hero-banner .hero-kicker{color:#78532b!important;opacity:1;font-weight:850}
+#app .hero-banner .book-graphic{box-shadow:7px 8px 19px rgba(103,70,28,.16)!important}
+#app .hero-banner .orbit{border-color:rgba(128,93,45,.12)!important}
+#app .hero-banner .floating-card{background:#fffaf0;color:#8e6337;box-shadow:0 5px 18px rgba(83,58,27,.11)}
+#app .hero-banner .floating-card span{color:#6e5940}
+#app .hero-actions button{border-radius:7px!important;font-weight:760}
+#app .hero-actions .primary-light-btn{background:#8f673d;color:#fff9ec}
+#app .hero-actions .ghost-light-btn{background:#f5ebd6;color:#634828;border:1px solid #cba972}
+#app .hero-actions button:hover{filter:brightness(.96)}
+#app .stat-card{padding:20px 21px;min-height:136px}
+#app .stat-value{color:#5a4229!important;font-family:Georgia,"STSong",serif}
+#app .stat-desc,#app .stat-name{color:#746044!important}
+#app .stat-ico,#app .quick-icon{background:#f1e2c5!important;color:#896236!important;border-radius:9px!important}
 #app .chapter-card{
-  background:#fff!important;border:1px solid #e2e9ef!important;border-radius:13px!important;
-  padding:19px!important;box-shadow:0 3px 13px rgba(15,43,65,.025)!important;
-  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+ background:#fffaf1!important;border:1px solid #e4d6bc!important;
+ border-radius:9px!important;padding:20px!important;
+ box-shadow:inset 4px 0 0 #e1c690,0 3px 15px rgba(102,74,35,.035)!important;
+ transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
 }
-#app .chapter-card:hover{transform:translateY(-2px)!important;border-color:#86c1ba!important;box-shadow:0 9px 24px rgba(32,74,85,.07)!important}
-#app .chapter-card h3{font-size:15px!important;color:#243d52!important;line-height:1.55}
-#app .chapter-card-number{color:#13897d!important}
-#app .roadmap-index,#app .chapter-group-label{font-weight:740}
-#app .quick-card{transition:transform .16s ease,border-color .16s ease}
-#app .quick-card:hover{transform:translateY(-2px);border-color:#93c8c0!important}
-#app .learning-layout{display:grid;grid-template-columns:minmax(230px,272px) minmax(0,1fr)!important;gap:23px!important;align-items:start}
+#app .chapter-card:hover{
+ transform:translateY(-2px)!important;border-color:#c5a472!important;
+ box-shadow:inset 4px 0 0 #be9558,0 9px 24px rgba(107,80,43,.075)!important
+}
+#app .chapter-card h3{color:#57432d!important;font-size:16px!important;line-height:1.6}
+#app .chapter-card-number{color:#986c37!important;font-family:Georgia,serif}
+#app .chapter-group-label{font-weight:800}
+#app .quick-card{transition:transform .16s,border-color .16s}
+#app .quick-card:hover{border-color:#c7ad82!important;transform:translateY(-2px)}
+#app .roadmap-index{background:#ead7b2!important;color:#78532e!important;border-radius:8px}
+#app .roadmap-track{background:#efe3cd}
+#app .roadmap-track span{background:#bc955c}
+#app .study-tip{
+ background:#f5ead4!important;border:1px solid #e7d4b3!important;border-radius:9px!important;
+ color:#715536
+}
+#app .study-tip .tip-icon,#app .study-tip strong{color:#956e3d!important}
+#app .study-tip p{color:#806a4e!important;line-height:1.85}
+#app .overview-strip{background:#fff7e8;border:1px solid #e4d4b9;border-radius:11px}
+#app .learning-layout{display:grid;grid-template-columns:minmax(230px,270px) minmax(0,1fr)!important;gap:23px!important;align-items:start}
 #app .learning-outline{
-  border:1px solid #e3eaf0!important;border-radius:13px!important;
-  box-shadow:0 2px 14px rgba(17,44,72,.035)!important;background:#fff!important;
-  position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;
+ position:sticky;top:17px;max-height:calc(100vh - 34px);overflow:auto;
+ border:1px solid #dfd0b6!important;border-radius:10px!important;
+ background:#f8efdd!important;box-shadow:0 4px 18px rgba(107,75,35,.045)!important
 }
-#app .outline-heading{padding:7px 12px 15px!important}
-#app .outline-heading strong{font-size:14px;color:#263b50}
+#app .outline-heading{padding:6px 11px 14px!important}
+#app .outline-heading strong{color:#5d462a!important;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;font-size:15px}
+#app .outline-heading small,#app .outline-progress-num{color:#795f3e}
 #app .outline-group{margin:3px 0}
-#app .outline-parent{border-radius:8px;font-weight:760;color:#41566a}
-#app .outline-child{border-radius:8px;color:#607386}
-#app .outline-child:hover{background:#f0f6f6!important}
-#app .outline-child.outline-active{background:#e8f5f1!important;color:#166f65!important;font-weight:760}
-#app .chapter-vertical-progress,#app .reading-overall-track{background:#e6efee}
-#app .chapter-vertical-progress>div,#app .reading-overall-track i{background:#279987}
-#app .reading-overall{background:#f1f8f6!important;border:1px solid #dbeae5!important;box-shadow:none}
-#app .reading-overall strong{color:#147f70}
-#app .lesson-area{min-width:0;padding:clamp(20px,2.7vw,34px)!important;border-radius:14px!important;background:#fff;border:1px solid #e4eaf0}
-#app .lesson-title{font-size:clamp(23px,2.3vw,31px)!important;line-height:1.45!important;color:#1e3449}
-#app .lesson-lead{font-size:14px!important;line-height:1.95!important;color:#5c6f81!important;max-width:870px}
-#app .lesson-tabs{border-bottom:1px solid #e4eaf0!important;gap:21px}
-#app .lesson-tabs button{font-size:13px;font-weight:730}
-#app .lesson-tabs button.on{color:#168678!important;border-color:#168678!important}
-#app .reading-section-header h3{font-size:16px!important;color:#263e52}
-#app .reading-section-header p{font-size:12px;line-height:1.7}
-#app .reading-section-icon{background:#edf6f3;color:#168678!important;border-radius:8px;font-weight:850}
-#app .reading-notes{display:grid;gap:15px}
-#app .reading-notes .note-block{background:#fff!important;border:1px solid #e3e9ef!important;border-radius:12px!important;margin:0!important;padding:21px 23px!important;box-shadow:none!important}
-#app .reading-notes .note-block.boost-note{background:#fbfdfc!important;border-color:#dceae7!important}
-#app .reading-notes .note-block-heading{margin-bottom:14px}
-#app .reading-notes .note-block-heading h3{font-size:15px!important;color:#263c50!important;line-height:1.6!important}
-#app .reading-notes .note-block-heading .block-index{border-radius:8px!important;background:#e8f4f1!important;color:#157c70!important;min-width:29px;min-height:29px}
-#app .knowledge-boost-tag{background:#ebf6f2!important;border:1px solid #d4e9e3!important;color:#168172!important}
-#app .kb-table-scroll{border:1px solid #e2e9ef;border-radius:10px!important}
-#app .kb-study-table{width:100%;border-collapse:collapse;line-height:1.9;font-size:13px}
-#app .kb-study-table thead{background:#f3f7f9!important}
-#app .kb-study-table th,#app .kb-study-table td{padding:12px 16px!important;text-align:left;vertical-align:top;border-bottom:1px solid #e8edf2;white-space:pre-line;overflow-wrap:anywhere}
-#app .kb-study-table th{color:#2d5360;font-weight:750}
-#app .kb-study-table td{color:#42586b}
-#app .kb-study-table tbody tr:last-child>th,#app .kb-study-table tbody tr:last-child>td{border-bottom:none}
-#app .kb-study-table tbody tr:nth-child(even){background:#fbfcfd}
-#app .definition-row{border-color:#e9edf2!important}
-#app .definition-row strong{color:#26495a!important}
-#app .definition-row p,#app .study-step p{line-height:1.9!important;color:#4b6074}
-#app .kb-case-cell{border-radius:10px}
-#app .app-footer{border-top:1px solid #e7edf2;color:#8391a0;font-size:11px;line-height:1.7}
-/* 章节/知识点的上下文导航，代替多层重复入口 */
-#app .lesson-path{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:15px 0 8px;color:#7b8d9a;font-size:11px}
-#app .lesson-path strong{color:#168678}
-#app .lesson-path button{border:0;background:#f1f6f7;color:#366779;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:720}
-#app .lesson-path button:hover{background:#e4f3ee;color:#116e63}
-#app .lesson-pager{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:19px;margin-top:22px;border-top:1px solid #e6edf1}
-#app .lesson-pager button{display:flex;align-items:center;gap:8px;border:1px solid #dce8e7;border-radius:9px;background:#f8fcfa;padding:10px 13px;color:#216d68;font-size:12px;font-weight:730;max-width:47%;text-align:left}
-#app .lesson-pager button:disabled{opacity:.34}
-#app .lesson-pager button:not(:disabled):hover{border-color:#88c4ba;background:#eaf6f1}
-#app .lesson-pager small{font-weight:520;font-size:10px;color:#72948e}
-#app :is(button,a,input,select,textarea):focus-visible{outline:3px solid rgba(30,149,130,.35);outline-offset:2px}
-#app.dark-mode{--bg:#142331;--panel:#1d3142;--surface:#243b4e;--text:#e3edf3;--sub:#adc0ce;--border:#375061;color:var(--text)}
-#app.dark-mode .topbar,#app.dark-mode .lesson-area,#app.dark-mode .panel,#app.dark-mode .reading-notes .note-block,#app.dark-mode .chapter-card,#app.dark-mode .quick-card,#app.dark-mode .stat-card,#app.dark-mode .learning-outline{background:#1d3142!important;border-color:#375061!important;color:#deebf2}
-#app.dark-mode .page-heading h1,#app.dark-mode .lesson-title,#app.dark-mode .reading-notes .note-block-heading h3,#app.dark-mode .panel-heading h3,#app.dark-mode .chapter-card h3,#app.dark-mode .lesson-pager button{color:#e4f1f7!important}
-#app.dark-mode .reading-notes .note-block.boost-note,#app.dark-mode .reading-overall{background:#223a48!important;border-color:#3d5965!important}
-#app.dark-mode .kb-study-table thead,#app.dark-mode .kb-study-table tbody tr:nth-child(even){background:#273d4c!important}
-#app.dark-mode .kb-study-table td,#app.dark-mode .kb-study-table th{border-color:#395365;color:#dce8ee}
-#app.dark-mode .lesson-pager button,#app.dark-mode .lesson-path button{background:#254c4f;border-color:#416b6a;color:#dff5ee}
+#app .outline-parent{color:#655036!important;border-radius:7px;font-weight:760}
+#app .outline-parent:hover{background:#efe0c4!important}
+#app .outline-child{border-radius:6px;color:#7e6749!important;line-height:1.55}
+#app .outline-child:hover{background:#f0e2ca!important}
+#app .outline-child.outline-active{
+ background:#e4cfac!important;color:#613f20!important;font-weight:800;
+ box-shadow:inset 3px 0 0 #a47d47
+}
+#app .status-circle{border-color:#c5ae88;color:#906c3b}
+#app .status-circle.is-done{background:#87926d;color:#fff9ea;border-color:#87926d}
+#app .outline-question-btn{
+ background:#ead6b2!important;color:#704a25!important;border:1px solid #d9b982!important;
+ border-radius:7px!important;font-size:12px
+}
+#app .chapter-vertical-progress,#app .reading-overall-track{background:#e9ddc5}
+#app .chapter-vertical-progress>div,#app .reading-overall-track i{background:#af8853}
+#app .reading-overall{background:#f5e8ce!important;border:1px solid #e0caa3!important;box-shadow:none}
+#app .reading-overall strong{color:#8e6735!important}
+#app .reading-overall span{color:#887051}
+#app .lesson-area{
+ position:relative;min-width:0;
+ padding:clamp(22px,3vw,39px)!important;
+ background:#fffdf7!important;border:1px solid #e5d7bc!important;border-radius:9px!important;
+ box-shadow:inset 7px 0 0 #e4ceab,0 10px 32px rgba(100,74,35,.06)!important
+}
+#app .lesson-topline{border-bottom:1px solid #ecdfc9;padding-bottom:11px}
+#app .lesson-id{background:#eee0c7;color:#7a5127;border-radius:5px}
+#app .lesson-label,#app .lesson-source-document{color:#745c3d}
+#app .lesson-title{
+ margin-top:21px!important;color:#4e3b27!important;
+ font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+ font-size:clamp(24px,2.3vw,32px)!important;line-height:1.52!important;letter-spacing:0!important
+}
+#app .lesson-lead{
+ max-width:850px;font-size:15px!important;line-height:2.06!important;color:#6e5941!important;
+ border-left:3px solid #d6b582;padding:5px 0 5px 16px;margin:16px 0 25px!important
+}
+#app .lesson-path{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:13px 0;color:#8c7455;font-size:11px}
+#app .lesson-path strong{color:#88603a}
+#app .lesson-path button{border:1px solid #e7d7b9;background:#f5ebd6;color:#72502d;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:750}
+#app .lesson-path button:hover{background:#ecdbba}
+#app .lesson-tabs{display:flex;gap:24px;border-bottom:1px solid #e5d8c1!important}
+#app .lesson-tabs button{font-size:13px;font-weight:770;color:#826e53}
+#app .lesson-tabs button.on{color:#80542a!important;border-color:#ad8550!important}
+#app .reading-section-header h3{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;font-size:17px!important;color:#56412a!important}
+#app .reading-section-header p{font-size:12px;color:#755b3e;line-height:1.7}
+#app .reading-section-icon{
+ background:#e9d6b2!important;color:#78532b!important;
+ border:1px solid #dec395;border-radius:6px;font-weight:850
+}
+#app .reading-notes{display:grid;gap:17px}
+#app .reading-notes .note-block{
+ padding:21px 23px!important;margin:0!important;
+ background:#fffaf0!important;border:1px solid #e9ddc7!important;border-radius:8px!important;
+ box-shadow:none!important
+}
+#app .reading-notes .note-block.boost-note{
+ background:#fffbf3!important;border-color:#e3d3b6!important;
+ box-shadow:inset 3px 0 0 #cfac77!important
+}
+#app .reading-notes .note-block-heading{margin-bottom:15px}
+#app .reading-notes .note-block-heading h3{
+ font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+ font-size:16px!important;line-height:1.6!important;color:#5a4029!important
+}
+#app .reading-notes .note-block-heading .block-index{
+ min-width:30px;min-height:29px;border-radius:5px!important;
+ background:#f0e0c2!important;color:#8d6435!important
+}
+#app .knowledge-boost-tag,#app .knowledge-doc-tag{
+ border:1px solid #e0c69b!important;border-radius:5px;
+ background:#f3e5cd!important;color:#80592c!important
+}
+#app .reading-notes .definition-grid{
+ background:#fffdf8!important;border:1px solid #ecdfc9!important;border-radius:8px!important
+}
+#app .reading-notes .definition-row{
+ border-color:#eee2cf!important;background:#fffdf8!important;
+ padding-top:13px!important;padding-bottom:13px!important
+}
+#app .definition-row strong,#app .reading-notes .definition-row strong{color:#77532f!important;font-weight:790}
+#app .definition-row p,#app .study-step p,#app .reading-notes .definition-row p{
+ color:#534638!important;font-size:14px!important;line-height:1.98!important;white-space:pre-line
+}
+#app .kb-table-scroll{border:1px solid #e6d9c1!important;border-radius:8px!important;overflow:auto}
+#app .kb-study-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.9;background:#fffdf8!important}
+#app .kb-study-table thead{background:#eee0c4!important}
+#app .kb-study-table th,#app .kb-study-table td{
+ padding:12px 15px!important;text-align:left;vertical-align:top;
+ border-bottom:1px solid #e9ddc9!important;white-space:pre-line;overflow-wrap:anywhere
+}
+#app .kb-study-table th{color:#6f4f30!important;font-weight:790}
+#app .kb-study-table td{color:#534638!important;line-height:1.95}
+#app .kb-study-table tbody tr:nth-child(even){background:#fbf4e6!important}
+#app .kb-study-table tbody tr:last-child th,#app .kb-study-table tbody tr:last-child td{border-bottom:none!important}
+#app .kb-case-grid{gap:13px}
+#app .kb-case-cell,#app .kb-formula-cell,#app .kb-flow-diagram li{
+ border:1px solid #e7d9bf!important;background:#fffaf0!important;border-radius:8px!important
+}
+#app .kb-case-cell.is-wrong{background:#fff3e9!important;border-color:#e8cabc!important}
+#app .kb-case-cell.is-right{background:#f2f3e8!important;border-color:#d6d9be!important}
+#app .kb-case-cell p,#app .kb-formula-cell p,#app .kb-flow-diagram li p{color:#574939!important;font-size:13px;line-height:1.93}
+#app .kb-flow-no{color:#9b6f3f}
+#app .kb-inline-tip{background:#f4e9d0;color:#725331;border-left:3px solid #c19c61}
+#app .reading-figure-section>.exam-visual{background:#fffbf2;border-color:#e9dbc4}
+#app .reading-figure-switcher button{background:#f4e8d3;border-color:#e1cfb1;color:#705136}
+#app .reading-figure-switcher button.on{background:#e5cda2;border-color:#c49d61;color:#573c1f}
+#app .lesson-area>.calc-lab,#app .lesson-area .calc-lab{background:#fffaf0!important;border-color:#e7d8bd!important}
+#app .lesson-footer{border-top:1px solid #e9ddc8}
+#app .lesson-next{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:20px}
+#app .lesson-next button{
+ min-width:0;padding:14px 16px!important;text-align:left;border:1px solid #e2d0b0!important;
+ background:#f6ecd9!important;border-radius:8px!important
+}
+#app .lesson-next button:hover:not(:disabled){border-color:#bc955a!important;background:#eddbb9!important}
+#app .lesson-next button>span{display:block;color:#895e35;font-size:11px;font-weight:800;margin-bottom:6px}
+#app .lesson-next button>strong{display:block;color:#5b462e;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+#app .primary-btn,#app .primary-light-btn,#app .exam-launch .primary-btn{
+ background:#956b3d!important;color:#fff9ed!important;border-color:#956b3d!important;border-radius:7px!important;
+ box-shadow:none!important
+}
+#app .primary-btn:hover{background:#80572c!important}
+#app .outline-btn,#app .text-link,#app .icon-text-btn{color:#8a6034;border-color:#dbc39c}
+#app .outline-btn:hover{background:#f4e8cf}
+#app .chapter-analytics-row,#app .practice-toolbar{background:#fffaf0}
+#app .question-label,#app .question-page,#app .question-title>span{color:#966839!important}
+#app .question-panel,#app .exam-launch,#app .result-panel,#app .writing-panel{background:#fffaf0!important}
+#app .option{background:#fffdf7!important;border-color:#e4d4b7!important;color:#564332!important;border-radius:8px}
+#app .option:hover{border-color:#b18a52!important;background:#f4e8d2!important}
+#app .option.selected-only{border-color:#9d7540!important;background:#f3e1bb!important}
+#app .option-letter{background:#eee0c6;color:#785a35}
+#app .question-title{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;color:#513b26}
+#app .q-progress{background:#eaddc6}
+#app .q-progress>div{background:#af8651}
+#app .global-search input::placeholder,#app .learning-textarea::placeholder{color:#ac9779}
+#app :is(input,textarea,select){accent-color:#996f42}
+#app :is(.form-input,.learning-textarea,.exam-config select,.filter-field select){
+ background:#fffcf5;color:#4d3d2c;border-color:#dfcfb0;border-radius:7px
+}
+#app :is(button,a,input,select,textarea):focus-visible{outline:3px solid rgba(168,117,55,.3);outline-offset:2px}
+#app .app-footer{border-top:1px solid #e4d5bd!important;color:#938066!important;font-size:11px;line-height:1.8}
+#app.dark-mode{
+ --bg:#28251f;--panel:#373127;--surface:#332e26;--field:#3b3529;
+ --text:#ecdfc7;--sub:#c3ac8b;--border:#5c4c37;--primary:#cba477;
+ background:#28251f!important;color:#ecdfc7!important
+}
+#app.dark-mode .sidebar{background:#302b23!important;color:#ecdec5!important;border-color:#514533!important}
+#app.dark-mode .brand{background:#342e24;border-color:#584b37}
+#app.dark-mode .brand strong,#app.dark-mode .sidebar .site-six-primary{color:#efe1c7!important}
+#app.dark-mode .site-six-primary.is-current{background:#655139!important;color:#fff1d5!important}
+#app.dark-mode .site-six-sub button{color:#d8c2a4!important}
+#app.dark-mode .site-six-sub button.is-current{background:#5d492f!important;color:#fff0d3!important}
+#app.dark-mode .topbar,#app.dark-mode .lesson-area,#app.dark-mode .panel,
+#app.dark-mode .stat-card,#app.dark-mode .quick-card,#app.dark-mode .chapter-card,
+#app.dark-mode .learning-outline,#app.dark-mode .reading-notes .note-block{
+ background:#373127!important;border-color:#5c4c37!important;color:#eadcc3!important
+}
+#app.dark-mode .page-heading h1,#app.dark-mode .lesson-title,#app.dark-mode .panel-heading h3,
+#app.dark-mode .reading-notes .note-block-heading h3,#app.dark-mode .chapter-card h3,
+#app.dark-mode .definition-row strong{color:#eddbbf!important}
+#app.dark-mode .page-heading p,#app.dark-mode .lesson-lead,
+#app.dark-mode .definition-row p,#app.dark-mode .study-step p{color:#d7c7ae!important}
+#app.dark-mode .reading-notes .note-block.boost-note{background:#3e3529!important}
+#app.dark-mode .reading-notes .definition-grid,#app.dark-mode .reading-notes .definition-row,
+#app.dark-mode .kb-study-table{background:#393227!important;border-color:#5b4b34!important}
+#app.dark-mode .kb-study-table thead,#app.dark-mode .kb-study-table tbody tr:nth-child(even){background:#453a2b!important}
+#app.dark-mode .kb-study-table :is(th,td){border-color:#66543b!important;color:#eadbc5!important}
+#app.dark-mode .kb-case-cell,#app.dark-mode .kb-formula-cell,
+#app.dark-mode .kb-flow-diagram li{background:#403529!important;border-color:#655137!important}
+#app.dark-mode .kb-case-cell p,#app.dark-mode .kb-formula-cell p{color:#e0ceb0!important}
+#app.dark-mode .lesson-next button{background:#463728!important;border-color:#675138!important}
+#app.dark-mode .lesson-next button strong{color:#eddbbf!important}
 @media(max-width:1100px){
-  #app .learning-layout{grid-template-columns:230px minmax(0,1fr)!important;gap:16px!important}
-  #app .lesson-area{padding:23px!important}
+ #app .learning-layout{grid-template-columns:230px minmax(0,1fr)!important;gap:16px!important}
+ #app .lesson-area{padding:25px!important}
 }
 @media(max-width:960px){
-  #app .learning-layout{grid-template-columns:1fr!important}
-  #app .learning-outline{position:relative;top:auto;max-height:250px}
+ #app .learning-layout{grid-template-columns:1fr!important}
+ #app .learning-outline{position:relative;top:auto;max-height:260px}
 }
 @media(max-width:800px){
-  #app .sidebar{width:min(310px,86vw)}
-  #app .app-shell{margin-left:0}
-  #app .study-six-nav{display:flex!important;min-height:52px;background:#fff!important;overflow:auto;scrollbar-width:none;gap:4px;padding:8px 12px;border-bottom:1px solid #e8edf2}
-  #app .study-six-link{font-size:12px;padding:8px 12px;white-space:nowrap;border-radius:8px}
-  #app .study-six-link.is-current{background:#e8f4ef!important;color:#187b6e!important}
-  #app .main-content{padding:19px 15px 36px!important}
-  #app .main-content.has-embedded-module{padding:12px 10px 30px!important}
-  #app .topbar{height:58px;padding:0 14px}
-  #app .global-search{width:min(220px,38vw)}
+ #app .sidebar{width:min(310px,86vw)}
+ #app .app-shell{margin-left:0}
+ #app .study-six-nav{
+  display:flex!important;min-height:52px;overflow:auto;scrollbar-width:none;gap:4px;
+  padding:8px 12px;background:#fff8e9!important;border-bottom:1px solid #e1d1b4!important
+ }
+ #app .study-six-link{font-size:12px;padding:8px 12px;white-space:nowrap;border-radius:7px;color:#775b3b!important}
+ #app .study-six-link.is-current{background:#e6cd9f!important;color:#593d20!important}
+ #app .main-content{padding:18px 14px 38px!important}
+ #app .main-content.has-embedded-module{padding:11px 10px 28px!important}
+ #app .topbar{height:57px;min-height:57px;padding:0 14px}
+ #app .global-search{width:min(225px,40vw)}
 }
 @media(max-width:560px){
-  #app .topbar .global-search{width:min(190px,37vw)}
-  #app .topbar .top-avatar{display:none}
-  #app .panel{padding:15px}
-  #app .reading-overall{width:100%}
-  #app .reading-notes .note-block{padding:16px!important}
-  #app .lesson-area{padding:17px!important}
-  #app .lesson-pager{gap:7px}
-  #app .lesson-pager button{max-width:100%;flex:1 1 45%;padding:9px}
-  #app .kb-study-table th,#app .kb-study-table td{padding:9px 10px!important;font-size:12px}
+ #app .topbar .global-search{width:min(185px,38vw)}
+ #app .topbar .top-avatar{display:none}
+ #app .panel{padding:15px}
+ #app .hero-content{padding:26px 22px}
+ #app .hero-banner{height:auto;min-height:213px}
+ #app .hero-art{opacity:.26;right:-95px}
+ #app .reading-overall{width:100%}
+ #app .reading-notes .note-block{padding:17px 15px!important}
+ #app .lesson-area{padding:18px 16px!important;box-shadow:inset 4px 0 0 #e4ceab,0 7px 22px rgba(90,64,35,.06)!important}
+ #app .lesson-lead{font-size:14px!important;padding-left:11px}
+ #app .kb-study-table :is(th,td){padding:10px!important;font-size:12px}
+ #app .lesson-next{gap:7px}
+ #app .lesson-next button{padding:11px 9px!important}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#app .quick-card,#app .chapter-card{transition:none!important}}
 
-/* 原站已存在上一节/下一节组件，统一为阅读导航卡，避免重复添加功能。 */
-#app .lesson-next{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:17px}
-#app .lesson-next button{border:1px solid #e0e9ed;border-radius:10px;background:#f9fcfb;padding:13px 15px;text-align:left;min-width:0}
-#app .lesson-next button:hover:not(:disabled){border-color:#93c7be;background:#ecf7f2}
-#app .lesson-next button>span{display:block;color:#168678;font-size:11px;font-weight:760;margin-bottom:5px}
-#app .lesson-next button>strong{display:block;color:#364f61;font-size:13px;font-weight:740;line-height:1.6;overflow-wrap:anywhere}
-#app.dark-mode .lesson-next button{background:#263e4a;border-color:#3f5b68}
-#app.dark-mode .lesson-next button>strong{color:#dcebf0}
-@media(max-width:560px){#app .lesson-next{gap:7px}#app .lesson-next button{padding:11px}}
+/* 纸质教材的细节：索引色、必背卡、知识标签、首页书本插画。 */
+#app .hero-banner .book-graphic{
+ background:linear-gradient(145deg,#ae8956,#795430)!important;
+ border:7px solid #dcc59d!important;border-left:12px solid #f0dfbe!important;
+ box-shadow:12px 19px 0 rgba(101,71,34,.16),0 14px 27px rgba(91,61,25,.18)!important
+}
+#app .hero-banner .book-graphic::before,#app .hero-banner .book-graphic::after{border-color:#f4e4c4}
+#app .catalog-group-heading h2{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;color:#594027;font-size:17px}
+#app .catalog-group-heading small{color:#806a4b}
+#app .category-bar.blue{background:#967249!important}
+#app .category-bar.violet{background:#ad9167!important}
+#app .category-bar.orange{background:#bd8f51!important}
+#app .category-bar.green{background:#788369!important}
+#app .reading-notes .chip-cloud span{
+ background:#f2e4cb!important;border:1px solid #dfcaa6!important;
+ color:#74502a!important;border-radius:6px!important
+}
+#app .reading-notes .step-stack{border-left-color:#dfc49a!important}
+#app .reading-notes .study-step:not(:last-child)::before{background:#e5cfaa!important}
+#app .reading-notes .step-number{background:#a57b47!important;color:#fff9eb!important}
+#app .reading-notes .analogy-box{
+ background:#f7edd9!important;border:1px solid #e8d6b8!important;
+ color:#645037!important;border-radius:8px
+}
+#app .reading-notes .analogy-box p{color:#5d4b35!important;line-height:1.95}
+#app .highlight-intro{background:#f2e5cc!important;color:#755533!important;border-radius:7px}
+#app .highlight-card{background:#fffaf0!important;border:1px solid #e5d8bf!important;border-radius:8px!important}
+#app .highlight-card p{color:#544532!important;font-size:13px;line-height:1.95}
+#app .highlight-number,#app .star-mini{color:#906336!important}
+#app .paper-year{background:#fffaf0!important;border-color:#e3d4b8!important;color:#5b422b}
+#app .paper-year.active{background:#ebd9b9!important;border-color:#bd9b63!important}
+#app .source-list a{border-color:#e9ddc5!important}
+#app .source-list a:hover strong{color:#8e5d2e!important}
+#app .file-icon.pdf{background:#f6e2d4!important;color:#9f634d!important}
+#app .file-icon.map{background:#e8dfc5!important;color:#7b7452!important}
+#app .date-pill{background:#f9eed8!important;border:1px solid #e4d0af!important;color:#87633a}
+#app .quick-enter{color:#977344}
+#app .practice-layout .question-options .option .option-letter{color:#76532b!important}
+#app .question-title>span{background:#f1e2c7!important;color:#825a2e!important}
+#app .module-notice{background:#f5ead5!important;border-color:#e7d4b3!important;color:#705435!important}

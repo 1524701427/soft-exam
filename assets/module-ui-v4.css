@@ -1,44 +1,110 @@
-/* 高项研习社统一专题皮肤 / v4：计算、案例、千题闯关 */
-:root{--study-ink:#23364d;--study-sub:#687c8c;--study-bg:#f5f7fa;--study-accent:#168678;--study-accent-soft:#eaf6f1;--study-line:#e3eaf0}
-body{background:var(--study-bg);color:var(--study-ink);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-button,input,select,textarea{font-family:inherit}
-:where(button,a,input,select,textarea):focus-visible{outline:3px solid rgba(30,149,130,.3);outline-offset:2px}
+/* 高项研习社 · 计算/案例/千题闯关共享暖纸主题 v5
+ * 独立访问和嵌入主站都使用同一套低饱和书页配色。
+ */
+:root{
+ --study-ink:#4d3d2d;--study-sub:#806c50;--study-bg:#f3ecdb;
+ --study-accent:#8f673c;--study-accent-soft:#f0dfbe;--study-line:#e5d8bf;
+ --ink:#4d3d2d;--muted:#816f56;--subtle:#a18d6b;--bg:#f3ecdb;
+ --paper:#fffaf0;--surface:#fffaf0;--border:#e5d8bf;--line:#e5d8bf;
+ --navy:#886039;--deep:#795938;--blue:#a67c48;--teal:#91693e;--lilac:#a07c50;
+ --soft-blue:#f2e6cf;--shadow:0 4px 20px rgba(101,74,35,.055)
+}
+html{color-scheme:light}
+body{
+ color:#4d3d2d!important;background:#f3ecdb!important;
+ font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+ -webkit-font-smoothing:antialiased
+}
+button,input,select,textarea{font-family:inherit;accent-color:#9a7042}
+:where(button,a,input,select,textarea):focus-visible{outline:3px solid rgba(164,115,56,.29);outline-offset:2px}
+:where(.container,.main,.wrap){color:#4d3d2d}
 :where(.panel,.group-card,.lesson-card,.domain-card,.case-card,.qcard,.stat,.stat-card,.filter-panel,.formula-card,.card){
-  border-radius:13px;border-color:var(--study-line);box-shadow:0 3px 15px rgba(24,46,70,.035)
+ border-color:#e5d8bf!important;border-radius:10px!important;
+ box-shadow:0 4px 18px rgba(98,70,35,.045)!important
 }
-:where(.container,.main,.wrap){color:var(--study-ink)}
-:where(.section-title h2,.panel h2,.panel h3,.group-card strong,.lesson-card strong){color:#263b50}
-:where(.section-title p,.panel p,.subline,.card-desc,.group-card small){line-height:1.83}
-:where(.eyebrow,.kicker){letter-spacing:.105em}
-:where(.btn,.button,.btn-line,.mini-btn,.calc-embedded-local-nav button,.case-embedded-local-nav button){
-  border-radius:9px;transition:background .15s ease,border-color .15s ease;
+body .panel,body .stat,body .lesson-card,body .group-card,body .domain-card{
+ background:#fffaf0!important;border-color:#e5d8bf!important;color:#51402e!important
 }
-:where(.calc-embedded-local-nav,.case-embedded-local-nav){
-  background:#fff;border:1px solid var(--study-line);border-radius:11px;box-shadow:none;
+body :where(.section-title h2,.panel h2,.panel h3,.group-card strong,.lesson-card h3,.domain-card strong,.qcard h2){
+ color:#583e28!important;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+ line-height:1.55
 }
-:where(.calc-embedded-local-nav,.case-embedded-local-nav) button.selected{
-  background:var(--study-accent-soft)!important;color:#127566!important;border-color:#bcded4!important;
+body :where(.section-title p,.panel p,.group-card small,.subline,.question-text,.qcard p){
+ color:#77644c;line-height:1.9
 }
-:where(.calc-embedded-local-nav,.case-embedded-local-nav) button:hover{
-  background:var(--study-accent-soft)!important;color:#127566!important;
+body :where(.eyebrow,.kicker){letter-spacing:.11em;color:#966d3e}
+body .hero{
+ background:linear-gradient(120deg,#ead1a2,#f4e4c0 55%,#dfbd88)!important;
+ color:#513920!important;border-radius:10px!important;
+ border:1px solid #d8b988!important;
+ box-shadow:inset 8px 0 0 #ae8751,0 8px 25px rgba(107,76,36,.08)!important
 }
+body .hero h1,body .hero h1 span,body .hero h2{
+ color:#4b3521!important;font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif
+}
+body .hero p,body .hero .eyebrow,body .hero .kicker{
+ color:#745637!important;opacity:1!important
+}
+body .hero .metric-strip,body .hero .hero-left{color:#503a23}
+body .hero .button-white,body .hero .btn.white{background:#926b40!important;color:#fff9ec!important}
+body .hero .button-outline,body .hero .btn.outline{
+ background:#f9edd5!important;color:#614725!important;border-color:#b89967!important
+}
+body .hero :where(.hero-side,.hero-art,.hero-figure){filter:sepia(.18);opacity:.8}
+body :where(.site-header,.topbar,.study-six-nav){background:#fff8e9!important;border-color:#e3d4b8!important;color:#614c35}
+body :where(.site-header,.topbar) a{color:#735636}
+body .brand-symbol,body .logo-symbol{background:#9a7546!important;color:#fff9ea!important}
+body :where(.sidebar,.side){background:#eee1c8!important;border-color:#d9c6a4!important;color:#563f2c!important}
+body .side-head{background:#ead8b9!important;border-bottom:1px solid #d7c29b}
+body .side-description,body .side-label,body .side-link{color:#745a3e!important}
+body .side-link.selected,body .side-link:hover{background:#dec499!important;color:#563a1d!important}
+body :where(.button,.btn,.btn-line,.mini-btn,.calc-embedded-local-nav button,.case-embedded-local-nav button){
+ border-radius:7px;transition:background .15s ease,border-color .15s ease
+}
+body :where(.button,.btn).primary,body .button:not(.button-white):not(.button-outline){
+ background:#90683c;color:#fff8ea;border-color:#90683c
+}
+body :where(.button,.btn).primary:hover{background:#7d552a}
+body :where(.group-card,.lesson-card,.domain-card):hover{
+ border-color:#c3a173!important;box-shadow:0 8px 24px rgba(92,67,31,.075)!important
+}
+body :where(.calc-embedded-local-nav,.case-embedded-local-nav){
+ background:#fff8eb!important;border:1px solid #e1cfb1!important;
+ border-radius:9px!important;box-shadow:none!important
+}
+body :where(.calc-embedded-local-nav,.case-embedded-local-nav) button{
+ background:#f2e6d1!important;color:#725735!important;border:1px solid transparent!important
+}
+body :where(.calc-embedded-local-nav,.case-embedded-local-nav) button.selected{
+ background:#e0c396!important;color:#563a1c!important;border-color:#bc985e!important
+}
+body :where(.calc-embedded-local-nav,.case-embedded-local-nav) button:hover{
+ background:#e6cda4!important;color:#593f22!important
+}
+body :where(.field select,.filtergrid select,.filtergrid input,.field input,.filter select,
+ .form-input,.search-input,.learning-input,.math-inputs input,.answer-dialog){
+ background:#fffcf5!important;color:#4f3e2c!important;border-color:#dcc8a4!important
+}
+body .stat strong{color:#68492a!important;font-family:Georgia,"STSong",serif}
+body .stat span,body .metric-strip span{color:#8e7555}
+body .notice{background:#f6ead4!important;border-color:#e8d4b4!important;color:#735534!important}
+body .question-text{background:#fffcf5!important;border-color:#e5d6bc!important;color:#56432d!important}
+body :where(.tag,.lesson-done,.group-no,.domain-number){color:#956d3e!important}
+body .tag{background:#f0e2c8!important;border-radius:6px}
+body .tag.warn{background:#fff0d8!important;color:#91602a!important}
+body :where(.choices button,.option,.btn-line){background:#fffaf0;border-color:#e1cfb0;color:#674b2e}
+body :where(.choices button,.option,.btn-line):hover{background:#f2e3c7;border-color:#bc965f}
+body :where(.choices button.selected,.option.selected){background:#ead6b3!important;border-color:#bc9558!important;color:#5b4021!important}
+body :where(.pager,.statgrid,.filtergrid){gap:12px}
+body .hero:after{color:#976c3c;opacity:.065}
+body :where(.source-disclaimer,.footer,.footer-note){color:#977e5d;line-height:1.9}
 html.is-embedded body{background:transparent!important}
-html.is-embedded :where(.container,.main,.wrap){padding-top:4px}
-html.is-embedded .hero{margin-top:6px}
-html.is-embedded :where(.site-header,.topbar,.study-six-nav){box-shadow:none}
-/* 独立访问时专题导航仍保留，嵌入主站时使用主站导航，不重复叠加 */
 html.is-embedded .study-six-nav{display:none!important}
+html.is-embedded :where(.container,.main,.wrap){padding-top:4px}
+html.is-embedded .hero{margin-top:7px;margin-bottom:19px}
 @media(max-width:660px){
-  :where(.panel,.group-card,.lesson-card,.domain-card,.case-card){border-radius:11px}
-  :where(.section-title h2){font-size:19px}
+ body :where(.panel,.group-card,.lesson-card,.domain-card,.case-card){border-radius:9px!important}
+ body .hero{padding:24px 20px!important}
+ body .hero h1{font-size:clamp(25px,6vw,33px)}
+ body :where(.section-title h2){font-size:20px}
 }
-/* 三个专题在主站内统一品牌主色与留白，避免题库蓝紫主题跳变。 */
-body .hero{background:linear-gradient(120deg,#193b52 2%,#226471 100%)!important;border-radius:17px!important}
-body .hero h1 span{color:#b8eee1}
-body .panel{border-color:#e3eaf0!important;box-shadow:0 3px 15px rgba(24,46,70,.035)!important;border-radius:13px!important}
-body .stat strong{color:#264256}
-body :where(.tag,.lesson-done){color:#168678}
-body .notice{background:#eff8f5;border-color:#d9ebe4;color:#3a6e68}
-body :where(.lesson-card,.group-card,.domain-card):hover{border-color:#85c0b5}
-body :where(.button,.btn).primary{background:#168678}
-html.is-embedded .hero{margin-bottom:19px}
