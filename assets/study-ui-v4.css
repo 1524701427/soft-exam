@@ -1,0 +1,184 @@
+/* 高项研习社 · 2026.11 统一设计体系
+ * 只负责界面，保留原路由、题库、学习记录和业务逻辑。
+ * 背景/文字/重点色统一：墨蓝 × 青绿 × 中性灰。
+ */
+:root{color-scheme:light}
+html{scroll-behavior:smooth}
+body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#app{
+  --bg:#f5f7fa;--panel:#fff;--text:#23364d;--sub:#68798b;--border:#e5ebf1;
+  --surface:#f8fafc;--primary:#168678;--shadow:0 4px 24px rgba(24,46,70,.045);
+  background:var(--bg)!important;color:var(--text);font-size:14px;
+}
+#app .sidebar{width:254px;background:#152b40!important;border-right:1px solid #29435a!important}
+#app .app-shell{margin-left:254px}
+#app .brand{height:82px;padding:20px 21px;border-bottom:1px solid rgba(255,255,255,.085)}
+#app .brand-mark{background:#248e82!important;border-radius:12px!important;width:41px;height:41px;box-shadow:none!important}
+#app .brand strong{font-size:16px;font-weight:790;letter-spacing:.01em}
+#app .brand small{font-size:11px;color:#a1b5c5!important;letter-spacing:0}
+#app .sidebar-scroll{padding:12px 11px 30px;scrollbar-color:#456075 transparent}
+#app .sidebar .nav-label{padding:9px 12px 13px;color:#8fa7ba!important;letter-spacing:.13em;font-size:10px}
+#app .site-six-primary{
+  min-height:47px;margin:2px 0;padding:11px 12px;border-radius:10px!important;
+  color:#d0dce5!important;font-size:13px;font-weight:720;letter-spacing:.01em;
+  display:flex;align-items:center;gap:12px;
+}
+#app .site-six-primary .six-side-symbol{
+  background:rgba(255,255,255,.075)!important;color:#b6d0dc!important;
+  width:28px;height:28px;border-radius:9px;font-size:15px;
+}
+#app .site-six-primary .six-side-arrow{color:#8ba5b7;font-size:18px}
+#app .site-six-primary:hover{background:#24435a!important;color:white!important}
+#app .site-six-primary.is-current{
+  background:#244d58!important;color:#fff!important;
+  box-shadow:inset 3px 0 #56c2ac!important;
+}
+#app .site-six-primary.is-current .six-side-symbol{background:#2e7d79!important;color:#eafff9!important}
+#app .site-six-sub{margin:5px 3px 13px 18px;padding:3px 0 3px 11px;border-left:1px solid #355167}
+#app .site-six-sub>button,#app .site-six-sub .six-sub-detail>button{
+  min-height:36px;padding:8px 11px;border-radius:8px;color:#aebfce;
+  line-height:1.4;text-align:left;font-size:12px;transition:background .16s,color .16s;
+}
+#app .site-six-sub button:hover,#app .site-six-sub button.is-current{background:#2a5260!important;color:#fff!important}
+#app .site-six-chapters summary,#app .site-six-sub .six-sub-heading{font-size:11px;color:#96afbf}
+#app .site-six-chapters .chapter-group-label{font-size:10px;letter-spacing:.04em;color:#a9bdcb;padding:13px 7px 5px}
+#app .site-six-chapters .chapter-mini{padding:7px 9px;margin:1px 0;min-height:33px;color:#c2d0da;font-size:12px}
+#app .site-six-chapters .chapter-mini.selected{background:#2c5863;color:#fff}
+#app .site-six-chapters .chapter-mini-no{font-variant-numeric:tabular-nums;color:#85b3c1}
+#app .sidebar-bottom{margin:0 13px;border-color:#385166}
+#app .user-avatar,#app .top-avatar{background:#248e82;border-radius:11px;box-shadow:none}
+#app .topbar{
+  height:68px;padding:0 clamp(20px,3vw,43px);
+  background:#fff;border-bottom:1px solid #e7ecf2;
+}
+#app .breadcrumbs{font-size:13px;color:#7890a1}
+#app .breadcrumbs strong{color:#263b50;font-weight:740}
+#app .global-search{width:min(310px,31vw);border:1px solid #e1e8ef;background:#f7f9fb;border-radius:10px;height:38px}
+#app .global-search:focus-within{border-color:#83bdb6;background:#fff;box-shadow:0 0 0 3px rgba(33,145,126,.09)}
+#app .top-icon-btn{border-radius:10px}
+#app .study-six-nav{display:none!important} /* 桌面端不重复六大导航；侧边栏是唯一主导航 */
+#app .main-content{width:100%;max-width:1390px!important;margin:0 auto;padding:32px clamp(22px,3vw,47px) 60px!important}
+#app .main-content.has-embedded-module{max-width:1450px!important;padding:20px clamp(13px,2.5vw,35px) 42px!important}
+#app .page-heading{margin-bottom:23px!important;gap:16px}
+#app .page-heading h1{font-size:clamp(24px,2.25vw,31px);font-weight:800;letter-spacing:-.028em;line-height:1.34;color:#1d3348}
+#app .page-heading p{font-size:13px;line-height:1.8;color:#6c7d8e;max-width:740px}
+#app .eyebrow{font-size:10px;font-weight:780;letter-spacing:.11em;color:#168678}
+#app .panel,#app .stat-card,#app .quick-card{
+  border:1px solid #e4eaf0!important;box-shadow:0 3px 16px rgba(21,48,76,.035)!important;
+  background:#fff!important;border-radius:14px!important;
+}
+#app .panel{padding:clamp(17px,2vw,24px)}
+#app .panel-heading{margin-bottom:16px}
+#app .panel-heading h3{font-size:16px;line-height:1.45;font-weight:780;color:#23384d}
+#app .panel-heading p{font-size:12px;line-height:1.7;color:#7c8b98}
+#app .hero-banner{background:linear-gradient(115deg,#193b52,#226471)!important;border-radius:17px!important;box-shadow:none!important}
+#app .hero-kicker{letter-spacing:.12em;opacity:.85}
+#app .hero-actions button{border-radius:9px}
+#app .stat-card{padding:19px 21px}
+#app .stat-value{color:#203a50}
+#app .chapter-card{
+  background:#fff!important;border:1px solid #e2e9ef!important;border-radius:13px!important;
+  padding:19px!important;box-shadow:0 3px 13px rgba(15,43,65,.025)!important;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+#app .chapter-card:hover{transform:translateY(-2px)!important;border-color:#86c1ba!important;box-shadow:0 9px 24px rgba(32,74,85,.07)!important}
+#app .chapter-card h3{font-size:15px!important;color:#243d52!important;line-height:1.55}
+#app .chapter-card-number{color:#13897d!important}
+#app .roadmap-index,#app .chapter-group-label{font-weight:740}
+#app .quick-card{transition:transform .16s ease,border-color .16s ease}
+#app .quick-card:hover{transform:translateY(-2px);border-color:#93c8c0!important}
+#app .learning-layout{display:grid;grid-template-columns:minmax(230px,272px) minmax(0,1fr)!important;gap:23px!important;align-items:start}
+#app .learning-outline{
+  border:1px solid #e3eaf0!important;border-radius:13px!important;
+  box-shadow:0 2px 14px rgba(17,44,72,.035)!important;background:#fff!important;
+  position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;
+}
+#app .outline-heading{padding:7px 12px 15px!important}
+#app .outline-heading strong{font-size:14px;color:#263b50}
+#app .outline-group{margin:3px 0}
+#app .outline-parent{border-radius:8px;font-weight:760;color:#41566a}
+#app .outline-child{border-radius:8px;color:#607386}
+#app .outline-child:hover{background:#f0f6f6!important}
+#app .outline-child.outline-active{background:#e8f5f1!important;color:#166f65!important;font-weight:760}
+#app .chapter-vertical-progress,#app .reading-overall-track{background:#e6efee}
+#app .chapter-vertical-progress>div,#app .reading-overall-track i{background:#279987}
+#app .reading-overall{background:#f1f8f6!important;border:1px solid #dbeae5!important;box-shadow:none}
+#app .reading-overall strong{color:#147f70}
+#app .lesson-area{min-width:0;padding:clamp(20px,2.7vw,34px)!important;border-radius:14px!important;background:#fff;border:1px solid #e4eaf0}
+#app .lesson-title{font-size:clamp(23px,2.3vw,31px)!important;line-height:1.45!important;color:#1e3449}
+#app .lesson-lead{font-size:14px!important;line-height:1.95!important;color:#5c6f81!important;max-width:870px}
+#app .lesson-tabs{border-bottom:1px solid #e4eaf0!important;gap:21px}
+#app .lesson-tabs button{font-size:13px;font-weight:730}
+#app .lesson-tabs button.on{color:#168678!important;border-color:#168678!important}
+#app .reading-section-header h3{font-size:16px!important;color:#263e52}
+#app .reading-section-header p{font-size:12px;line-height:1.7}
+#app .reading-section-icon{background:#edf6f3;color:#168678!important;border-radius:8px;font-weight:850}
+#app .reading-notes{display:grid;gap:15px}
+#app .reading-notes .note-block{background:#fff!important;border:1px solid #e3e9ef!important;border-radius:12px!important;margin:0!important;padding:21px 23px!important;box-shadow:none!important}
+#app .reading-notes .note-block.boost-note{background:#fbfdfc!important;border-color:#dceae7!important}
+#app .reading-notes .note-block-heading{margin-bottom:14px}
+#app .reading-notes .note-block-heading h3{font-size:15px!important;color:#263c50!important;line-height:1.6!important}
+#app .reading-notes .note-block-heading .block-index{border-radius:8px!important;background:#e8f4f1!important;color:#157c70!important;min-width:29px;min-height:29px}
+#app .knowledge-boost-tag{background:#ebf6f2!important;border:1px solid #d4e9e3!important;color:#168172!important}
+#app .kb-table-scroll{border:1px solid #e2e9ef;border-radius:10px!important}
+#app .kb-study-table{width:100%;border-collapse:collapse;line-height:1.9;font-size:13px}
+#app .kb-study-table thead{background:#f3f7f9!important}
+#app .kb-study-table th,#app .kb-study-table td{padding:12px 16px!important;text-align:left;vertical-align:top;border-bottom:1px solid #e8edf2;white-space:pre-line;overflow-wrap:anywhere}
+#app .kb-study-table th{color:#2d5360;font-weight:750}
+#app .kb-study-table td{color:#42586b}
+#app .kb-study-table tbody tr:last-child>th,#app .kb-study-table tbody tr:last-child>td{border-bottom:none}
+#app .kb-study-table tbody tr:nth-child(even){background:#fbfcfd}
+#app .definition-row{border-color:#e9edf2!important}
+#app .definition-row strong{color:#26495a!important}
+#app .definition-row p,#app .study-step p{line-height:1.9!important;color:#4b6074}
+#app .kb-case-cell{border-radius:10px}
+#app .app-footer{border-top:1px solid #e7edf2;color:#8391a0;font-size:11px;line-height:1.7}
+/* 章节/知识点的上下文导航，代替多层重复入口 */
+#app .lesson-path{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:15px 0 8px;color:#7b8d9a;font-size:11px}
+#app .lesson-path strong{color:#168678}
+#app .lesson-path button{border:0;background:#f1f6f7;color:#366779;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:720}
+#app .lesson-path button:hover{background:#e4f3ee;color:#116e63}
+#app .lesson-pager{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:19px;margin-top:22px;border-top:1px solid #e6edf1}
+#app .lesson-pager button{display:flex;align-items:center;gap:8px;border:1px solid #dce8e7;border-radius:9px;background:#f8fcfa;padding:10px 13px;color:#216d68;font-size:12px;font-weight:730;max-width:47%;text-align:left}
+#app .lesson-pager button:disabled{opacity:.34}
+#app .lesson-pager button:not(:disabled):hover{border-color:#88c4ba;background:#eaf6f1}
+#app .lesson-pager small{font-weight:520;font-size:10px;color:#72948e}
+#app :is(button,a,input,select,textarea):focus-visible{outline:3px solid rgba(30,149,130,.35);outline-offset:2px}
+#app.dark-mode{--bg:#142331;--panel:#1d3142;--surface:#243b4e;--text:#e3edf3;--sub:#adc0ce;--border:#375061;color:var(--text)}
+#app.dark-mode .topbar,#app.dark-mode .lesson-area,#app.dark-mode .panel,#app.dark-mode .reading-notes .note-block,#app.dark-mode .chapter-card,#app.dark-mode .quick-card,#app.dark-mode .stat-card,#app.dark-mode .learning-outline{background:#1d3142!important;border-color:#375061!important;color:#deebf2}
+#app.dark-mode .page-heading h1,#app.dark-mode .lesson-title,#app.dark-mode .reading-notes .note-block-heading h3,#app.dark-mode .panel-heading h3,#app.dark-mode .chapter-card h3,#app.dark-mode .lesson-pager button{color:#e4f1f7!important}
+#app.dark-mode .reading-notes .note-block.boost-note,#app.dark-mode .reading-overall{background:#223a48!important;border-color:#3d5965!important}
+#app.dark-mode .kb-study-table thead,#app.dark-mode .kb-study-table tbody tr:nth-child(even){background:#273d4c!important}
+#app.dark-mode .kb-study-table td,#app.dark-mode .kb-study-table th{border-color:#395365;color:#dce8ee}
+#app.dark-mode .lesson-pager button,#app.dark-mode .lesson-path button{background:#254c4f;border-color:#416b6a;color:#dff5ee}
+@media(max-width:1100px){
+  #app .learning-layout{grid-template-columns:230px minmax(0,1fr)!important;gap:16px!important}
+  #app .lesson-area{padding:23px!important}
+}
+@media(max-width:960px){
+  #app .learning-layout{grid-template-columns:1fr!important}
+  #app .learning-outline{position:relative;top:auto;max-height:250px}
+}
+@media(max-width:800px){
+  #app .sidebar{width:min(310px,86vw)}
+  #app .app-shell{margin-left:0}
+  #app .study-six-nav{display:flex!important;min-height:52px;background:#fff!important;overflow:auto;scrollbar-width:none;gap:4px;padding:8px 12px;border-bottom:1px solid #e8edf2}
+  #app .study-six-link{font-size:12px;padding:8px 12px;white-space:nowrap;border-radius:8px}
+  #app .study-six-link.is-current{background:#e8f4ef!important;color:#187b6e!important}
+  #app .main-content{padding:19px 15px 36px!important}
+  #app .main-content.has-embedded-module{padding:12px 10px 30px!important}
+  #app .topbar{height:58px;padding:0 14px}
+  #app .global-search{width:min(220px,38vw)}
+}
+@media(max-width:560px){
+  #app .topbar .global-search{width:min(190px,37vw)}
+  #app .topbar .top-avatar{display:none}
+  #app .panel{padding:15px}
+  #app .reading-overall{width:100%}
+  #app .reading-notes .note-block{padding:16px!important}
+  #app .lesson-area{padding:17px!important}
+  #app .lesson-pager{gap:7px}
+  #app .lesson-pager button{max-width:100%;flex:1 1 45%;padding:9px}
+  #app .kb-study-table th,#app .kb-study-table td{padding:9px 10px!important;font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#app .quick-card,#app .chapter-card{transition:none!important}}
