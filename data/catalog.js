@@ -1,11 +1,15 @@
 window.EXAM_CATALOG = [
-  {group:'信息技术与信息系统',color:'blue',chapters:[
+  {group:'信息化与信息系统 · 第1—5章',color:'blue',chapters:[
     '信息化发展','信息技术发展','信息系统治理','信息系统管理','信息系统工程']},
-  {group:'项目管理基础',color:'violet',chapters:[
-    '项目管理概论','项目立项管理','项目整合管理','项目范围管理','项目进度管理','项目成本管理','项目质量管理','项目资源管理','项目沟通管理','项目风险管理','项目采购管理','项目干系人管理']},
-  {group:'绩效域与高级管理',color:'orange',chapters:[
+  {group:'项目管理基础 · 第6—7章',color:'violet',chapters:[
+    '项目管理概论','项目立项管理']},
+  {group:'核心管理领域 · 第8—12章',color:'violet',chapters:[
+    '项目整合管理','项目范围管理','项目进度管理','项目成本管理','项目质量管理']},
+  {group:'协同管理领域 · 第13—17章',color:'violet',chapters:[
+    '项目资源管理','项目沟通管理','项目风险管理','项目采购管理','项目干系人管理']},
+  {group:'绩效域与高级管理 · 第18—21章',color:'orange',chapters:[
     '项目绩效域','配置与变更管理','高级项目管理','项目管理科学基础']},
-  {group:'组织治理与规范',color:'green',chapters:[
+  {group:'组织治理与法规 · 第22—24章',color:'green',chapters:[
     '组织通用治理','组织通用管理','法律法规与标准规范']}
 ];
 window.EXAM_CHAPTERS = window.EXAM_CATALOG.flatMap(g=>g.chapters.map(name=>({id:window.EXAM_CATALOG.flatMap(x=>x.chapters).indexOf(name)+1,name,group:g.group,color:g.color})));
