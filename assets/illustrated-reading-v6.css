@@ -309,3 +309,106 @@
  #app .visual-foot{padding:11px!important}
 }
 @media(prefers-reduced-motion:reduce){#app .vd-map-node{transition:none}}
+
+
+/* 24 章通用知识路线图。小型书页插图 + 可交互章节脉络，非装饰性占位图。 */
+#app .chapter-map-panel{
+ margin:0 0 19px;padding:14px 20px 15px;min-width:0;overflow:hidden;
+ border:1px solid #e0dacb;border-radius:10px;
+ background:linear-gradient(115deg,#fffdf8 4%,#f5f4ea 100%);
+ box-shadow:0 5px 19px rgba(89,77,50,.033);
+}
+#app .chapter-map-heading{display:flex;align-items:center;gap:14px;margin:0 0 12px}
+#app .chapter-map-illustration{
+ width:82px;min-width:82px;height:71px;border-radius:9px;display:grid;place-items:center;
+ background:#f3eee1;border:1px solid #e8dfc9;
+}
+#app .chapter-map-illustration svg{display:block;width:80px;height:62px}
+#app .chapter-map-copy{min-width:0;flex:1}
+#app .chapter-map-copy>small{
+ display:block;color:#7d947f;font-size:10px;font-weight:800;
+ letter-spacing:.11em;margin-bottom:4px
+}
+#app .chapter-map-copy h2{
+ font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+ color:#4c4b3c;font-weight:780;letter-spacing:.017em;
+ font-size:18px;line-height:1.5;margin:0 0 5px
+}
+#app .chapter-map-copy p{color:#857866;font-size:11px;line-height:1.65;margin:0}
+#app .chapter-map-practice{
+ flex-shrink:0;min-height:34px;border:1px solid #cdded0;border-radius:6px;
+ color:#557763;background:#edf3ec;font-size:11px;font-weight:750;
+ padding:7px 12px;cursor:pointer
+}
+#app .chapter-map-practice:hover{background:#dae8dc;border-color:#91b29b}
+#app .chapter-map-track{
+ min-width:0;display:flex;gap:10px;overflow-x:auto;padding:5px 3px 9px;
+ scrollbar-width:thin;scrollbar-color:#d6d2c3 transparent;scroll-snap-type:x proximity
+}
+#app .chapter-map-stop{
+ flex:0 0 200px;min-height:76px;position:relative;
+ display:flex;gap:9px;align-items:flex-start;text-align:left;
+ border:1px solid #e2dfd3;border-radius:8px;
+ background:#fffcf6;color:#585245;padding:12px 11px;
+ cursor:pointer;scroll-snap-align:start;
+ transition:background .16s,border-color .16s,transform .16s
+}
+#app .chapter-map-stop:not(:last-child):after{
+ content:"";position:absolute;top:36px;right:-11px;width:10px;
+ height:2px;background:#a8bbaa;z-index:2
+}
+#app .chapter-map-stop:hover{
+ background:#f1f5ed;border-color:#b8cfbd;transform:translateY(-1px)
+}
+#app .chapter-map-stop.is-current{
+ background:#e9f1e7;border-color:#96b3a1;box-shadow:inset 3px 0 0 #6c927b
+}
+#app .chapter-map-step{
+ display:grid;place-items:center;min-width:30px;width:30px;height:30px;
+ border-radius:50%;color:#fffef8;background:#739486;
+ font-family:Georgia,serif;font-size:12px;font-weight:750
+}
+#app .chapter-map-stop:nth-child(4n+2) .chapter-map-step{background:#b38468}
+#app .chapter-map-stop:nth-child(4n+3) .chapter-map-step{background:#708ba0}
+#app .chapter-map-stop:nth-child(4n+4) .chapter-map-step{background:#aa955f}
+#app .chapter-map-stop-text{min-width:0;flex:1}
+#app .chapter-map-stop-text strong{
+ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+ overflow:hidden;color:#534a3c;line-height:1.43;font-size:12px;
+ font-weight:750;overflow-wrap:anywhere
+}
+#app .chapter-map-stop-text small{
+ display:block;color:#8b8374;font-size:10px;line-height:1.6;margin-top:4px
+}
+#app .chapter-map-go{color:#8c9f8c;font-size:16px;margin-left:auto}
+#app .chapter-map-stop:focus-visible,
+#app .chapter-map-practice:focus-visible{
+ outline:3px solid rgba(106,150,121,.36)!important;outline-offset:2px
+}
+#app .chapter-map-stop:disabled{cursor:default;opacity:.6;transform:none}
+#app.dark-mode .chapter-map-panel{
+ background:#38362e;border-color:#5b5548;box-shadow:none
+}
+#app.dark-mode .chapter-map-illustration{background:#4b4438;border-color:#655947}
+#app.dark-mode .chapter-map-copy h2{color:#ede0c9}
+#app.dark-mode .chapter-map-copy p{color:#c8b99e}
+#app.dark-mode .chapter-map-stop{background:#433f35;border-color:#615848;color:#ede0c9}
+#app.dark-mode .chapter-map-stop.is-current{background:#4c5c4e;border-color:#809f8b}
+#app.dark-mode .chapter-map-stop-text strong{color:#e8ddc8}
+#app.dark-mode .chapter-map-stop-text small{color:#c3b79f}
+#app.dark-mode .chapter-map-practice{background:#455348;color:#dfebd9;border-color:#647b67}
+@media(max-width:1020px){
+ #app .chapter-map-stop{flex-basis:180px}
+ #app .chapter-map-panel{padding:13px 14px}
+}
+@media(max-width:560px){
+ #app .chapter-map-heading{gap:9px;flex-wrap:wrap}
+ #app .chapter-map-illustration{width:56px;min-width:56px;height:58px}
+ #app .chapter-map-illustration svg{width:54px;height:49px}
+ #app .chapter-map-copy h2{font-size:16px}
+ #app .chapter-map-copy p{font-size:10px}
+ #app .chapter-map-practice{margin-left:auto}
+ #app .chapter-map-stop{flex-basis:164px;min-height:72px;padding:10px 8px}
+ #app .chapter-map-step{width:26px;min-width:26px;height:26px;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){#app .chapter-map-stop{transition:none}}
