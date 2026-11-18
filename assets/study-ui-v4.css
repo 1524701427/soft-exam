@@ -372,3 +372,44 @@ body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-web
  #app .lesson-next button{padding:11px 9px!important}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#app .quick-card,#app .chapter-card{transition:none!important}}
+
+/* 纸质教材的细节：索引色、必背卡、知识标签、首页书本插画。 */
+#app .hero-banner .book-graphic{
+ background:linear-gradient(145deg,#ae8956,#795430)!important;
+ border:7px solid #dcc59d!important;border-left:12px solid #f0dfbe!important;
+ box-shadow:12px 19px 0 rgba(101,71,34,.16),0 14px 27px rgba(91,61,25,.18)!important
+}
+#app .hero-banner .book-graphic::before,#app .hero-banner .book-graphic::after{border-color:#f4e4c4}
+#app .catalog-group-heading h2{font-family:"Noto Serif SC","Songti SC","STSong","SimSun",serif;color:#594027;font-size:17px}
+#app .catalog-group-heading small{color:#806a4b}
+#app .category-bar.blue{background:#967249!important}
+#app .category-bar.violet{background:#ad9167!important}
+#app .category-bar.orange{background:#bd8f51!important}
+#app .category-bar.green{background:#788369!important}
+#app .reading-notes .chip-cloud span{
+ background:#f2e4cb!important;border:1px solid #dfcaa6!important;
+ color:#74502a!important;border-radius:6px!important
+}
+#app .reading-notes .step-stack{border-left-color:#dfc49a!important}
+#app .reading-notes .study-step:not(:last-child)::before{background:#e5cfaa!important}
+#app .reading-notes .step-number{background:#a57b47!important;color:#fff9eb!important}
+#app .reading-notes .analogy-box{
+ background:#f7edd9!important;border:1px solid #e8d6b8!important;
+ color:#645037!important;border-radius:8px
+}
+#app .reading-notes .analogy-box p{color:#5d4b35!important;line-height:1.95}
+#app .highlight-intro{background:#f2e5cc!important;color:#755533!important;border-radius:7px}
+#app .highlight-card{background:#fffaf0!important;border:1px solid #e5d8bf!important;border-radius:8px!important}
+#app .highlight-card p{color:#544532!important;font-size:13px;line-height:1.95}
+#app .highlight-number,#app .star-mini{color:#906336!important}
+#app .paper-year{background:#fffaf0!important;border-color:#e3d4b8!important;color:#5b422b}
+#app .paper-year.active{background:#ebd9b9!important;border-color:#bd9b63!important}
+#app .source-list a{border-color:#e9ddc5!important}
+#app .source-list a:hover strong{color:#8e5d2e!important}
+#app .file-icon.pdf{background:#f6e2d4!important;color:#9f634d!important}
+#app .file-icon.map{background:#e8dfc5!important;color:#7b7452!important}
+#app .date-pill{background:#f9eed8!important;border:1px solid #e4d0af!important;color:#87633a}
+#app .quick-enter{color:#977344}
+#app .practice-layout .question-options .option .option-letter{color:#76532b!important}
+#app .question-title>span{background:#f1e2c7!important;color:#825a2e!important}
+#app .module-notice{background:#f5ead5!important;border-color:#e7d4b3!important;color:#705435!important}
