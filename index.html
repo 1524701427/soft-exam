@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="./assets/knowledge-boost-integrated.css?v=1.0" />
 <link rel="stylesheet" href="./assets/site-design-v3.css?v=1.0" />
 <link rel="stylesheet" href="./assets/study-ui-v4.css?v=2.0" />
-<link rel="stylesheet" href="./assets/illustrated-reading-v6.css?v=1.0" />
+<link rel="stylesheet" href="./assets/illustrated-reading-v6.css?v=1.1" />
 </head>
 <body>
 <div id="app" v-cloak :class="{'dark-mode':state.settings.dark}">
@@ -128,7 +128,41 @@
       <!-- 知识点 -->
       <template v-else-if="activeView==='knowledge'"><div class="page-heading compact reading-page-heading"><div><div class="eyebrow">章节研读 / 第 {{String(selectedChapter).padStart(2,'0')}} 章</div><h1>{{chapterTitle}}</h1><p>沿着章节目录学习：读知识点、看图解、记易错点，再练习巩固。</p></div><div class="reading-overall"><strong>{{chapterMasteryPercent}}%</strong><span>本章已掌握 {{chapterLearnedCount}} / {{currentChapterTopicList.length}} 节</span><div class="reading-overall-track"><i :style="{width:chapterMasteryPercent+'%'}"></i></div></div></div>
       <div v-if="!currentChapterSections.length" class="empty-panel"><span class="empty-illustration">▤</span><h2>第 {{selectedChapter}} 章内容尚未录入</h2><p>章节目录已配置。可在「数据与设置」中导入该章的知识点与题目；不会自动生成未经核对的教材知识。</p><button class="primary-btn" @click="navigate('settings')">去导入资料</button></div>
-      <template v-else><div class="learning-layout"><aside class="learning-outline panel"><div class="outline-heading"><div><strong>课程目录</strong><small>按顺序学习，随时定位</small></div><span class="outline-progress-num">{{chapterLearnedCount}} / {{currentChapterTopicList.length}}</span></div><div class="chapter-vertical-progress"><div :style="{width:chapterMasteryPercent+'%'}"></div></div><div v-for="sec in currentChapterSections" :key="sec.id" class="outline-group"><button class="outline-parent" @click="toggleSectionCollapse(sec.id)"><span>{{sec.id}} {{sec.title}}</span><span :class="{'rotated':!openSectionGroups.includes(sec.id)}" v-html="icon('chevron-down')"></span></button><div v-if="openSectionGroups.includes(sec.id)"><button v-for="t in sec.children" :key="t.id" class="outline-child" :class="{'outline-active':selectedTopic===t.id}" @click="selectTopic(t.id)"><span class="status-circle" :class="{'is-done':state.mastered.includes(t.id)}">{{state.mastered.includes(t.id)?'✓':''}}</span><span class="ellipsis">{{t.id}} {{t.title}}</span></button></div></div><button class="outline-question-btn" @click="goToChapterPractice(selectedChapter)"><span v-html="icon('clipboard')"></span> 本章刷题训练 <span>→</span></button></aside>
+      <template v-else>
+      <!-- 24章目录共用的数据驱动知识路线图，按本章现有section自动生成，不引入额外考点 -->
+      <section class="chapter-map-panel" aria-label="本章知识路线图">
+        <div class="chapter-map-heading">
+          <div class="chapter-map-illustration" aria-hidden="true">
+            <svg viewBox="0 0 134 94" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 78h102" fill="none" stroke="#baa982" stroke-width="4" stroke-linecap="round"/>
+              <path d="M66 27C50 18 30 20 16 23v51c19-4 37-2 50 7V27z" fill="#fffaf0" stroke="#bda780" stroke-width="2.4"/>
+              <path d="M66 27c17-9 37-7 52-4v51c-20-4-39-2-52 7V27z" fill="#fcf7e8" stroke="#bda780" stroke-width="2.4"/>
+              <path d="M66 27v54" stroke="#947953" stroke-width="2"/>
+              <path d="M24 32c13-2 25 0 36 5M24 43c15-2 25 0 36 5M24 54c14-2 26 0 36 5M72 37c11-5 23-7 37-5M72 48c13-5 25-7 37-5M72 59c13-5 26-7 37-5" stroke="#e1d3b3" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+              <path d="M98 14v26l7-5 7 5V14z" fill="#82988a"/>
+              <circle cx="20" cy="13" r="3" fill="#cb9979"/><circle cx="37" cy="10" r="2.4" fill="#9bb9aa"/>
+            </svg>
+          </div>
+          <div class="chapter-map-copy">
+            <small>CHAPTER MAP · 第 {{String(selectedChapter).padStart(2,'0')}} 章</small>
+            <h2>本章知识路线图</h2>
+            <p>{{currentChapterSections.length}} 个知识模块 · {{currentChapterTopicList.length}} 个知识点 · 按教材顺序串联，点击模块直接开始学习</p>
+          </div>
+          <button class="chapter-map-practice" type="button" @click="goToChapterPractice(selectedChapter)">本章练习 <span aria-hidden="true">↗</span></button>
+        </div>
+        <nav class="chapter-map-track" aria-label="本章各模块快捷入口">
+          <button v-for="(sec,i) in currentChapterSections" :key="sec.id" type="button"
+            :class="['chapter-map-stop',{'is-current':selectedTopic===sec.id||selectedTopic.startsWith(sec.id+'.')}]"
+            :disabled="!sec.children?.length"
+            :aria-label="'进入'+sec.id+' '+sec.title+'，共'+(sec.children?.length||0)+'个知识点'"
+            @click="selectTopic(sec.children?.[0]?.id)">
+            <span class="chapter-map-step">{{String(i+1).padStart(2,'0')}}</span>
+            <span class="chapter-map-stop-text"><strong>{{sec.id}} {{sec.title}}</strong><small>{{sec.children?.length||0}} 个知识点</small></span>
+            <span class="chapter-map-go" aria-hidden="true">›</span>
+          </button>
+        </nav>
+      </section>
+      <div class="learning-layout"><aside class="learning-outline panel"><div class="outline-heading"><div><strong>课程目录</strong><small>按顺序学习，随时定位</small></div><span class="outline-progress-num">{{chapterLearnedCount}} / {{currentChapterTopicList.length}}</span></div><div class="chapter-vertical-progress"><div :style="{width:chapterMasteryPercent+'%'}"></div></div><div v-for="sec in currentChapterSections" :key="sec.id" class="outline-group"><button class="outline-parent" @click="toggleSectionCollapse(sec.id)"><span>{{sec.id}} {{sec.title}}</span><span :class="{'rotated':!openSectionGroups.includes(sec.id)}" v-html="icon('chevron-down')"></span></button><div v-if="openSectionGroups.includes(sec.id)"><button v-for="t in sec.children" :key="t.id" class="outline-child" :class="{'outline-active':selectedTopic===t.id}" @click="selectTopic(t.id)"><span class="status-circle" :class="{'is-done':state.mastered.includes(t.id)}">{{state.mastered.includes(t.id)?'✓':''}}</span><span class="ellipsis">{{t.id}} {{t.title}}</span></button></div></div><button class="outline-question-btn" @click="goToChapterPractice(selectedChapter)"><span v-html="icon('clipboard')"></span> 本章刷题训练 <span>→</span></button></aside>
       <article class="lesson-area"><div class="lesson-topline"><div><span class="lesson-id">{{selectedTopic}}</span><span class="lesson-label">{{chapterTitle}} · 考点精讲</span></div><div class="lesson-actions"><button class="icon-text-btn" @click="toggleStar('topic:'+selectedTopic)"><span v-html="icon(state.starred.includes('topic:'+selectedTopic)?'star-fill':'star')"></span>{{state.starred.includes('topic:'+selectedTopic)?'已收藏':'收藏'}}</button><button class="icon-text-btn" @click="openPdf(currentTopicPage)"><span v-html="icon('external')"></span> 资料 P{{currentTopicPage}}</button></div><small v-if="currentNote?.sourceDocument" class="lesson-source-document">来自：{{currentNote.sourceDocument}}</small></div><h2 class="lesson-title">{{currentTopicTitle}}</h2><p class="lesson-lead">{{currentNote?.lead || '该节内容已建立，待补充学习资料。'}}</p><nav class="lesson-path" aria-label="本节位置"><button @click="navigate('chapters')">全部章节</button><span>›</span><button @click="openChapter(selectedChapter)">第 {{selectedChapter}} 章</button><span>›</span><strong>{{currentChapterTopicList.findIndex(t=>t.id===selectedTopic)+1}} / {{currentChapterTopicList.length}} 节</strong><span>·</span><span>按知识点学习 → 练习 → 复盘</span></nav><div class="lesson-tabs"><button :class="{'on':readingTab==='course'}" @click="readingTab='course'">考点精讲</button><button :class="{'on':readingTab==='highlights'}" @click="readingTab='highlights'">必背清单 <span>{{currentSectionHighlights.length}}</span></button><button :class="{'on':readingTab==='notes'}" @click="readingTab='notes'">我的笔记</button></div>
       <template v-if="readingTab==='course'"><section v-if="lessonVisuals.length" id="lesson-figure" class="reading-figure-section"><div class="reading-section-header"><span class="reading-section-icon">01</span><div><small>知识导读 · 图解速览</small><h3>先看图，再理解知识点</h3><p>{{activeLessonVisual?.generatedFromNotes?'依据当前知识点已有笔记生成的知识结构图':'与当前知识点直接匹配的交互图解'}}</p></div></div><div v-if="lessonVisuals.length>1" class="reading-figure-switcher"><button v-for="v in lessonVisuals" :key="v.id" :class="{on:activeLessonVisual?.id===v.id}" @click="visualFocusId=v.id">{{v.title}}</button></div><exam-visual v-if="activeLessonVisual" :key="activeLessonVisual.id" :diagram="activeLessonVisual" dense @navigate="openKnowledge"></exam-visual></section><div class="reading-section-header reading-text-heading"><span class="reading-section-icon">{{lessonVisuals.length?'02':'01'}}</span><div><small>教材笔记 · 核心考点</small><h3>考点精讲与记忆</h3><p>结合概念、步骤和关键区别，理解后再记忆。</p></div></div><details v-if="chapterDocExampleTopics.length" class="doc-entry-nav"><summary>本章文件速查 · {{chapterDocExampleCount}} 份示例 <span>（展开选择知识小节）</span></summary><div class="doc-entry-links"><button v-for="doc in chapterDocExampleTopics" :key="doc.sectionId" type="button" :class="{'doc-entry-current':selectedTopic===doc.sectionId}" @click="selectTopic(doc.sectionId)"><small>{{doc.sectionId}}</small> {{doc.title}} <span>{{doc.count}}份</span></button></div><p>文件名称及分类参考本章考点；“主要内容”和“填写示例”为便于复习编写的教学样例，不是原 PDF 模板。</p></details><div class="reading-notes"><div class="note-block" :class="{'boost-note':!!b.knowledgeBoostKey}" v-for="(b,idx) in currentNote?.blocks||[]" :key="idx"><div class="note-block-heading"><span class="block-index">{{String(idx+1).padStart(2,'0')}}</span><h3>{{b.title}}</h3><span v-if="b.knowledgeBoostKey" class="knowledge-boost-tag">拓展精讲</span><span v-if="b.documentExampleKey" class="knowledge-doc-tag">文件内容·填写示例</span><span v-if="b.sources?.length" class="knowledge-external-tag">外部资料核查</span></div><div v-if="b.sources?.length" class="knowledge-source-links">补充参考（非教材原文）：<a v-for="(src,k) in b.sources" :key="k" :href="src.url" target="_blank" rel="noopener noreferrer">{{src.label}} ↗</a></div><template v-if="b.knowledgeBoostKey">
   <div v-if="b.knowledgeBoostGroup==='it' || b.knowledgeBoostGroup==='docs' || b.knowledgeBoostGroup==='compare' || b.knowledgeBoostGroup==='domains' || (b.knowledgeBoostGroup==='changes' && !(b.flowSteps?.length>1))" class="kb-table-scroll">
